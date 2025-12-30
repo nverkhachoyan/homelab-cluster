@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/<YOUR_USER>/homelab-cluster.git
+    repoURL: https://github.com/nverkhachoyan/homelab-cluster.git
     targetRevision: HEAD
     path: apps/nginx-test
   destination:
