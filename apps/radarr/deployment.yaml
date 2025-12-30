@@ -28,7 +28,6 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            # THIS IS THE MAGIC PART
             - name: data
               mountPath: /data
       volumes:
@@ -37,5 +36,5 @@ spec:
             claimName: radarr-config-pvc
         - name: data
           hostPath:
-            path: /mnt/plex-media/data  <-- The Unified Folder
+            path: /mnt/plex-media/data
             type: Directory
