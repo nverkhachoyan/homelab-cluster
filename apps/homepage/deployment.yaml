@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homepage
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homepage
+  template:
+    metadata:
+      labels:
+        app: homepage
+    spec:
+      containers:
+        - name: homepage
+          image: ghcr.io/gethomepage/homepage:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: HOMEPAGE_VAR_PLEX_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: plex_token
+            - name: HOMEPAGE_VAR_RADARR_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: radarr_key
+            - name: HOMEPAGE_VAR_SONARR_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: sonarr_key
+            - name: HOMEPAGE_VAR_PROWLARR_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: prowlarr_key
+            - name: HOMEPAGE_VAR_QBIT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: qbit_password
+          volumeMounts:
+            - name: config
+              mountPath: /app/config
+      volumes:
+        - name: config
+          configMap:
+            name: homepage-config

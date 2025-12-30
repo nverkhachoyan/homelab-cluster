@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-config
+  namespace: default
+data:
+  settings.yaml: |
+    title: Home Lab
+    background:
+      image: https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb
+      blur: sm
+    theme: dark
+    layout:
+      Media:
+        style: row
+        columns: 4
+      Downloads:
+        style: row
+        columns: 2
+
+  services.yaml: |
+    - Media:
+        - Plex:
+            icon: plex.png
+            href: https://plex.192.168.1.30.sslip.io/web
+            description: Media Server
+            widget:
+              type: plex
+              url: http://plex-service.default.svc.cluster.local:32400
+              key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}"
+
+        - Radarr:
+            icon: radarr.png
+            href: https://radarr.192.168.1.30.sslip.io
+            description: Movie Manager
+            widget:
+              type: radarr
+              url: http://radarr-service.default.svc.cluster.local:7878
+              key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
+
+        - Sonarr:
+            icon: sonarr.png
+            href: https://sonarr.192.168.1.30.sslip.io
+            description: TV Manager
+            widget:
+              type: sonarr
+              url: http://sonarr-service.default.svc.cluster.local:8989
+              key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
+
+    - Downloads:
+        - qBittorrent:
+            icon: qbittorrent.png
+            href: https://torrent.192.168.1.30.sslip.io
+            description: Downloader
+            widget:
+              type: qbittorrent
+              url: http://qbit-service.default.svc.cluster.local:8080
+              username: admin
+              password: "{{HOMEPAGE_VAR_QBIT_PASSWORD}}"
+
+        - Prowlarr:
+            icon: prowlarr.png
+            href: https://prowlarr.192.168.1.30.sslip.io
+            description: Indexer Manager
+            widget:
+              type: prowlarr
+              url: http://prowlarr-service.default.svc.cluster.local:9696
+              key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
+
+  widgets.yaml: |
+    - resources:
+        cpu: true
+        memory: true
+        disk: /
+    - search:
+        provider: google
+        target: _blank
