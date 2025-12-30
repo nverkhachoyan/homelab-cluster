@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plex
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: plex
+  template:
+    metadata:
+      labels:
+        app: plex
+    spec:
+      nodeSelector:
+              kubernetes.io/hostname: k3s-master-01
+      containers:
+      - name: plex
+        image: linuxserver/plex:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: VERSION
+          value: docker
+        - name: PLEX_CLAIM
+          value: "claim-asKxkMSwgJ9SbrLxkJLu"
+        ports:
+        - containerPort: 32400
+        volumeMounts:
+        - name: plex-config
+          mountPath: /config
+        - name: media-volume
+          mountPath: /media
+      volumes:
+      - name: plex-config
+        persistentVolumeClaim:
+          claimName: plex-config-pvc
+      - name: media-volume
+        hostPath:
+          path: /mnt/plex-media
+          type: Directory
