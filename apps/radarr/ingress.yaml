@@ -14,7 +14,7 @@ spec:
               service:
                 name: radarr-service
                 port:
-                  number: 9696
+                  number: 7878
   tls:
     - hosts:
         - radarr.192.168.1.30.sslip.io
