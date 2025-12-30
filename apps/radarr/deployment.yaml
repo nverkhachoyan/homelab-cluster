@@ -1,45 +1,41 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: plex
+  name: radarr
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: plex
+      app: radarr
   template:
     metadata:
       labels:
-        app: plex
+        app: radarr
     spec:
       nodeSelector:
         kubernetes.io/hostname: k3s-master-01
       containers:
-        - name: plex
-          image: linuxserver/plex:latest
-          imagePullPolicy: IfNotPresent
+        - name: radarr
+          image: lscr.io/linuxserver/radarr:latest
           env:
             - name: PUID
               value: "1000"
             - name: PGID
               value: "1000"
-            - name: VERSION
-              value: docker
-            - name: PLEX_CLAIM
-              value: "claim-X9omYkEWLxZS9cm9B3bi"
           ports:
-            - containerPort: 32400
+            - containerPort: 7878
           volumeMounts:
-            - name: plex-config
+            - name: config
               mountPath: /config
-            - name: media-volume
+            # THIS IS THE MAGIC PART
+            - name: data
               mountPath: /data
       volumes:
-        - name: plex-config
+        - name: config
           persistentVolumeClaim:
-            claimName: plex-config-pvc
-        - name: media-volume
+            claimName: radarr-config-pvc
+        - name: data
           hostPath:
-            path: /mnt/plex-media/data
+            path: /mnt/plex-media/data  <-- The Unified Folder
             type: Directory
