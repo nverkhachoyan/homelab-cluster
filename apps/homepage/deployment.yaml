@@ -13,6 +13,16 @@ spec:
       labels:
         app: homepage
     spec:
+      initContainers:
+        - name: copy-config
+          image: busybox:latest
+          command: ["sh", "-c", "cp /tmp/config/* /app/config/"]
+          volumeMounts:
+            - name: config-source
+              mountPath: /tmp/config
+            - name: config-writable
+              mountPath: /app/config
+
       containers:
         - name: homepage
           image: ghcr.io/gethomepage/homepage:latest
@@ -21,6 +31,8 @@ spec:
           env:
             - name: HOMEPAGE_ALLOWED_HOSTS
               value: "home.192.168.1.30.sslip.io"
+
+            # --- SECRETS INJECTION ---
             - name: HOMEPAGE_VAR_PLEX_TOKEN
               valueFrom:
                 secretKeyRef:
@@ -46,14 +58,14 @@ spec:
                 secretKeyRef:
                   name: homepage-secrets
                   key: qbit_password
+
           volumeMounts:
-            - name: config
+            - name: config-writable
               mountPath: /app/config
-            - name: logs
-              mountPath: /app/config/logs
+
       volumes:
-        - name: config
+        - name: config-source
           configMap:
             name: homepage-config
-        - name: logs
+        - name: config-writable
           emptyDir: {}
