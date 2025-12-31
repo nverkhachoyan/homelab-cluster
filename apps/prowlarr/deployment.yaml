@@ -15,6 +15,7 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/hostname: k3s-master-01
+
       containers:
         - name: prowlarr
           image: lscr.io/linuxserver/prowlarr:latest
