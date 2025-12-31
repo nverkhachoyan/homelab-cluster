@@ -20,14 +20,14 @@ data:
 
   services.yaml: |
     - Media:
-        - Plex:
-            icon: plex.png
-            href: https://plex.192.168.1.30.sslip.io/web
+        - Jellyfin:
+            icon: jellyfin.png
+            href: http://jellyfin.192.168.1.30.sslip.io
             description: Media Server
             widget:
-              type: plex
-              url: http://plex-service.default.svc.cluster.local:32400
-              key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}"
+              type: jellyfin
+              url: http://jellyfin-service.default.svc.cluster.local:8096
+              key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
 
         - Radarr:
             icon: radarr.png
@@ -76,17 +76,17 @@ data:
         provider: google
         target: _blank
 
-    kubernetes.yaml: |
-        mode: cluster
+  kuberneters.yaml: |
+    mode: cluster
 
-      docker.yaml: |
-        # Empty docker config
+  docker.yaml: |
+    # Empty docker config
 
-      bookmarks.yaml: |
-        # Empty bookmarks
+  bookmarks.yaml: |
+    # Empty bookmarks
 
-      custom.css: |
-        /* Custom CSS */
+  custom.css: |
+    /* Custom CSS */
 
-      custom.js: |
-        /* Custom JS */
+  custom.js: |
+    /* Custom JS */
