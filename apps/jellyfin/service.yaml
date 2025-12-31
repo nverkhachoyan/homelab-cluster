@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: plex-service
+  name: jellyfin-service
   namespace: default
 spec:
   selector:
-    app: plex
+    app: jellyfin
   ports:
-    - port: 32400
-      targetPort: 32400
+    - port: 8096
+      targetPort: 8096
