@@ -55,7 +55,7 @@ data:
             widget:
               type: qbittorrent
               url: http://qbit-service.default.svc.cluster.local:8080
-              username: admin
+              username: nverk1997
               password: "{{HOMEPAGE_VAR_QBIT_PASSWORD}}"
 
         - Prowlarr:
