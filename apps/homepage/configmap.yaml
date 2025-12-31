@@ -75,3 +75,18 @@ data:
     - search:
         provider: google
         target: _blank
+
+    kubernetes.yaml: |
+        mode: cluster
+
+      docker.yaml: |
+        # Empty docker config
+
+      bookmarks.yaml: |
+        # Empty bookmarks
+
+      custom.css: |
+        /* Custom CSS */
+
+      custom.js: |
+        /* Custom JS */
