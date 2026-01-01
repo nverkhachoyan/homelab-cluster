@@ -18,10 +18,10 @@ spec:
       containers:
         - name: cloudflared
           image: cloudflare/cloudflared:2024.12.2
-          command:
-            - /bin/sh
-            - -c
-            - cloudflared tunnel --no-autoupdate run --token "$TUNNEL_TOKEN"
+          args:
+            - tunnel
+            - --no-autoupdate
+            - run
           env:
             - name: TUNNEL_TOKEN
               valueFrom:
