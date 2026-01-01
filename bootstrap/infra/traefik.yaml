@@ -10,9 +10,51 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/nverkhachoyan/homelab-cluster.git
-    targetRevision: HEAD
-    path: infra/traefik
+    repoURL: https://traefik.github.io/charts
+    chart: traefik
+    targetRevision: 33.2.1
+    helm:
+      valuesObject:
+        service:
+          type: LoadBalancer
+        ports:
+          web:
+            port: 8000
+            expose:
+              default: true
+            exposedPort: 80
+            protocol: TCP
+          websecure:
+            port: 8443
+            expose:
+              default: true
+            exposedPort: 443
+            protocol: TCP
+            tls:
+              enabled: false
+        ingressRoute:
+          dashboard:
+            enabled: true
+            matchRule: Host(`traefik.localhost`)
+            entryPoints:
+              - web
+        logs:
+          general:
+            level: INFO
+          access:
+            enabled: true
+        providers:
+          kubernetesIngress:
+            enabled: true
+            publishedService:
+              enabled: true
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
   destination:
     server: https://kubernetes.default.svc
     namespace: traefik
@@ -22,4 +64,3 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-

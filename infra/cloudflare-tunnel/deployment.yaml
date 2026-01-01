@@ -20,19 +20,16 @@ spec:
           image: cloudflare/cloudflared:2024.12.2
           args:
             - tunnel
-            - --config
-            - /etc/cloudflared/config.yaml
+            - --no-autoupdate
             - run
+            - --token
+            - $(TUNNEL_TOKEN)
           env:
             - name: TUNNEL_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: cloudflare-tunnel-token
                   key: token
-          volumeMounts:
-            - name: config
-              mountPath: /etc/cloudflared
-              readOnly: true
           resources:
             requests:
               cpu: "50m"
@@ -40,20 +37,3 @@ spec:
             limits:
               cpu: "200m"
               memory: "128Mi"
-          livenessProbe:
-            httpGet:
-              path: /ready
-              port: 2000
-            initialDelaySeconds: 10
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: 2000
-            initialDelaySeconds: 5
-            periodSeconds: 5
-      volumes:
-        - name: config
-          configMap:
-            name: cloudflare-tunnel-config
-

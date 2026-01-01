@@ -1,2 +1,2 @@
 .direnv
-nixos/secrets.nix
+# nixos/secrets.nix

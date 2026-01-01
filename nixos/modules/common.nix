@@ -6,6 +6,8 @@
   boot.supportedFilesystems = [ "nfs" ];
   services.rpcbind.enable = true;
 
+  services.qemuGuest.enable = true;
+
   networking.networkmanager.enable = true;
 
   users.users.${config.cluster.username} = {
