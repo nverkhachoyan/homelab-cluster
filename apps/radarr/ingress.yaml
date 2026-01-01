@@ -3,9 +3,11 @@ kind: Ingress
 metadata:
   name: radarr-ingress
   namespace: default
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
   rules:
-    - host: radarr.192.168.1.30.sslip.io
+    - host: radarr.nver.me
       http:
         paths:
           - path: /
@@ -15,6 +17,3 @@ spec:
                 name: radarr-service
                 port:
                   number: 7878
-  tls:
-    - hosts:
-        - radarr.192.168.1.30.sslip.io

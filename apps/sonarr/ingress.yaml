@@ -3,9 +3,11 @@ kind: Ingress
 metadata:
   name: sonarr-ingress
   namespace: default
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
   rules:
-    - host: sonarr.192.168.1.30.sslip.io
+    - host: sonarr.nver.me
       http:
         paths:
           - path: /
@@ -15,6 +17,3 @@ spec:
                 name: sonarr-service
                 port:
                   number: 8989
-  tls:
-    - hosts:
-        - sonarr.192.168.1.30.sslip.io

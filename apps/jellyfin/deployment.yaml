@@ -23,7 +23,7 @@ spec:
             - containerPort: 8096
           env:
             - name: JELLYFIN_PublishedServerUrl
-              value: "http://jellyfin.192.168.1.30.sslip.io"
+              value: "https://jellyfin.nver.me"
           volumeMounts:
             - name: config
               mountPath: /config
@@ -34,6 +34,5 @@ spec:
           persistentVolumeClaim:
             claimName: jellyfin-config-pvc
         - name: media
-          hostPath:
-            path: /mnt/plex-media
-            type: Directory
+          persistentVolumeClaim:
+            claimName: media-pvc

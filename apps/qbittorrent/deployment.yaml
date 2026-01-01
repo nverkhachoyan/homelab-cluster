@@ -41,6 +41,5 @@ spec:
           persistentVolumeClaim:
             claimName: qbit-config-pvc
         - name: media-volume
-          hostPath:
-            path: /mnt/plex-media/data
-            type: Directory
+          persistentVolumeClaim:
+            claimName: media-pvc

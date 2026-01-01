@@ -3,6 +3,10 @@ kind: Application
 metadata:
   name: jellyfin
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
@@ -16,3 +20,4 @@ spec:
     automated:
       prune: true
       selfHeal: true
+

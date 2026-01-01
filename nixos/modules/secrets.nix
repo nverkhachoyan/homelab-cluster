@@ -56,6 +56,12 @@ with lib;
       description = "Whether to run in install mode";
       default = false;
     };
+
+    metallbIPRange = mkOption {
+      type = types.str;
+      description = "IP range for MetalLB load balancer pool (e.g., 192.168.1.200-192.168.1.210)";
+      default = "192.168.1.200-192.168.1.210";
+    };
   };
 }
 

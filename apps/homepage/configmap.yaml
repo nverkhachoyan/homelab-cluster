@@ -25,7 +25,7 @@ data:
     - Media:
         - Jellyfin:
             icon: jellyfin.png
-            href: http://jellyfin.192.168.1.30.sslip.io
+            href: https://jellyfin.nver.me
             description: Media Server
             widget:
               type: jellyfin
@@ -34,7 +34,7 @@ data:
 
         - Radarr:
             icon: radarr.png
-            href: https://radarr.192.168.1.30.sslip.io
+            href: https://radarr.nver.me
             description: Movie Manager
             widget:
               type: radarr
@@ -43,7 +43,7 @@ data:
 
         - Sonarr:
             icon: sonarr.png
-            href: https://sonarr.192.168.1.30.sslip.io
+            href: https://sonarr.nver.me
             description: TV Manager
             widget:
               type: sonarr
@@ -53,7 +53,7 @@ data:
     - Downloads:
         - qBittorrent:
             icon: qbittorrent.png
-            href: https://torrent.192.168.1.30.sslip.io
+            href: https://torrent.nver.me
             description: Downloader
             widget:
               type: qbittorrent
@@ -63,7 +63,7 @@ data:
 
         - Prowlarr:
             icon: prowlarr.png
-            href: https://prowlarr.192.168.1.30.sslip.io
+            href: https://prowlarr.nver.me
             description: Indexer Manager
             widget:
               type: prowlarr

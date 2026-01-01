@@ -36,6 +36,7 @@
               cluster.domain = vars.domain;
               cluster.username = vars.username;
               cluster.installMode = vars.installMode;
+              cluster.metallbIPRange = vars.metallbIPRange or "192.168.1.200-192.168.1.210";
             }
           ];
         };
@@ -59,6 +60,7 @@
               cluster.domain = vars.domain;
               cluster.username = vars.username;
               cluster.installMode = vars.installMode;
+              cluster.metallbIPRange = vars.metallbIPRange or "192.168.1.200-192.168.1.210";
             }
           ];
         };

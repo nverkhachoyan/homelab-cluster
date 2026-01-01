@@ -1,11 +1,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: qbit-ingress
+  name: qbittorrent-ingress
   namespace: default
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
   rules:
-    - host: torrent.192.168.1.30.sslip.io
+    - host: torrent.nver.me
       http:
         paths:
           - path: /
@@ -15,6 +17,3 @@ spec:
                 name: qbit-service
                 port:
                   name: web-ui
-  tls:
-    - hosts:
-        - torrent.192.168.1.30.sslip.io

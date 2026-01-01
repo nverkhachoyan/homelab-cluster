@@ -3,9 +3,11 @@ kind: Ingress
 metadata:
   name: prowlarr-ingress
   namespace: default
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
   rules:
-    - host: prowlarr.192.168.1.30.sslip.io
+    - host: prowlarr.nver.me
       http:
         paths:
           - path: /
@@ -15,6 +17,3 @@ spec:
                 name: prowlarr-service
                 port:
                   number: 9696
-  tls:
-    - hosts:
-        - prowlarr.192.168.1.30.sslip.io

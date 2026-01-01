@@ -36,6 +36,5 @@ spec:
           persistentVolumeClaim:
             claimName: sonarr-config-pvc
         - name: data
-          hostPath:
-            path: /mnt/plex-media/data
-            type: Directory
+          persistentVolumeClaim:
+            claimName: media-pvc

@@ -3,9 +3,11 @@ kind: Ingress
 metadata:
   name: jellyfin-ingress
   namespace: default
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
   rules:
-    - host: jellyfin.192.168.1.30.sslip.io
+    - host: jellyfin.nver.me
       http:
         paths:
           - path: /
