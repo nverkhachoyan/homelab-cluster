@@ -3,6 +3,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.supportedFilesystems = [ "nfs" ];
+  services.rpcbind.enable = true;
+
   networking.networkmanager.enable = true;
 
   users.users.${config.cluster.username} = {
@@ -25,6 +28,7 @@
     curl
     wget
     kubectl
+    nfs-utils
   ];
 
   nixpkgs.config.allowUnfree = true;

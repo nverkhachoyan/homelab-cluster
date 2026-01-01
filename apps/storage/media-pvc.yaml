@@ -6,6 +6,8 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
+  storageClassName: nfs
   resources:
     requests:
       storage: 2000Gi
+  volumeName: media-pv
