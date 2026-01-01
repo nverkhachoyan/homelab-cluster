@@ -14,7 +14,7 @@ spec:
         app: radarr
     spec:
       nodeSelector:
-        kubernetes.io/hostname: k3s-master-01
+        kubernetes.io/hostname: k3s-master
       containers:
         - name: radarr
           image: lscr.io/linuxserver/radarr:latest

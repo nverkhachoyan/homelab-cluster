@@ -14,7 +14,7 @@ spec:
         app: prowlarr
     spec:
       nodeSelector:
-        kubernetes.io/hostname: k3s-master-01
+        kubernetes.io/hostname: k3s-master
 
       containers:
         - name: prowlarr
