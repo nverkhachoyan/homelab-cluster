@@ -18,12 +18,10 @@ spec:
       containers:
         - name: cloudflared
           image: cloudflare/cloudflared:2024.12.2
-          args:
-            - tunnel
-            - --no-autoupdate
-            - run
-            - --token
-            - $(TUNNEL_TOKEN)
+          command:
+            - /bin/sh
+            - -c
+            - cloudflared tunnel --no-autoupdate run --token "$TUNNEL_TOKEN"
           env:
             - name: TUNNEL_TOKEN
               valueFrom:
@@ -36,4 +34,4 @@ spec:
               memory: "64Mi"
             limits:
               cpu: "200m"
-              memory: "128Mi"
+              memory: "256Mi"
