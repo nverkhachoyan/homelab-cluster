@@ -21,6 +21,8 @@ spec:
           args:
             - tunnel
             - --no-autoupdate
+            - --protocol
+            - http2
             - run
           env:
             - name: TUNNEL_TOKEN
@@ -33,5 +35,5 @@ spec:
               cpu: "50m"
               memory: "64Mi"
             limits:
-              cpu: "200m"
-              memory: "256Mi"
+              cpu: "500m"
+              memory: "512Mi"
