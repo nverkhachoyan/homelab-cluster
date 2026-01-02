@@ -26,8 +26,11 @@ spec:
               value: "11220"
           volumeMounts:
             - name: op-credentials
-              mountPath: /home/opuser/.op
+              mountPath: /home/opuser/.op/1password-credentials.json
+              subPath: 1password-credentials.json
               readOnly: true
+            - name: op-data
+              mountPath: /home/opuser/.op/data
       volumes:
         - name: op-credentials
           secret:
@@ -35,3 +38,5 @@ spec:
             items:
               - key: 1password-credentials.json
                 path: 1password-credentials.json
+        - name: op-data
+          emptyDir: {}
