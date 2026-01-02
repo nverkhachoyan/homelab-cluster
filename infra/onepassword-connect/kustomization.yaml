@@ -7,5 +7,10 @@ resources:
   - namespace.yaml
   - sealedsecret-credentials.yaml
   - sealedsecret-token.yaml
-  - service.yaml
-  - deployment-api.yaml
+helmCharts:
+  - name: connect
+    releaseName: onepassword-connect
+    repo: https://1password.github.io/connect-helm-charts
+    version: 2.1.1
+    namespace: onepassword
+    valuesFile: values.yaml
