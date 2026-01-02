@@ -5,7 +5,7 @@ metadata:
   namespace: onepassword
 spec:
   selector:
-    app: onepassword-connect-api
+    app: onepassword-connect
   ports:
     - name: http
       port: 8080
