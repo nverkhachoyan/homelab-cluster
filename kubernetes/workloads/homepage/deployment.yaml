@@ -33,7 +33,7 @@ spec:
             - containerPort: 3000
           env:
             - name: HOMEPAGE_ALLOWED_HOSTS
-              value: "home.192.168.1.30.sslip.io"
+              value: "home.nverk.me"
             - name: HOMEPAGE_VAR_JELLYFIN_KEY
               valueFrom:
                 secretKeyRef:
