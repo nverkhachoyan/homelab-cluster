@@ -25,7 +25,7 @@ data:
     - Media:
         - Jellyfin:
             icon: jellyfin.png
-            href: https://jellyfin.nver.me
+            href: https://jellyfin.nverk.me
             description: Media Server
             widget:
               type: jellyfin
@@ -34,7 +34,7 @@ data:
 
         - Radarr:
             icon: radarr.png
-            href: https://radarr.nver.me
+            href: https://radarr.nverk.me
             description: Movie Manager
             widget:
               type: radarr
@@ -43,7 +43,7 @@ data:
 
         - Sonarr:
             icon: sonarr.png
-            href: https://sonarr.nver.me
+            href: https://sonarr.nverk.me
             description: TV Manager
             widget:
               type: sonarr
@@ -53,7 +53,7 @@ data:
     - Downloads:
         - qBittorrent:
             icon: qbittorrent.png
-            href: https://torrent.nver.me
+            href: https://torrent.nverk.me
             description: Downloader
             widget:
               type: qbittorrent
@@ -63,7 +63,7 @@ data:
 
         - Prowlarr:
             icon: prowlarr.png
-            href: https://prowlarr.nver.me
+            href: https://prowlarr.nverk.me
             description: Indexer Manager
             widget:
               type: prowlarr

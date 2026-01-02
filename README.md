@@ -12,7 +12,7 @@ A NixOS-based homelab cluster running k3s on Proxmox with GitOps via ArgoCD and 
 - **ArgoCD**: GitOps continuous delivery
 - **MetalLB**: Bare-metal load balancer
 - **Traefik**: Ingress controller
-- **Cloudflare Tunnel**: Secure external access via `*.nver.me`
+- **Cloudflare Tunnel**: Secure external access via `*.nverk.me`
 
 ## Structure
 

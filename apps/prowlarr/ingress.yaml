@@ -7,7 +7,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
   rules:
-    - host: prowlarr.nver.me
+    - host: prowlarr.nverk.me
       http:
         paths:
           - path: /

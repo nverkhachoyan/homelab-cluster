@@ -23,7 +23,7 @@ spec:
             - containerPort: 8096
           env:
             - name: JELLYFIN_PublishedServerUrl
-              value: "https://jellyfin.nver.me"
+              value: "https://jellyfin.nverk.me"
           volumeMounts:
             - name: config
               mountPath: /config

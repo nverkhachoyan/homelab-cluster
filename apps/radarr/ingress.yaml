@@ -7,7 +7,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
   rules:
-    - host: radarr.nver.me
+    - host: radarr.nverk.me
       http:
         paths:
           - path: /

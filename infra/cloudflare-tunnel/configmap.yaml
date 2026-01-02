@@ -6,6 +6,6 @@ metadata:
 data:
   config.yaml: |
     ingress:
-      - hostname: "*.nver.me"
+      - hostname: "*.nverk.me"
         service: http://traefik.traefik.svc.cluster.local:80
       - service: http_status:404

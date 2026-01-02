@@ -8,7 +8,7 @@ A GitOps-based homelab infrastructure using:
 - **ArgoCD** for GitOps continuous deployment
 - **MetalLB** for load balancing (pending fix)
 - **Traefik** as ingress controller ✅ Running
-- **Cloudflare Tunnels** for external access via `*.nver.me` (troubleshooting)
+- **Cloudflare Tunnels** for external access via `*.nverk.me` (troubleshooting)
 
 ## Directory Structure Created
 
@@ -55,10 +55,10 @@ homelab-cluster/
 
 ### 2. App Updates
 
-- Updated all ingress resources to use `*.nver.me` subdomains
+- Updated all ingress resources to use `*.nverk.me` subdomains
 - Updated Homepage configmap with new URLs
 - Fixed nodeSelector from `k3s-master-01` to `k3s-master`
-- Updated Jellyfin's `JELLYFIN_PublishedServerUrl` to `https://jellyfin.nver.me`
+- Updated Jellyfin's `JELLYFIN_PublishedServerUrl` to `https://jellyfin.nverk.me`
 
 ### 3. Storage (NFS)
 
@@ -103,8 +103,8 @@ kubectl create secret generic homepage-secrets \
 ### 3. Cloudflare Dashboard Configuration
 
 1. Create tunnel in Zero Trust → Networks → Tunnels
-2. Add public hostnames (e.g., `jellyfin.nver.me` → `http://traefik.traefik.svc.cluster.local:80`)
-3. Add wildcard DNS: `*.nver.me` CNAME to `<tunnel-id>.cfargotunnel.com`
+2. Add public hostnames (e.g., `jellyfin.nverk.me` → `http://traefik.traefik.svc.cluster.local:80`)
+3. Add wildcard DNS: `*.nverk.me` CNAME to `<tunnel-id>.cfargotunnel.com`
 
 ## Outstanding Issues
 
@@ -157,9 +157,9 @@ kubectl delete application <app-name> -n argocd
 
 | App         | URL                      |
 | ----------- | ------------------------ |
-| Homepage    | https://home.nver.me     |
-| Jellyfin    | https://jellyfin.nver.me |
-| Sonarr      | https://sonarr.nver.me   |
-| Radarr      | https://radarr.nver.me   |
-| Prowlarr    | https://prowlarr.nver.me |
-| qBittorrent | https://torrent.nver.me  |
+| Homepage    | https://home.nverk.me     |
+| Jellyfin    | https://jellyfin.nverk.me |
+| Sonarr      | https://sonarr.nverk.me   |
+| Radarr      | https://radarr.nverk.me   |
+| Prowlarr    | https://prowlarr.nverk.me |
+| qBittorrent | https://torrent.nverk.me  |
