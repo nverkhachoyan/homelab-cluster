@@ -27,7 +27,7 @@ spec:
             - name: OP_BUS_PORT
               value: "11220"
             - name: OP_BUS_PEERS
-              value: onepassword-connect-bus.onepassword.svc.cluster.local:11220
+              value: onepassword-connect-sync-bus.onepassword.svc.cluster.local:11220
           volumeMounts:
             - name: op-credentials
               mountPath: /home/opuser/.op/1password-credentials.json
