@@ -5,6 +5,7 @@ metadata:
   namespace: onepassword
   labels:
     app: onepassword-connect-sync
+    app.kubernetes.io/name: onepassword-connect
 spec:
   replicas: 1
   selector:
@@ -14,6 +15,7 @@ spec:
     metadata:
       labels:
         app: onepassword-connect-sync
+        app.kubernetes.io/name: onepassword-connect
     spec:
       containers:
         - name: connect-sync
@@ -22,6 +24,8 @@ spec:
           env:
             - name: OP_BUS_PORT
               value: "11220"
+            - name: OP_BUS_PEERS
+              value: http://onepassword-connect-bus.onepassword.svc.cluster.local:11220
           volumeMounts:
             - name: op-credentials
               mountPath: /home/opuser/.op/1password-credentials.json

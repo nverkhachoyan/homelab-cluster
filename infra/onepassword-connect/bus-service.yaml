@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: onepassword-connect-bus
+  namespace: onepassword
+spec:
+  selector:
+    app.kubernetes.io/name: onepassword-connect
+  ports:
+    - name: bus
+      port: 11220
+      targetPort: 11220
