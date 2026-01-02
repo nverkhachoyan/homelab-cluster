@@ -1,8 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: root
+  name: qbittorrent
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -10,15 +12,11 @@ spec:
   source:
     repoURL: https://github.com/nverkhachoyan/homelab-cluster.git
     targetRevision: HEAD
-    path: bootstrap
-    directory:
-      include: "{infra.yaml,apps.yaml}"
+    path: kubernetes/workloads/qbittorrent
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: default
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true

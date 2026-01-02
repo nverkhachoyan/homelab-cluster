@@ -18,31 +18,20 @@ A NixOS-based homelab cluster running k3s on Proxmox with GitOps via ArgoCD and 
 
 ```
 homelab-cluster/
-├── nixos/                  # NixOS flake configuration
-│   ├── hosts/master/       # Master node config
-│   ├── hosts/worker/       # Worker node config
-│   ├── modules/            # Shared modules
-│   └── secrets.nix         # Secrets (not in git)
-├── infra/                  # Infrastructure components
-│   ├── argocd/             # ArgoCD installation
-│   ├── metallb/            # MetalLB load balancer
-│   ├── traefik/            # Traefik ingress
-│   └── cloudflare-tunnel/  # Cloudflare tunnel
-├── apps/                   # Application manifests
-│   ├── jellyfin/
-│   ├── sonarr/
-│   ├── radarr/
-│   ├── prowlarr/
-│   ├── qbittorrent/
-│   ├── flaresolverr/
-│   ├── homepage/
-│   └── storage/
-├── bootstrap/              # ArgoCD Applications
-│   ├── root.yaml           # Root application (entry point)
-│   ├── infra.yaml          # Infrastructure app-of-apps
-│   ├── apps.yaml           # User apps app-of-apps
-│   ├── infra/              # Individual infra apps
-│   └── apps/               # Individual user apps
+├── kubernetes/                # All Kubernetes + GitOps content
+│   ├── bootstrap/             # ArgoCD Applications (app-of-apps)
+│   │   ├── root.yaml          # Root application (entry point)
+│   │   ├── infra.yaml         # Platform app-of-apps
+│   │   ├── apps.yaml          # Workloads app-of-apps
+│   │   ├── infra/             # Individual platform apps
+│   │   └── apps/              # Individual workload apps
+│   ├── platform/              # Platform components (argocd, sealed-secrets, 1password, etc.)
+│   └── workloads/             # Workload manifests (jellyfin, sonarr, radarr, prowlarr, qbittorrent, flaresolverr, homepage, storage)
+├── nixos/                     # NixOS flake configuration
+│   ├── hosts/master/          # Master node config
+│   ├── hosts/worker/          # Worker node config
+│   ├── modules/               # Shared modules
+│   └── secrets.nix            # Secrets (not in git)
 └── scripts/
-    └── bootstrap.sh        # One-time cluster setup
+    └── bootstrap.sh           # One-time cluster setup
 ```

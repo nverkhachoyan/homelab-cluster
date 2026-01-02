@@ -12,7 +12,7 @@ spec:
   source:
     repoURL: https://github.com/nverkhachoyan/homelab-cluster.git
     targetRevision: HEAD
-    path: apps/sonarr
+    path: kubernetes/workloads/sonarr
   destination:
     server: https://kubernetes.default.svc
     namespace: default
@@ -20,4 +20,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-

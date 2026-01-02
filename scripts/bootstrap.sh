@@ -28,7 +28,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
 
 log_info "Step 1: Installing ArgoCD..."
-kubectl apply -k "${REPO_ROOT}/infra/argocd"
+kubectl apply -k "${REPO_ROOT}/kubernetes/platform/argocd"
 log_info "ArgoCD installed successfully"
 
 log_info "Waiting for ArgoCD to be ready..."
@@ -38,6 +38,6 @@ kubectl wait --for=condition=available --timeout=300s deployment/argocd-server -
 }
 
 log_info "Step 2: Applying root Application..."
-kubectl apply -f "${REPO_ROOT}/bootstrap/root.yaml"
+kubectl apply -f "${REPO_ROOT}/kubernetes/bootstrap/root.yaml"
 
 log_info "Bootstrap complete!"

@@ -1,10 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: flaresolverr
+  name: root
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -12,11 +10,15 @@ spec:
   source:
     repoURL: https://github.com/nverkhachoyan/homelab-cluster.git
     targetRevision: HEAD
-    path: apps/flaresolverr
+    path: kubernetes/bootstrap
+    directory:
+      include: "{infra.yaml,apps.yaml}"
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: argocd
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prowlarr
+  name: flaresolverr
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "1"
@@ -12,7 +12,7 @@ spec:
   source:
     repoURL: https://github.com/nverkhachoyan/homelab-cluster.git
     targetRevision: HEAD
-    path: apps/prowlarr
+    path: kubernetes/workloads/flaresolverr
   destination:
     server: https://kubernetes.default.svc
     namespace: default
@@ -20,4 +20,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-
