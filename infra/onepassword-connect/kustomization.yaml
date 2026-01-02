@@ -8,6 +8,4 @@ resources:
   - sealedsecret-credentials.yaml
   - sealedsecret-token.yaml
   - service.yaml
-  - bus-service.yaml
   - deployment-api.yaml
-  - deployment-sync.yaml
