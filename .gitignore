@@ -1,2 +1,4 @@
 .direnv
 # nixos/secrets.nix
+1password-credentials.json
+1password-token.txt
