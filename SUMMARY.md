@@ -84,9 +84,10 @@ homelab-cluster/
 
 ## Manual Steps Required
 
-### 1. Cloudflare Tunnel Secret
-- Managed via SealedSecrets (`infra/cloudflare-tunnel/sealedsecret.yaml`).
-- Rotate by re-sealing a new token with `kubeseal --scope namespace-wide --cert <controller-cert> < secret.yaml` and committing the updated sealed secret.
+### 1. Secrets Management
+- Secrets are sourced from 1Password via External Secrets (`ClusterSecretStore` in `infra/op-secretstore`, apps use `ExternalSecret`).
+- 1Password Connect bootstrap credentials are sealed in `infra/onepassword-connect/*sealedsecret-*.yaml` (only bootstrap secret kept in git).
+- Cloudflare tunnel token and homepage widget keys are pulled from Homelab vault items (`cloudflare-tunnel`, `jellyfin`, `radarr`, `sonarr`, `prowlarr`, `qbittorrent`).
 
 ### 2. Homepage Secrets (for widgets)
 

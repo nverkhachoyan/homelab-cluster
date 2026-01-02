@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: onepassword-connect-sync
+  namespace: onepassword
+  labels:
+    app: onepassword-connect-sync
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: onepassword-connect-sync
+  template:
+    metadata:
+      labels:
+        app: onepassword-connect-sync
+    spec:
+      containers:
+        - name: connect-sync
+          image: 1password/connect-sync:1.7.3
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: OP_BUS_PORT
+              value: "11220"
+          volumeMounts:
+            - name: op-credentials
+              mountPath: /home/opuser/.op
+              readOnly: true
+      volumes:
+        - name: op-credentials
+          secret:
+            secretName: op-connect-credentials
+            items:
+              - key: 1password-credentials.json
+                path: 1password-credentials.json
