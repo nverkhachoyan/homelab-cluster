@@ -8,5 +8,5 @@ spec:
     app: onepassword-connect-sync
   ports:
     - name: bus
-      port: 11220
-      targetPort: 11220
+      port: 11221
+      targetPort: 11221
