@@ -85,12 +85,8 @@ homelab-cluster/
 ## Manual Steps Required
 
 ### 1. Cloudflare Tunnel Secret
-
-```bash
-kubectl create secret generic cloudflare-tunnel-token \
-  --namespace=cloudflare \
-  --from-literal=token='YOUR_TUNNEL_TOKEN'
-```
+- Managed via SealedSecrets (`infra/cloudflare-tunnel/sealedsecret.yaml`).
+- Rotate by re-sealing a new token with `kubeseal --scope namespace-wide --cert <controller-cert> < secret.yaml` and committing the updated sealed secret.
 
 ### 2. Homepage Secrets (for widgets)
 
