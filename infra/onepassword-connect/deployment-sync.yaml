@@ -1,28 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: onepassword-connect-api
+  name: onepassword-connect-sync
   namespace: onepassword
   labels:
-    app: onepassword-connect-api
+    app: onepassword-connect-sync
     app.kubernetes.io/name: onepassword-connect
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: onepassword-connect-api
+      app: onepassword-connect-sync
   template:
     metadata:
       labels:
-        app: onepassword-connect-api
+        app: onepassword-connect-sync
         app.kubernetes.io/name: onepassword-connect
     spec:
       containers:
-        - name: connect-api
-          image: 1password/connect-api:1.7.3
+        - name: connect-sync
+          image: 1password/connect-sync:1.7.3
           imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 8080
           env:
             - name: OP_BUS_PORT
               value: "11220"
