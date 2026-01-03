@@ -12,15 +12,21 @@
 
   users.users.${config.homelab.adminUser} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" ];
+    extraGroups = [ "wheel" ];
     openssh.authorizedKeys.keys = config.homelab.sshKeys;
     hashedPassword = "!";
   };
+
+  security.sudo.wheelNeedsPassword = false;
 
   services.openssh = {
     enable = true;
     settings.PasswordAuthentication = false;
     settings.PermitRootLogin = "no";
+  };
+
+  environment.shellAliases = {
+    k = "kubectl";
   };
 
   environment.systemPackages = with pkgs; [
