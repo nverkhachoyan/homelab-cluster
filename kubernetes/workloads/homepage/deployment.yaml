@@ -37,27 +37,27 @@ spec:
             - name: HOMEPAGE_VAR_JELLYFIN_KEY
               valueFrom:
                 secretKeyRef:
-                  name: homepage-secrets
+                  name: homelab-secrets
                   key: jellyfin_key
             - name: HOMEPAGE_VAR_RADARR_KEY
               valueFrom:
                 secretKeyRef:
-                  name: homepage-secrets
+                  name: homelab-secrets
                   key: radarr_key
             - name: HOMEPAGE_VAR_SONARR_KEY
               valueFrom:
                 secretKeyRef:
-                  name: homepage-secrets
+                  name: homelab-secrets
                   key: sonarr_key
             - name: HOMEPAGE_VAR_PROWLARR_KEY
               valueFrom:
                 secretKeyRef:
-                  name: homepage-secrets
+                  name: homelab-secrets
                   key: prowlarr_key
             - name: HOMEPAGE_VAR_QBIT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: homepage-secrets
+                  name: homelab-secrets
                   key: qbit_password
 
           volumeMounts:

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cloudflared
-  namespace: cloudflare
+  namespace: default
   labels:
     app: cloudflared
 spec:
@@ -28,8 +28,8 @@ spec:
             - name: TUNNEL_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: cloudflare-tunnel-token
-                  key: token
+                  name: homelab-secrets
+                  key: cloudflare_tunnel_token
           resources:
             requests:
               cpu: "50m"

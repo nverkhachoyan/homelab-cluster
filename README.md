@@ -25,7 +25,7 @@ homelab-cluster/
 │   │   ├── apps.yaml          # Workloads app-of-apps
 │   │   ├── platform/             # Individual platform apps
 │   │   └── apps/              # Individual workload apps
-│   ├── platform/              # Platform components (argocd, sealed-secrets, 1password, etc.)
+│   ├── platform/              # Platform components (argocd, cloudflare, etc.)
 │   └── workloads/             # Workload manifests (jellyfin, sonarr, radarr, prowlarr, qbittorrent, flaresolverr, homepage, storage)
 ├── nixos/                     # NixOS flake configuration
 │   ├── hosts/master/          # Master node config
@@ -36,11 +36,4 @@ homelab-cluster/
 └── scripts/
     └── bootstrap.sh           # One-time cluster setup
 
-## Settings (no baked secrets)
-
-- Copy `nixos/settings.example.nix` to `nixos/settings.nix` and fill in your values; the file is gitignored.
-- Or point to an external file with `NIXOS_SETTINGS_FILE=/absolute/path/to/settings.nix` before running Nix commands.
-- Required keys: `masterIP`, `adminUser`, `sshKeys` (public), `mediaDriveUUID`, `installMode`.
-- SSH is key-only by default (password locked). Set a password later via console if needed.
-- k3s token is not baked into the image; after the server boots, copy `/var/lib/rancher/k3s/server/node-token` from the master to `/etc/k3s/token` on the worker and restart the agent.
 ```

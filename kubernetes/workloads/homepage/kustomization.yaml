@@ -6,4 +6,3 @@ resources:
   - service.yaml
   - ingress.yaml
   - configmap.yaml
-  - externalsecret.yaml
