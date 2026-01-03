@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 {
+  time.timeZone = "UTC";
+  services.timesyncd.enable = true;
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -7,8 +10,6 @@
   services.rpcbind.enable = true;
 
   services.qemuGuest.enable = true;
-
-  networking.networkmanager.enable = true;
 
   users.users.${config.homelab.adminUser} = {
     isNormalUser = true;

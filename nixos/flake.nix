@@ -37,7 +37,7 @@
               {
                 proxmox.qemuConf.bios = "ovmf";
                 proxmox.partitionTableType = "efi";
-                proxmox.cloudInit.enable = false;
+                proxmox.cloudInit.enable = true;
                 disko.enableConfig = false;
               }
             ];
