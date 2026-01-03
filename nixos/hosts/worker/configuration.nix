@@ -1,7 +1,5 @@
 { config, pkgs, ... }:
 {
-  networking.hostName = "k3s-worker";
-
   services.k3s = {
     enable = true;
     role = "agent";
