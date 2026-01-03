@@ -1,5 +1,8 @@
 .direnv
-# nixos/secrets.nix
+nixos/settings.nix
+nixos/settings.local.nix
+nixos/secrets.nix
+nixos/secrets.local.nix
 1password-credentials.json
 1password-token.txt
 .DS_Store

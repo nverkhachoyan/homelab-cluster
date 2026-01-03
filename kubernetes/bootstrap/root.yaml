@@ -12,7 +12,7 @@ spec:
     targetRevision: HEAD
     path: kubernetes/bootstrap
     directory:
-      include: "{infra.yaml,apps.yaml}"
+      include: "{platform.yaml,apps.yaml}"
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd

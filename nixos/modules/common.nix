@@ -10,11 +10,11 @@
 
   networking.networkmanager.enable = true;
 
-  users.users.${config.cluster.username} = {
+  users.users.${config.homelab.adminUser} = {
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" ];
-    openssh.authorizedKeys.keys = [ config.secrets.sshKey ];
-    hashedPassword = config.secrets.userPassword;
+    openssh.authorizedKeys.keys = config.homelab.sshKeys;
+    hashedPassword = "!";
   };
 
   services.openssh = {

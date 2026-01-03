@@ -1,12 +1,10 @@
 { config, pkgs, ... }:
 {
-  imports = [ ./hardware.nix ];
   networking.hostName = "k3s-master";
 
   services.k3s = {
     enable = true;
     role = "server";
-    token = config.secrets.k3sToken;
     extraFlags = toString [
       "--write-kubeconfig-mode 644"
       "--disable traefik"
