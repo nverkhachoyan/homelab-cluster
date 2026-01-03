@@ -15,20 +15,15 @@ spec:
     spec:
       containers:
         - name: jellyseerr
-          # Use Docker Hub to avoid GHCR token issues on lscr.io
-          image: docker.io/linuxserver/jellyseerr:latest
+          image: ghcr.io/fallenbagel/jellyseerr:latest
           env:
-            - name: PUID
-              value: "1000"
-            - name: PGID
-              value: "1000"
             - name: TZ
               value: UTC
           ports:
             - containerPort: 5055
           volumeMounts:
             - name: config
-              mountPath: /config
+              mountPath: /app/config
       volumes:
         - name: config
           persistentVolumeClaim:
