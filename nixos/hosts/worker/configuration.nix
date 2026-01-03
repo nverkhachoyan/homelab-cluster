@@ -4,7 +4,7 @@
     enable = true;
     role = "agent";
     extraFlags = [
-      "--node-label=node-role.kubernetes.io/worker=true"
+      "--node-label=role=worker"
     ];
     tokenFile = "/etc/k3s/token";
     serverAddr = "https://${config.homelab.masterIP}:6443";
