@@ -13,8 +13,6 @@ spec:
       labels:
         app: flaresolverr
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: k3s-master
       containers:
         - name: flaresolverr
           image: ghcr.io/flaresolverr/flaresolverr:latest

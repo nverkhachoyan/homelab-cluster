@@ -9,6 +9,9 @@
   boot.supportedFilesystems = [ "nfs" ];
   services.rpcbind.enable = true;
 
+  # Ensure DHCP identity is per-NIC MAC, not the shared machine-id baked into the template.
+  systemd.network.networkConfig.dhcpIdentifier = "mac";
+
   services.qemuGuest.enable = true;
 
   users.users.${config.homelab.adminUser} = {

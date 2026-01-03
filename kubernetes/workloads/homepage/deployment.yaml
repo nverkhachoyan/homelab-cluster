@@ -13,9 +13,6 @@ spec:
       labels:
         app: homepage
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: k3s-master
-
       initContainers:
         - name: copy-config
           image: busybox:latest
