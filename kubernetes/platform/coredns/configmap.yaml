@@ -15,10 +15,9 @@ data:
            ttl 30
         }
         prometheus :9153
-        forward . 1.1.1.1 8.8.8.8
+        forward . /etc/resolv.conf
         cache 30
         loop
         reload
         loadbalance
     }
-
