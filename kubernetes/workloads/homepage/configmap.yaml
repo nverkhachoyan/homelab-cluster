@@ -50,6 +50,11 @@ data:
               url: http://sonarr-service.default.svc.cluster.local:8989
               key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
 
+        - Jellyseerr:
+            icon: jellyseerr.png
+            href: http://jellyseerr-service.default.svc.cluster.local:5055
+            description: Requests
+
     - Downloads:
         - qBittorrent:
             icon: qbittorrent.png
@@ -75,11 +80,15 @@ data:
         cpu: true
         memory: true
         disk: /
+    - kubernetes:
+        cluster: homelab
+        nodes: true
+        resources: true
     - search:
         provider: google
         target: _blank
 
-  kuberneters.yaml: |
+  kubernetes.yaml: |
     mode: cluster
 
   docker.yaml: |
