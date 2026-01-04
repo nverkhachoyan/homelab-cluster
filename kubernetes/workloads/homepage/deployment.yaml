@@ -29,6 +29,8 @@ spec:
           ports:
             - containerPort: 3000
           env:
+            - name: HOSTNAME
+              value: "0.0.0.0"
             - name: HOMEPAGE_ALLOWED_HOSTS
               value: "home.nverk.me"
             - name: HOMEPAGE_VAR_JELLYFIN_KEY
