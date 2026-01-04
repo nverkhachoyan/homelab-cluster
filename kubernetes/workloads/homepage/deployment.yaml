@@ -14,6 +14,8 @@ spec:
         app: homepage
     spec:
       dnsPolicy: ClusterFirst
+      nodeSelector:
+        node-role.kubernetes.io/control-plane: ""
       initContainers:
         - name: copy-config
           image: busybox:latest
