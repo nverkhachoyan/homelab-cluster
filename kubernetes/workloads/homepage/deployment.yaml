@@ -73,11 +73,11 @@ spec:
                 secretKeyRef:
                   name: homelab-secrets
                   key: cloudflare_tunnel_id
-            - name: HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_TOKEN
+            - name: HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_TOKEN_HOMEPAGE
               valueFrom:
                 secretKeyRef:
                   name: homelab-secrets
-                  key: cloudflare_tunnel_token
+                  key: cloudflare_tunnel_token_homepage
 
           volumeMounts:
             - name: config-writable

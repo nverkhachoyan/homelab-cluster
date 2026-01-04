@@ -92,7 +92,7 @@ data:
               type: cloudflared
               accountid: "{{HOMEPAGE_VAR_CLOUDFLARE_ACCOUNT_ID}}"
               tunnelid: "{{HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_ID}}"
-              key: "{{HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_TOKEN}}"
+              key: "{{HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_TOKEN_HOMEPAGE}}"
 
   widgets.yaml: |
     - resources:
