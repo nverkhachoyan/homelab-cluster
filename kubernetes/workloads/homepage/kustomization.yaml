@@ -6,3 +6,9 @@ resources:
   - service.yaml
   - ingress.yaml
   - configmap.yaml
+
+configMapGenerator:
+  - name: homepage-config
+    behavior: merge
+    files:
+      - assets/custom.css
