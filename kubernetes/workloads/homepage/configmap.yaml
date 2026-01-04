@@ -22,6 +22,9 @@ data:
       Downloads:
         style: row
         columns: 2
+      Services:
+        style: row
+        columns: 2
 
   services.yaml: |
     - Media:
@@ -80,6 +83,16 @@ data:
               type: prowlarr
               url: http://prowlarr-service.default.svc.cluster.local:9696
               key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
+    - Services:
+        - Cloudflare:
+            icon: cloudflare.png
+            href: https://cloudflare.nverk.me
+            description: Cloudflare
+            widget:
+              type: cloudflared
+              accountid: "{{HOMEPAGE_VAR_CLOUDFLARE_ACCOUNT_ID}}"
+              tunnelid: "{{HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_ID}}"
+              key: "{{HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_TOKEN}}"
 
   widgets.yaml: |
     - resources:

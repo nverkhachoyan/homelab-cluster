@@ -6,4 +6,4 @@ nixos/secrets.local.nix
 1password-credentials.json
 1password-token.txt
 .DS_Store
-SUMMARY.md
+scripts/secrets_cmd.sh

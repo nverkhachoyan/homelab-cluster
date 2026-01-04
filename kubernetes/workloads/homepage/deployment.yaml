@@ -61,6 +61,21 @@ spec:
                 secretKeyRef:
                   name: homelab-secrets
                   key: jellyseerr_key
+            - name: HOMEPAGE_VAR_CLOUDFLARE_ACCOUNT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: homelab-secrets
+                  key: cloudflare_account_id
+            - name: HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_ID
+              valueFrom:
+                secretKeyRef:
+                  name: homelab-secrets
+                  key: cloudflare_tunnel_id
+            - name: HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: homelab-secrets
+                  key: cloudflare_tunnel_token
 
           volumeMounts:
             - name: config-writable

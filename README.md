@@ -5,7 +5,7 @@ A NixOS-based homelab cluster running k3s on Proxmox with GitOps via ArgoCD and 
 ## Architecture
 
 - **k3s-master**: Master node running k3s server
-- **media-worker**: Worker node running k3s agent with media storage
+- **media-workers**: Worker nodes running k3s agents with media storage
 
 ### Infrastructure Components
 
@@ -16,24 +16,28 @@ A NixOS-based homelab cluster running k3s on Proxmox with GitOps via ArgoCD and 
 
 ## Structure
 
-```
-homelab-cluster/
-├── kubernetes/                # All Kubernetes + GitOps content
-│   ├── bootstrap/             # ArgoCD Applications (app-of-apps)
-│   │   ├── root.yaml          # Root application (entry point)
-│   │   ├── platform.yaml         # Platform app-of-apps
-│   │   ├── apps.yaml          # Workloads app-of-apps
-│   │   ├── platform/             # Individual platform apps
-│   │   └── apps/              # Individual workload apps
-│   ├── platform/              # Platform components (argocd, cloudflare, etc.)
-│   └── workloads/             # Workload manifests (jellyfin, sonarr, radarr, prowlarr, qbittorrent, flaresolverr, homepage, storage)
-├── nixos/                     # NixOS flake configuration
-│   ├── hosts/master/          # Master node config
-│   ├── hosts/worker/          # Worker node config
-│   ├── modules/               # Shared modules + homelab settings options
-│   ├── settings.example.nix   # Template for required values
-│   └── settings.nix           # Local settings (gitignored)
-└── scripts/
-    └── bootstrap.sh           # One-time cluster setup
+### `kubernetes/`
 
+All Kubernetes + GitOps content. Contains `bootstrap/` (ArgoCD app-of-apps), `platform/` (argocd, cloudflare, etc.), and `workloads/` (storage, jellyfin, sonarr, radarr, prowlarr, etc).
+
+### `nixos/`
+
+NixOS flake configs for building VMs.
+
+### `scripts/`
+
+Utility scripts (e.g. secret generation).
+
+### Steps
+
+1. Deploy argocd first.
+
+```sh
+kubectl apply -k "kubernetes/platform/argocd"
+```
+
+2. Wait argocd to deploy, and run the bootstrap.
+
+```sh
+kubectl apply -f "kubernetes/bootstrap/root.yaml"
 ```
