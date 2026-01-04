@@ -15,7 +15,7 @@ spec:
     spec:
       dnsPolicy: ClusterFirst
       nodeSelector:
-        node-role.kubernetes.io/control-plane: ""
+        kubernetes.io/hostname: k3s-master
       initContainers:
         - name: copy-config
           image: busybox:latest
