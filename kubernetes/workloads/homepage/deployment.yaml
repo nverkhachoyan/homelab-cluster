@@ -56,6 +56,11 @@ spec:
                 secretKeyRef:
                   name: homelab-secrets
                   key: qbit_password
+            - name: HOMEPAGE_VAR_JELLYSEERR_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: homelab-secrets
+                  key: jellyseerr_key
 
           volumeMounts:
             - name: config-writable

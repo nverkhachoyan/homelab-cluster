@@ -52,8 +52,12 @@ data:
 
         - Jellyseerr:
             icon: jellyseerr.png
-            href: http://jellyseerr-service.default.svc.cluster.local:5055
+            href: https://jellyseerr.nverk.me
             description: Requests
+            widget:
+              type: jellyseerr
+              url: http://jellyseerr-service.default.svc.cluster.local:5055
+              key: "{{HOMEPAGE_VAR_JELLYSEERR_KEY}}"
 
     - Downloads:
         - qBittorrent:
