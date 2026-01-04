@@ -13,6 +13,7 @@ spec:
       labels:
         app: homepage
     spec:
+      dnsPolicy: ClusterFirst
       initContainers:
         - name: copy-config
           image: busybox:latest
