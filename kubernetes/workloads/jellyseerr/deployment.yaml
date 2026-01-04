@@ -13,6 +13,8 @@ spec:
       labels:
         app: jellyseerr
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: k3s-worker-06
       containers:
         - name: jellyseerr
           image: ghcr.io/fallenbagel/jellyseerr:latest

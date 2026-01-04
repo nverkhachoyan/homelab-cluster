@@ -10,9 +10,11 @@
     serverAddr = "https://${config.homelab.masterIP}:6443";
   };
 
-  networking.firewall.allowedTCPPorts = [
-    10250
-  ];
+  networking.firewall = {
+  enable = true;
+  allowedUDPPorts = [ 8472 51820 51821 ]; 
+  allowedTCPPorts = [ 6443 10250 ];
+};
 
   systemd.tmpfiles.rules = [
     "d /etc/k3s 0700 root root -"
