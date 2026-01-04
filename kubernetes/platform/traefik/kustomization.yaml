@@ -4,15 +4,7 @@ kind: Kustomization
 namespace: traefik
 
 resources:
-  - https://raw.githubusercontent.com/traefik/traefik/v3.2/pkg/provider/kubernetes/crd/traefik/v1alpha1/ingressroute.yaml
-  - https://raw.githubusercontent.com/traefik/traefik/v3.2/pkg/provider/kubernetes/crd/traefik/v1alpha1/ingressroutetcp.yaml
-  - https://raw.githubusercontent.com/traefik/traefik/v3.2/pkg/provider/kubernetes/crd/traefik/v1alpha1/ingressrouteudp.yaml
-  - https://raw.githubusercontent.com/traefik/traefik/v3.2/pkg/provider/kubernetes/crd/traefik/v1alpha1/middleware.yaml
-  - https://raw.githubusercontent.com/traefik/traefik/v3.2/pkg/provider/kubernetes/crd/traefik/v1alpha1/middlewaretcp.yaml
-  - https://raw.githubusercontent.com/traefik/traefik/v3.2/pkg/provider/kubernetes/crd/traefik/v1alpha1/tlsoption.yaml
-  - https://raw.githubusercontent.com/traefik/traefik/v3.2/pkg/provider/kubernetes/crd/traefik/v1alpha1/tlsstore.yaml
-  - https://raw.githubusercontent.com/traefik/traefik/v3.2/pkg/provider/kubernetes/crd/traefik/v1alpha1/serverstransport.yaml
-  - https://raw.githubusercontent.com/traefik/traefik/v3.2/pkg/provider/kubernetes/crd/traefik/v1alpha1/traefikservice.yaml
+  - crds.yaml
   - namespace.yaml
   - configmap.yaml
   - deployment.yaml
