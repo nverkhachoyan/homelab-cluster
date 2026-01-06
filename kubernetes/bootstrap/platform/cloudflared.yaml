@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cloudflare-tunnel
+  name: cloudflared
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -12,10 +12,10 @@ spec:
   source:
     repoURL: https://github.com/nverkhachoyan/homelab-cluster.git
     targetRevision: HEAD
-    path: kubernetes/platform/cloudflare-tunnel
+    path: kubernetes/platform/cloudflared
   destination:
     server: https://kubernetes.default.svc
-    namespace: cloudflare
+    namespace: cloudflared
   syncPolicy:
     automated:
       prune: true

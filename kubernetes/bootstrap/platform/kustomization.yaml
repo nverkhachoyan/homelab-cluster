@@ -4,5 +4,4 @@ kind: Kustomization
 resources:
   - metallb.yaml
   - traefik.yaml
-  - cloudflare-tunnel.yaml
-  - coredns.yaml
+  - cloudflared.yaml
