@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - github.com/metallb/metallb/config/native?ref=v0.15.3
   - config.yaml
-  - namespace.yaml
