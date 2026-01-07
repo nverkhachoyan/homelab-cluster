@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: longhorn-auth
+  namespace: longhorn-system
+data:
+  users: bnZlcmsxOTk3OiRhcHIxJDBBdXF6b25CJE5XelgyQjFSL0JEUHgydHVmUS9wOTEK
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: longhorn-auth
+  namespace: longhorn-system
+spec:
+  basicAuth:
+    secret: longhorn-auth

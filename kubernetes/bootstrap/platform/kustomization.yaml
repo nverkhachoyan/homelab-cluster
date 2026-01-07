@@ -5,3 +5,4 @@ resources:
   - metallb.yaml
   - traefik.yaml
   - cloudflared.yaml
+  - longhorn.yaml

@@ -3,3 +3,9 @@ kind: Kustomization
 
 generators:
   - helm-gen.yaml
+
+resources:
+  - sc.yaml
+  - sc-disable-local.yaml
+  - ingress.yaml
+  - auth.yaml

@@ -1,6 +1,6 @@
 # Homelab Setup
 
-A NixOS-based homelab cluster running k3s on Proxmox with GitOps via ArgoCD and external access via Cloudflare Tunnels.
+This is my homelab k3s cluster setup.
 
 ## Architecture
 
