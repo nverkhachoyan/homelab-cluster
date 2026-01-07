@@ -9,6 +9,12 @@ metadata:
     traefik.ingress.kubernetes.io/service.sticky.cookie.name: "lb_longhorn"
     traefik.ingress.kubernetes.io/service.serversscheme: http
     # traefik.ingress.kubernetes.io/router.middlewares: longhorn-system-longhorn-auth@kubernetescrd
+    # Essential for long-lived WebSocket connections
+    traefik.ingress.kubernetes.io/transport.respondingTimeouts.readTimeout: "0"
+    traefik.ingress.kubernetes.io/transport.respondingTimeouts.idleTimeout: "0"
+    # Specific timeouts for the connection to the backend
+    traefik.ingress.kubernetes.io/service.forwardingTimeouts.dialTimeout: "30s"
+    traefik.ingress.kubernetes.io/service.forwardingTimeouts.responseHeaderTimeout: "30s"
 spec:
   rules:
     - host: longhorn.nverk.me
