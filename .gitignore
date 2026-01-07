@@ -2,3 +2,4 @@
 .DS_Store
 scripts/secrets_cmd.sh
 test_dns_per_node.sh
+**/charts/
