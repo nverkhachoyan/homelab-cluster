@@ -29,6 +29,7 @@ logs:
 providers:
   kubernetesIngress:
     enabled: true
+    allowExternalNameServices: true
     publishedService:
       enabled: true
 resources:
