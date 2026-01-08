@@ -1,0 +1,96 @@
+- Streaming:
+    - Jellyfin:
+        icon: jellyfin.svg
+        href: https://jellyfin.nverk.me
+        description: Media streaming server
+        siteMonitor: http://jellyfin-service.default.svc.cluster.local:8096
+        widget:
+          type: jellyfin
+          url: http://jellyfin-service.default.svc.cluster.local:8096
+          key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
+          enableBlocks: true
+          enableNowPlaying: true
+
+    - Jellyseerr:
+        icon: jellyseerr.svg
+        href: https://jellyseerr.nverk.me
+        description: Request movies & shows
+        siteMonitor: http://jellyseerr-service.default.svc.cluster.local:5055
+        widget:
+          type: jellyseerr
+          url: http://jellyseerr-service.default.svc.cluster.local:5055
+          key: "{{HOMEPAGE_VAR_JELLYSEERR_KEY}}"
+
+- Content Management:
+    - Radarr:
+        icon: radarr.svg
+        href: https://radarr.nverk.me
+        description: Movie collection manager
+        siteMonitor: http://radarr-service.default.svc.cluster.local:7878
+        widget:
+          type: radarr
+          url: http://radarr-service.default.svc.cluster.local:7878
+          key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
+          enableQueue: true
+
+    - Sonarr:
+        icon: sonarr.svg
+        href: https://sonarr.nverk.me
+        description: TV series manager
+        siteMonitor: http://sonarr-service.default.svc.cluster.local:8989
+        widget:
+          type: sonarr
+          url: http://sonarr-service.default.svc.cluster.local:8989
+          key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
+          enableQueue: true
+
+    - Prowlarr:
+        icon: prowlarr.svg
+        href: https://prowlarr.nverk.me
+        description: Indexer manager
+        siteMonitor: http://prowlarr-service.default.svc.cluster.local:9696
+        widget:
+          type: prowlarr
+          url: http://prowlarr-service.default.svc.cluster.local:9696
+          key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
+
+- Downloads:
+    - qBittorrent:
+        icon: qbittorrent.svg
+        href: https://torrent.nverk.me
+        description: Torrent client
+        siteMonitor: http://qbit-service.default.svc.cluster.local:8080
+        widget:
+          type: qbittorrent
+          url: http://qbit-service.default.svc.cluster.local:8080
+          username: nverk1997
+          password: "{{HOMEPAGE_VAR_QBIT_PASSWORD}}"
+
+    - FlareSolverr:
+        icon: flaresolverr.svg
+        href: http://flaresolverr.default.svc.cluster.local:8191
+        description: Proxy for bypassing Cloudflare
+        siteMonitor: http://flaresolverr.default.svc.cluster.local:8191
+
+- Infra:
+    - ArgoCD:
+        icon: argocd.svg
+        href: https://argocd.nverk.me
+        description: GitOps continuous delivery
+        siteMonitor: http://argocd-server.argocd.svc.cluster.local:80
+
+    - Cloudflare Tunnel:
+        icon: cloudflare.svg
+        href: https://dash.cloudflare.com
+        description: Zero Trust network access
+        widget:
+          type: cloudflared
+          accountid: "{{HOMEPAGE_VAR_CLOUDFLARE_ACCOUNT_ID}}"
+          tunnelid: "{{HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_ID}}"
+          key: "{{HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_TOKEN_HOMEPAGE}}"
+
+    - Traefik:
+        icon: traefik.svg
+        href: https://traefik.nverk.me
+        description: Reverse proxy & ingress
+        siteMonitor: http://traefik.traefik.svc.cluster.local:80

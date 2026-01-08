@@ -5,10 +5,16 @@ resources:
   - deployment.yaml
   - service.yaml
   - ingress.yaml
-  - configmap.yaml
 
 configMapGenerator:
   - name: homepage-config
-    behavior: replace
+    behavior: merge
     files:
-      - assets/custom.css
+      - configs/settings.yaml
+      - configs/services.yaml
+      - configs/widgets.yaml
+      - configs/bookmarks.yaml
+      - configs/kubernetes.yaml
+      - configs/docker.yaml
+      - configs/custom.css
+      - configs/custom.js
