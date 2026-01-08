@@ -21,9 +21,10 @@ data:
 
     cardBlur: xl
 
-    color: slate
+    hideVersion: true
     hideErrors: true
     showStats: true
+    statusStyle: "dot"
     useEqualHeights: true
 
     quicklaunch:
