@@ -3,13 +3,15 @@ kind: Secret
 metadata:
   name: homepage-auth
   namespace: default
+  labels:
+    app.kubernetes.io/name: homepage
 data:
   users: bnZlcmsxOTk3OiRhcHIxJGxLcmt6ejNIJEZGOW9zUUswNFBtekJTclUuQXhoNDAK
 ---
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
-  name: homepage-auth
+  name: basic-auth
   namespace: default
 spec:
   basicAuth:

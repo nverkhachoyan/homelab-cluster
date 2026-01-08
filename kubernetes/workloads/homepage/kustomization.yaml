@@ -10,3 +10,4 @@ resources:
   - secret.yaml
   - roles.yaml
   - auth.yaml
+  - middleware.yaml
