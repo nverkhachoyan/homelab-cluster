@@ -120,7 +120,7 @@ data:
 
     - Infrastructure:
         - ArgoCD:
-            icon: argocd.svg
+            icon: argo.svg
             href: https://argocd.nverk.me
             description: GitOps
             widget:
@@ -132,6 +132,9 @@ data:
             icon: traefik.svg
             href: https://traefik.nverk.me
             description: Ingress
+            widget:
+              type: traefik
+              url: http://traefik.traefik.svc.cluster.local:80
 
         - Cloudflare:
             icon: cloudflare.svg
