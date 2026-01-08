@@ -19,7 +19,7 @@ data:
     background:
       image: https://images.unsplash.com/photo-1620121478247-ec786b9be2fa
 
-    cardBlur: xs
+    cardBlur: xl
 
     color: slate
     hideErrors: true
