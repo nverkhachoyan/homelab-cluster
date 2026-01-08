@@ -34,25 +34,25 @@ data:
       Streaming:
         style: row
         columns: 2
-        header: true
+        header: false
         icon: mdi-play-circle-outline
 
       Content Management:
         style: row
         columns: 3
-        header: true
+        header: false
         icon: mdi-folder-multiple-outline
 
       Downloads:
         style: row
         columns: 2
-        header: true
+        header: false
         icon: mdi-download-circle-outline
 
       Infra:
         style: row
         columns: 3
-        header: true
+        header: false
         icon: mdi-server-network
 
   services.yaml: |
