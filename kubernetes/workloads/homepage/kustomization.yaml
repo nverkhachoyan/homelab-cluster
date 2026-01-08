@@ -9,3 +9,4 @@ resources:
   - service-account.yaml
   - secret.yaml
   - roles.yaml
+  - auth.yaml
