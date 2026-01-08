@@ -139,7 +139,7 @@ data:
   bookmarks.yaml: |
     - Dev:
         - GitHub:
-            - icon: github-#181717.svg
+            - icon: github.svg
               href: https://github.com
 
         - Nix:
