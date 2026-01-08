@@ -19,64 +19,56 @@ data:
     background:
       image: https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?w=1920&q=80
       blur: md
-      opacity: 75
-      brightness: 50
+      opacity: 70
+      brightness: 40
 
     theme: dark
     color: slate
-    disableCollapse: false
+    hideErrors: true
     showStats: false
 
     quicklaunch:
-      searchDescriptions: true
+      searchDescriptions: false
       hideInternetSearch: false
       showSearchSuggestions: true
-      hideVisitURL: false
+      hideVisitURL: true
 
     layout:
       Media:
         style: row
         columns: 2
-        header: true
-        icon: mdi-play-circle-outline
 
       Automation:
         style: row
         columns: 3
-        header: true
-        icon: mdi-robot-outline
 
       Downloads:
         style: row
         columns: 2
-        header: true
-        icon: mdi-download-circle-outline
 
       Infrastructure:
         style: row
         columns: 3
-        header: true
-        icon: mdi-server-network
 
   services.yaml: |
     - Media:
         - Jellyfin:
             icon: jellyfin.svg
             href: https://jellyfin.nverk.me
-            description: Stream movies, TV shows & music
-            siteMonitor: http://jellyfin-service.default.svc.cluster.local:8096
+            description: Media Server
+            ping: http://jellyfin-service.default.svc.cluster.local:8096
             widget:
               type: jellyfin
               url: http://jellyfin-service.default.svc.cluster.local:8096
               key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
               enableBlocks: true
-              enableNowPlaying: true
+              enableNowPlaying: false
 
         - Jellyseerr:
             icon: jellyseerr.svg
             href: https://jellyseerr.nverk.me
-            description: Request new content
-            siteMonitor: http://jellyseerr-service.default.svc.cluster.local:5055
+            description: Content Requests
+            ping: http://jellyseerr-service.default.svc.cluster.local:5055
             widget:
               type: jellyseerr
               url: http://jellyseerr-service.default.svc.cluster.local:5055
@@ -86,8 +78,8 @@ data:
         - Radarr:
             icon: radarr.svg
             href: https://radarr.nverk.me
-            description: Automated movie downloads
-            siteMonitor: http://radarr-service.default.svc.cluster.local:7878
+            description: Movies
+            ping: http://radarr-service.default.svc.cluster.local:7878
             widget:
               type: radarr
               url: http://radarr-service.default.svc.cluster.local:7878
@@ -97,8 +89,8 @@ data:
         - Sonarr:
             icon: sonarr.svg
             href: https://sonarr.nverk.me
-            description: Automated TV downloads
-            siteMonitor: http://sonarr-service.default.svc.cluster.local:8989
+            description: TV Shows
+            ping: http://sonarr-service.default.svc.cluster.local:8989
             widget:
               type: sonarr
               url: http://sonarr-service.default.svc.cluster.local:8989
@@ -108,8 +100,8 @@ data:
         - Prowlarr:
             icon: prowlarr.svg
             href: https://prowlarr.nverk.me
-            description: Manage indexers & trackers
-            siteMonitor: http://prowlarr-service.default.svc.cluster.local:9696
+            description: Indexers
+            ping: http://prowlarr-service.default.svc.cluster.local:9696
             widget:
               type: prowlarr
               url: http://prowlarr-service.default.svc.cluster.local:9696
@@ -119,8 +111,8 @@ data:
         - qBittorrent:
             icon: qbittorrent.svg
             href: https://torrent.nverk.me
-            description: BitTorrent client
-            siteMonitor: http://qbit-service.default.svc.cluster.local:8080
+            description: Torrent Client
+            ping: http://qbit-service.default.svc.cluster.local:8080
             widget:
               type: qbittorrent
               url: http://qbit-service.default.svc.cluster.local:8080
@@ -130,26 +122,26 @@ data:
         - FlareSolverr:
             icon: flaresolverr.svg
             href: http://flaresolverr.default.svc.cluster.local:8191
-            description: Cloudflare bypass proxy
-            siteMonitor: http://flaresolverr.default.svc.cluster.local:8191
+            description: Cloudflare Proxy
+            ping: http://flaresolverr.default.svc.cluster.local:8191
 
     - Infrastructure:
         - ArgoCD:
             icon: argocd.svg
             href: https://argocd.nverk.me
-            description: GitOps deployment platform
-            siteMonitor: http://argocd-server.argocd.svc.cluster.local:80
+            description: GitOps
+            ping: http://argocd-server.argocd.svc.cluster.local:80
 
         - Traefik:
             icon: traefik.svg
             href: https://traefik.nverk.me
-            description: Ingress controller
-            siteMonitor: http://traefik.traefik.svc.cluster.local:80
+            description: Ingress
+            ping: http://traefik.traefik.svc.cluster.local:80
 
         - Cloudflare:
             icon: cloudflare.svg
             href: https://dash.cloudflare.com
-            description: Zero Trust tunnel
+            description: Tunnel
             widget:
               type: cloudflared
               accountid: "{{HOMEPAGE_VAR_CLOUDFLARE_ACCOUNT_ID}}"
@@ -161,67 +153,52 @@ data:
         icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/kubernetes.svg
         
     - greeting:
-        text_size: 3xl
+        text_size: 2xl
         text: Welcome Back
 
     - datetime:
-        text_size: xl
+        text_size: lg
         format:
           dateStyle: long
           timeStyle: short
           hourCycle: h12
 
     - search:
-        provider: [google, duckduckgo, reddit, youtube]
+        provider: google
         focus: true
         target: _blank
 
-    - resources:
-        label: Cluster Resources
-        cpu: true
-        memory: true
-        cputemp: true
-        uptime: true
-        disk:
-          - /
-          - label: Storage
-            path: /mnt/storage
-        expanded: true
-        refresh: 5000
-
   bookmarks.yaml: |
-    - Development:
+    - Dev:
         - GitHub:
-            - abbr: GH
-              icon: github.svg
+            - icon: github.svg
               href: https://github.com
 
-        - Nix Packages:
-            - abbr: NX
-              icon: nixos.svg
+        - Nix:
+            - icon: nixos.svg
               href: https://search.nixos.org/packages
 
     - Homelab:
-        - Kubernetes Dashboard:
-            - abbr: K8s
-              icon: kubernetes.svg
+        - K8s Docs:
+            - icon: kubernetes.svg
               href: https://kubernetes.io/docs/
 
-        - Homepage Docs:
-            - abbr: HP
-              icon: homepage.svg
+        - Homepage:
+            - icon: homepage.svg
               href: https://gethomepage.dev/
 
-    - Quick Links:
+    - Links:
         - Reddit:
-            - abbr: RD
-              icon: reddit.svg
+            - icon: reddit.svg
               href: https://reddit.com/r/homelab
 
         - YouTube:
-            - abbr: YT
-              icon: youtube.svg
+            - icon: youtube.svg
               href: https://youtube.com
 
   docker.yaml: ""
+  custom.css: |
+    .service-card {
+      backdrop-filter: blur(10px);
+    }
   custom.js: ""
