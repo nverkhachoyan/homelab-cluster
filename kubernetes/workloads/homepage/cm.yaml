@@ -50,12 +50,6 @@ data:
         style: row
         columns: 3
 
-    providers:
-      longhorn:
-        username: nverk1997
-        password: "{{HOMEPAGE_VAR_LONGHORN_PASSWORD}}"
-        url: http://longhorn-backend.longhorn-system.svc.cluster.local:9500
-
   services.yaml: |
     - Media:
         - Jellyfin:
@@ -148,11 +142,6 @@ data:
               accountid: "{{HOMEPAGE_VAR_CLOUDFLARE_ACCOUNT_ID}}"
               tunnelid: "{{HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_ID}}"
               key: "{{HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_TOKEN_HOMEPAGE}}"
-        - longhorn:
-            expanded: true
-            total: true
-            labels: true
-            nodes: true
 
   widgets.yaml: |
     - logo:

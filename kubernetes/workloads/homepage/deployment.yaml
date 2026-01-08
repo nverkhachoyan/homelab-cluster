@@ -84,12 +84,6 @@ spec:
                   name: homelab-secrets
                   key: argocd_api_key
 
-            - name: HOMEPAGE_VAR_LONGHORN_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: homelab-secrets
-                  key: longhorn_password
-
           volumeMounts:
             - mountPath: /app/config/custom.js
               name: homepage-config
