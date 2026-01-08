@@ -20,6 +20,8 @@ spec:
           ports:
             - containerPort: 3000
           env:
+            - name: HOMEPAGE_LOG_PATH
+              value: "/tmp/homepage.log"
             - name: HOSTNAME
               value: "0.0.0.0"
             - name: HOMEPAGE_ALLOWED_HOSTS
@@ -72,7 +74,26 @@ spec:
 
           volumeMounts:
             - name: config-volume
-              mountPath: /app/config
+              mountPath: /app/config/settings.yaml
+              subPath: settings.yaml
+            - name: config-volume
+              mountPath: /app/config/services.yaml
+              subPath: services.yaml
+            - name: config-volume
+              mountPath: /app/config/widgets.yaml
+              subPath: widgets.yaml
+            - name: config-volume
+              mountPath: /app/config/bookmarks.yaml
+              subPath: bookmarks.yaml
+            - name: config-volume
+              mountPath: /app/config/kubernetes.yaml
+              subPath: kubernetes.yaml
+            - name: config-volume
+              mountPath: /app/config/docker.yaml
+              subPath: docker.yaml
+            - name: config-volume
+              mountPath: /app/config/custom.js
+              subPath: custom.js
 
       volumes:
         - name: config-volume
