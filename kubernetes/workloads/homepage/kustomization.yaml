@@ -11,3 +11,4 @@ resources:
   - roles.yaml
   - auth.yaml
   - middleware.yaml
+  - jobs/restart.yaml
