@@ -8,7 +8,6 @@ resources:
 
 configMapGenerator:
   - name: homepage-config
-    behavior: merge
     files:
       - configs/settings.yaml
       - configs/services.yaml
