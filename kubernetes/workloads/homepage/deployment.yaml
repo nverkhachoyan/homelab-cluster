@@ -14,8 +14,6 @@ spec:
         app: homepage
     spec:
       dnsPolicy: ClusterFirst
-      nodeSelector:
-        kubernetes.io/hostname: k3s-master
       initContainers:
         - name: copy-config
           image: busybox:latest
