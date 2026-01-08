@@ -21,8 +21,6 @@ data:
 
     theme: dark
     color: stone
-    useEqualHeights: true
-    cardBlur: md
     disableCollapse: false
     quicklaunch:
       searchDescriptions: true
