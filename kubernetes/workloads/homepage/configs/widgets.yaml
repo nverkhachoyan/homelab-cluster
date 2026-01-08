@@ -27,16 +27,3 @@
       - /
     expanded: true
     refresh: 3000
-
-- kubernetes:
-    cluster:
-      show: true
-      cpu: true
-      memory: true
-      showLabel: true
-      label: k3s cluster
-    nodes:
-      show: true
-      cpu: true
-      memory: true
-      showLabel: true
