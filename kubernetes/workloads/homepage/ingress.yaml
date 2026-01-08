@@ -5,6 +5,13 @@ metadata:
   namespace: default
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
+    gethomepage.dev/description: Homepage
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Cluster Management
+    gethomepage.dev/icon: homepage.png
+    gethomepage.dev/name: Homepage
+  labels:
+    app.kubernetes.io/name: homepage
 spec:
   rules:
     - host: home.nverk.me

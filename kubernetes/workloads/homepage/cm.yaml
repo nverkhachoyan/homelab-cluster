@@ -5,6 +5,8 @@ kind: ConfigMap
 metadata:
   name: homepage
   namespace: default
+  labels:
+    app.kubernetes.io/name: homepage
 
 data:
   kubernetes.yaml: |
