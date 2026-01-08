@@ -9,6 +9,6 @@ resources:
 
 configMapGenerator:
   - name: homepage-config
-    behavior: merge
+    behavior: replace
     # files:
     #   - assets/custom.css
