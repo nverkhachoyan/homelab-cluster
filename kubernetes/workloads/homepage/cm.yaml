@@ -25,7 +25,8 @@ data:
     theme: dark
     color: slate
     hideErrors: true
-    showStats: false
+    showStats: true
+    useEqualHeights: true
 
     quicklaunch:
       searchDescriptions: false
