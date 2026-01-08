@@ -14,10 +14,10 @@ data:
 
   settings.yaml: |
     title: nverk.me
-    favicon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/kubernetes.svg
+    favicon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/google-home.svg
     headerStyle: clean
     background:
-      image: https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?w=1920&q=80
+      image: https://images.unsplash.com/photo-1620121478247-ec786b9be2fa
       blur: md
       opacity: 70
       brightness: 40
@@ -36,19 +36,11 @@ data:
     layout:
       Media:
         style: row
-        columns: 2
+        columns: 4
 
-      Automation:
+      Infra:
         style: row
-        columns: 3
-
-      Downloads:
-        style: row
-        columns: 2
-
-      Infrastructure:
-        style: row
-        columns: 3
+        columns: 4
 
   services.yaml: |
     - Media:
@@ -72,16 +64,15 @@ data:
               url: http://jellyseerr-service.default.svc.cluster.local:5055
               key: "{{HOMEPAGE_VAR_JELLYSEERR_KEY}}"
 
-    - Automation:
         - Radarr:
-            icon: radarr.svg
-            href: https://radarr.nverk.me
-            description: Movies
-            widget:
-              type: radarr
-              url: http://radarr-service.default.svc.cluster.local:7878
-              key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
-              enableQueue: true
+          icon: radarr.svg
+          href: https://radarr.nverk.me
+          description: Movies
+          widget:
+            type: radarr
+            url: http://radarr-service.default.svc.cluster.local:7878
+            key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
+            enableQueue: true
 
         - Sonarr:
             icon: sonarr.svg
@@ -93,16 +84,16 @@ data:
               key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
               enableQueue: true
 
-        - Prowlarr:
-            icon: prowlarr.svg
-            href: https://prowlarr.nverk.me
-            description: Indexers
+    - Infra:
+        - ArgoCD:
+            icon: argo-cd.svg
+            href: https://argocd.nverk.me
+            description: GitOps
             widget:
-              type: prowlarr
-              url: http://prowlarr-service.default.svc.cluster.local:9696
-              key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
-
-    - Downloads:
+              type: argocd
+              url: https://argocd.nverk.me
+              key: "{{HOMEPAGE_VAR_ARGOCD_API_KEY}}"
+        
         - qBittorrent:
             icon: qbittorrent.svg
             href: https://torrent.nverk.me
@@ -112,21 +103,6 @@ data:
               url: http://qbit-service.default.svc.cluster.local:8080
               username: nverk1997
               password: "{{HOMEPAGE_VAR_QBIT_PASSWORD}}"
-
-        - FlareSolverr:
-            icon: flaresolverr.svg
-            href: http://flaresolverr.default.svc.cluster.local:8191
-            description: Cloudflare Proxy
-
-    - Infrastructure:
-        - ArgoCD:
-            icon: argo-cd.svg
-            href: https://argocd.nverk.me
-            description: GitOps
-            widget:
-              type: argocd
-              url: https://argocd.nverk.me
-              key: "{{HOMEPAGE_VAR_ARGOCD_API_KEY}}"
 
         - Traefik:
             icon: traefik.svg
@@ -145,25 +121,32 @@ data:
               accountid: "{{HOMEPAGE_VAR_CLOUDFLARE_ACCOUNT_ID}}"
               tunnelid: "{{HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_ID}}"
               key: "{{HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_TOKEN_HOMEPAGE}}"
+        
+        - FlareSolverr:
+            icon: flaresolverr.svg
+            href: http://flaresolverr.default.svc.cluster.local:8191
+            description: Cloudflare Proxy
+        
+        - Prowlarr:
+            icon: prowlarr.svg
+            href: https://prowlarr.nverk.me
+            description: Indexers
+            widget:
+              type: prowlarr
+              url: http://prowlarr-service.default.svc.cluster.local:9696
+              key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
 
   widgets.yaml: |
-    - logo:
-        icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/kubernetes.svg
-        
-    - greeting:
-        text_size: 2xl
-        text: Welcome Back
-
     - datetime:
         text_size: lg
         format:
-          dateStyle: long
           timeStyle: short
-          hourCycle: h12
+          hour12: true
 
     - search:
-        provider: google
+        provider: [google, duckduckgo]
         focus: true
+        showSearchSuggestions: true
         target: _blank
 
   bookmarks.yaml: |
@@ -175,24 +158,6 @@ data:
         - Nix:
             - icon: nixos.svg
               href: https://search.nixos.org/packages
-
-    - Homelab:
-        - K8s Docs:
-            - icon: kubernetes.svg
-              href: https://kubernetes.io/docs/
-
-        - Homepage:
-            - icon: homepage.svg
-              href: https://gethomepage.dev/
-
-    - Links:
-        - Reddit:
-            - icon: reddit.svg
-              href: https://reddit.com/r/homelab
-
-        - YouTube:
-            - icon: youtube.svg
-              href: https://youtube.com
 
   docker.yaml: ""
   custom.css: |
