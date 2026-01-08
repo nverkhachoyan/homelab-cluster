@@ -14,17 +14,6 @@ spec:
         app: homepage
     spec:
       dnsPolicy: ClusterFirst
-
-      initContainers:
-        - name: copy-config
-          image: busybox:latest
-          command: ["sh", "-c", "cp /tmp/config/* /app/config/"]
-          volumeMounts:
-            - name: config-source
-              mountPath: /tmp/config
-            - name: config-writable
-              mountPath: /app/config
-
       containers:
         - name: homepage
           image: ghcr.io/gethomepage/homepage:latest
@@ -82,12 +71,10 @@ spec:
                   key: cloudflare_tunnel_token_homepage
 
           volumeMounts:
-            - name: config-writable
+            - name: config-volume
               mountPath: /app/config
 
       volumes:
-        - name: config-source
+        - name: config-volume
           configMap:
             name: homepage-config
-        - name: config-writable
-          emptyDir: {}
