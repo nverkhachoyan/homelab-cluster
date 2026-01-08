@@ -56,7 +56,6 @@ data:
             icon: jellyfin.svg
             href: https://jellyfin.nverk.me
             description: Media Server
-            ping: http://jellyfin-service.default.svc.cluster.local:8096
             widget:
               type: jellyfin
               url: http://jellyfin-service.default.svc.cluster.local:8096
@@ -68,7 +67,6 @@ data:
             icon: jellyseerr.svg
             href: https://jellyseerr.nverk.me
             description: Content Requests
-            ping: http://jellyseerr-service.default.svc.cluster.local:5055
             widget:
               type: jellyseerr
               url: http://jellyseerr-service.default.svc.cluster.local:5055
@@ -79,7 +77,6 @@ data:
             icon: radarr.svg
             href: https://radarr.nverk.me
             description: Movies
-            ping: http://radarr-service.default.svc.cluster.local:7878
             widget:
               type: radarr
               url: http://radarr-service.default.svc.cluster.local:7878
@@ -90,7 +87,6 @@ data:
             icon: sonarr.svg
             href: https://sonarr.nverk.me
             description: TV Shows
-            ping: http://sonarr-service.default.svc.cluster.local:8989
             widget:
               type: sonarr
               url: http://sonarr-service.default.svc.cluster.local:8989
@@ -101,7 +97,6 @@ data:
             icon: prowlarr.svg
             href: https://prowlarr.nverk.me
             description: Indexers
-            ping: http://prowlarr-service.default.svc.cluster.local:9696
             widget:
               type: prowlarr
               url: http://prowlarr-service.default.svc.cluster.local:9696
@@ -112,7 +107,6 @@ data:
             icon: qbittorrent.svg
             href: https://torrent.nverk.me
             description: Torrent Client
-            ping: http://qbit-service.default.svc.cluster.local:8080
             widget:
               type: qbittorrent
               url: http://qbit-service.default.svc.cluster.local:8080
@@ -123,20 +117,17 @@ data:
             icon: flaresolverr.svg
             href: http://flaresolverr.default.svc.cluster.local:8191
             description: Cloudflare Proxy
-            ping: http://flaresolverr.default.svc.cluster.local:8191
 
     - Infrastructure:
         - ArgoCD:
             icon: argocd.svg
             href: https://argocd.nverk.me
             description: GitOps
-            ping: http://argocd-server.argocd.svc.cluster.local:80
 
         - Traefik:
             icon: traefik.svg
             href: https://traefik.nverk.me
             description: Ingress
-            ping: http://traefik.traefik.svc.cluster.local:80
 
         - Cloudflare:
             icon: cloudflare.svg
