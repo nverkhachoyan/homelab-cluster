@@ -10,5 +10,5 @@ resources:
 configMapGenerator:
   - name: homepage-config
     behavior: replace
-    # files:
-    #   - assets/custom.css
+    files:
+      - assets/custom.css

@@ -14,16 +14,6 @@ spec:
         app: homepage
     spec:
       dnsPolicy: ClusterFirst
-      initContainers:
-        - name: copy-config
-          image: busybox:latest
-          command: ["sh", "-c", "cp /tmp/config/* /app/config/"]
-          volumeMounts:
-            - name: config-source
-              mountPath: /tmp/config
-            - name: config-writable
-              mountPath: /app/config
-
       containers:
         - name: homepage
           image: ghcr.io/gethomepage/homepage:latest
