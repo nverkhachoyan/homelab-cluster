@@ -5,15 +5,4 @@ resources:
   - deployment.yaml
   - service.yaml
   - ingress.yaml
-
-configMapGenerator:
-  - name: homepage-config
-    files:
-      - configs/settings.yaml
-      - configs/services.yaml
-      - configs/widgets.yaml
-      - configs/bookmarks.yaml
-      - configs/kubernetes.yaml
-      - configs/docker.yaml
-      - configs/custom.css
-      - configs/custom.js
+  - cm.yaml
