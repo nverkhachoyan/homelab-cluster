@@ -139,7 +139,7 @@ data:
   bookmarks.yaml: |
     - Dev:
         - GitHub:
-            - icon: github.svg
+            - icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/github-light.svg
               href: https://github.com
 
         - Nix:
