@@ -11,17 +11,22 @@ metadata:
 data:
   kubernetes.yaml: |
     mode: cluster
+
   settings.yaml: |
     title: nverk.me
+    favicon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/kubernetes.svg
     headerStyle: clean
     background:
       image: https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?w=1920&q=80
       blur: md
       opacity: 75
+      brightness: 50
 
     theme: dark
-    color: stone
+    color: slate
     disableCollapse: false
+    showStats: false
+
     quicklaunch:
       searchDescriptions: true
       hideInternetSearch: false
@@ -29,36 +34,36 @@ data:
       hideVisitURL: false
 
     layout:
-      Streaming:
+      Media:
         style: row
         columns: 2
-        header: false
+        header: true
         icon: mdi-play-circle-outline
 
-      Content Management:
+      Automation:
         style: row
         columns: 3
-        header: false
-        icon: mdi-folder-multiple-outline
+        header: true
+        icon: mdi-robot-outline
 
       Downloads:
         style: row
         columns: 2
-        header: false
+        header: true
         icon: mdi-download-circle-outline
 
-      Infra:
+      Infrastructure:
         style: row
         columns: 3
-        header: false
+        header: true
         icon: mdi-server-network
 
   services.yaml: |
-    - Streaming:
+    - Media:
         - Jellyfin:
             icon: jellyfin.svg
             href: https://jellyfin.nverk.me
-            description: Media streaming server
+            description: Stream movies, TV shows & music
             siteMonitor: http://jellyfin-service.default.svc.cluster.local:8096
             widget:
               type: jellyfin
@@ -70,18 +75,18 @@ data:
         - Jellyseerr:
             icon: jellyseerr.svg
             href: https://jellyseerr.nverk.me
-            description: Request movies & shows
+            description: Request new content
             siteMonitor: http://jellyseerr-service.default.svc.cluster.local:5055
             widget:
               type: jellyseerr
               url: http://jellyseerr-service.default.svc.cluster.local:5055
               key: "{{HOMEPAGE_VAR_JELLYSEERR_KEY}}"
 
-    - Content Management:
+    - Automation:
         - Radarr:
             icon: radarr.svg
             href: https://radarr.nverk.me
-            description: Movie collection manager
+            description: Automated movie downloads
             siteMonitor: http://radarr-service.default.svc.cluster.local:7878
             widget:
               type: radarr
@@ -92,7 +97,7 @@ data:
         - Sonarr:
             icon: sonarr.svg
             href: https://sonarr.nverk.me
-            description: TV series manager
+            description: Automated TV downloads
             siteMonitor: http://sonarr-service.default.svc.cluster.local:8989
             widget:
               type: sonarr
@@ -103,7 +108,7 @@ data:
         - Prowlarr:
             icon: prowlarr.svg
             href: https://prowlarr.nverk.me
-            description: Indexer manager
+            description: Manage indexers & trackers
             siteMonitor: http://prowlarr-service.default.svc.cluster.local:9696
             widget:
               type: prowlarr
@@ -114,7 +119,7 @@ data:
         - qBittorrent:
             icon: qbittorrent.svg
             href: https://torrent.nverk.me
-            description: Torrent client
+            description: BitTorrent client
             siteMonitor: http://qbit-service.default.svc.cluster.local:8080
             widget:
               type: qbittorrent
@@ -125,73 +130,98 @@ data:
         - FlareSolverr:
             icon: flaresolverr.svg
             href: http://flaresolverr.default.svc.cluster.local:8191
-            description: Proxy for bypassing Cloudflare
+            description: Cloudflare bypass proxy
             siteMonitor: http://flaresolverr.default.svc.cluster.local:8191
 
-    - Infra:
+    - Infrastructure:
         - ArgoCD:
             icon: argocd.svg
             href: https://argocd.nverk.me
-            description: GitOps continuous delivery
+            description: GitOps deployment platform
             siteMonitor: http://argocd-server.argocd.svc.cluster.local:80
 
-        - Cloudflare Tunnel:
+        - Traefik:
+            icon: traefik.svg
+            href: https://traefik.nverk.me
+            description: Ingress controller
+            siteMonitor: http://traefik.traefik.svc.cluster.local:80
+
+        - Cloudflare:
             icon: cloudflare.svg
             href: https://dash.cloudflare.com
-            description: Zero Trust network access
+            description: Zero Trust tunnel
             widget:
               type: cloudflared
               accountid: "{{HOMEPAGE_VAR_CLOUDFLARE_ACCOUNT_ID}}"
               tunnelid: "{{HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_ID}}"
               key: "{{HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_TOKEN_HOMEPAGE}}"
 
-        - Traefik:
-            icon: traefik.svg
-            href: https://traefik.nverk.me
-            description: Reverse proxy & ingress
-            siteMonitor: http://traefik.traefik.svc.cluster.local:80
-
   widgets.yaml: |
     - logo:
         icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/kubernetes.svg
+        
     - greeting:
-        text_size: 2xl
-        text: Welcome home
+        text_size: 3xl
+        text: Welcome Back
 
     - datetime:
-        text_size: lg
+        text_size: xl
         format:
           dateStyle: long
           timeStyle: short
           hourCycle: h12
 
     - search:
-        provider: [google, duckduckgo]
-        focus: false
+        provider: [google, duckduckgo, reddit, youtube]
+        focus: true
         target: _blank
 
     - resources:
-        label: System
+        label: Cluster Resources
         cpu: true
         memory: true
         cputemp: true
         uptime: true
         disk:
           - /
+          - label: Storage
+            path: /mnt/storage
         expanded: true
-        refresh: 3000
+        refresh: 5000
 
   bookmarks.yaml: |
-    - Dev:
+    - Development:
         - GitHub:
             - abbr: GH
               icon: github.svg
               href: https://github.com
 
         - Nix Packages:
-            - abbr: NP
+            - abbr: NX
               icon: nixos.svg
               href: https://search.nixos.org/packages
+
+    - Homelab:
+        - Kubernetes Dashboard:
+            - abbr: K8s
+              icon: kubernetes.svg
+              href: https://kubernetes.io/docs/
+
+        - Homepage Docs:
+            - abbr: HP
+              icon: homepage.svg
+              href: https://gethomepage.dev/
+
+    - Quick Links:
+        - Reddit:
+            - abbr: RD
+              icon: reddit.svg
+              href: https://reddit.com/r/homelab
+
+        - YouTube:
+            - abbr: YT
+              icon: youtube.svg
+              href: https://youtube.com
 
   docker.yaml: ""
   custom.js: ""
