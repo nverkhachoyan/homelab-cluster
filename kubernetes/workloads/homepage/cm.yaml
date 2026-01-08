@@ -18,11 +18,11 @@ data:
     headerStyle: clean
     background:
       image: https://images.unsplash.com/photo-1620121478247-ec786b9be2fa
-      blur: md
       opacity: 70
       brightness: 40
 
-    theme: dark
+    cardBlur: md
+
     color: slate
     hideErrors: true
     showStats: true
@@ -104,15 +104,7 @@ data:
               url: http://qbit-service.default.svc.cluster.local:8080
               username: nverk1997
               password: "{{HOMEPAGE_VAR_QBIT_PASSWORD}}"
-
-        - Traefik:
-            icon: traefik.svg
-            href: https://traefik.nverk.me
-            description: Ingress
-            widget:
-              type: traefik
-              url: http://traefik.traefik.svc.cluster.local:80
-
+              
         - Cloudflare:
             icon: cloudflare.svg
             href: https://dash.cloudflare.com
@@ -161,8 +153,5 @@ data:
               href: https://search.nixos.org/packages
 
   docker.yaml: ""
-  custom.css: |
-    .service-card {
-      backdrop-filter: blur(10px);
-    }
+  custom.css: ""
   custom.js: ""
