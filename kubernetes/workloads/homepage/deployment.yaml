@@ -14,6 +14,7 @@ spec:
         app: homepage
     spec:
       dnsPolicy: ClusterFirst
+
       containers:
         - name: homepage
           image: ghcr.io/gethomepage/homepage:latest
@@ -71,12 +72,10 @@ spec:
                   key: cloudflare_tunnel_token_homepage
 
           volumeMounts:
-            - name: config-writable
+            - name: config-source
               mountPath: /app/config
 
       volumes:
         - name: config-source
           configMap:
             name: homepage-config
-        - name: config-writable
-          emptyDir: {}
