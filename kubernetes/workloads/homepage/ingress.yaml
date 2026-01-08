@@ -11,6 +11,7 @@ metadata:
     gethomepage.dev/group: Cluster Management
     gethomepage.dev/icon: homepage.png
     gethomepage.dev/name: Homepage
+    gethomepage.dev/pod-selector: "app.kubernetes.io/name=homepage"
   labels:
     app.kubernetes.io/name: homepage
 spec:
