@@ -181,21 +181,8 @@ data:
         expanded: true
         refresh: 3000
 
-    - kubernetes:
-        cluster:
-          show: true
-          cpu: true
-          memory: true
-          showLabel: true
-          label: k3s cluster
-        nodes:
-          show: true
-          cpu: true
-          memory: true
-          showLabel: true
-
   bookmarks.yaml: |
-    - Development:
+    - Dev:
         - GitHub:
             - abbr: GH
               icon: github.svg
@@ -206,36 +193,5 @@ data:
               icon: nixos.svg
               href: https://search.nixos.org/packages
 
-        - Docker Hub:
-            - abbr: DH
-              icon: docker.svg
-              href: https://hub.docker.com
-
-    - Media:
-        - TMDB:
-            - abbr: TM
-              icon: themoviedatabase.svg
-              href: https://www.themoviedb.org
-
-        - TheTVDB:
-            - abbr: TV
-              icon: thetvdb.svg
-              href: https://www.thetvdb.com
-
-        - IMDb:
-            - abbr: IM
-              icon: imdb.svg
-              href: https://www.imdb.com
-
-    - Tools:
-        - Cloudflare:
-            - abbr: CF
-              icon: cloudflare.svg
-              href: https://dash.cloudflare.com
-
-        - Homepage Docs:
-            - abbr: HP
-              icon: homepage.svg
-              href: https://gethomepage.dev
   docker.yaml: ""
   custom.js: ""
