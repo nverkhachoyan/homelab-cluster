@@ -53,7 +53,7 @@ data:
               url: http://jellyfin-service.default.svc.cluster.local:8096
               key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
               enableBlocks: true
-              enableNowPlaying: false
+              showEpisodeNumber: true
 
         - Jellyseerr:
             icon: jellyseerr.svg
@@ -65,14 +65,14 @@ data:
               key: "{{HOMEPAGE_VAR_JELLYSEERR_KEY}}"
 
         - Radarr:
-          icon: radarr.svg
-          href: https://radarr.nverk.me
-          description: Movies
-          widget:
-            type: radarr
-            url: http://radarr-service.default.svc.cluster.local:7878
-            key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
-            enableQueue: true
+            icon: radarr.svg
+            href: https://radarr.nverk.me
+            description: Movies
+            widget:
+              type: radarr
+              url: http://radarr-service.default.svc.cluster.local:7878
+              key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
+              enableQueue: true
 
         - Sonarr:
             icon: sonarr.svg
@@ -113,11 +113,6 @@ data:
               accountid: "{{HOMEPAGE_VAR_CLOUDFLARE_ACCOUNT_ID}}"
               tunnelid: "{{HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_ID}}"
               key: "{{HOMEPAGE_VAR_CLOUDFLARE_TUNNEL_TOKEN_HOMEPAGE}}"
-        
-        - FlareSolverr:
-            icon: flaresolverr.svg
-            href: http://flaresolverr.default.svc.cluster.local:8191
-            description: Cloudflare Proxy
         
         - Prowlarr:
             icon: prowlarr.svg
