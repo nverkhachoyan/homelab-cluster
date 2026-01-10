@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: readarr
-          image: ghcr.io/linuxserver/readarr:develop
+          image: ghcr.io/linuxserver/readarr:amd64-develop
           env:
             - name: PUID
               value: "1000"
