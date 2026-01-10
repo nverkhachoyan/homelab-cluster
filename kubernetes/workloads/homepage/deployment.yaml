@@ -16,7 +16,7 @@ spec:
         app.kubernetes.io/name: homepage
     spec:
       nodeSelector:
-        type: k3s-agent-02
+        kubernetes.io/hostname: k3s-agent-02
       serviceAccountName: homepage
       automountServiceAccountToken: true
       dnsPolicy: ClusterFirst
