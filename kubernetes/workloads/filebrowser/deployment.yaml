@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: filebrowser
+  namespace: default
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: filebrowser
+  template:
+    metadata:
+      labels:
+        app: filebrowser
+    spec:
+      containers:
+        - name: filebrowser
+          image: filebrowser/filebrowser:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: FB_BASEURL
+              value: ""
+          volumeMounts:
+            - name: database
+              mountPath: /database.db
+              subPath: filebrowser.db
+            - name: media
+              mountPath: /srv
+      volumes:
+        - name: database
+          persistentVolumeClaim:
+            claimName: filebrowser-db-pvc
+        - name: media
+          persistentVolumeClaim:
+            claimName: media-pvc
