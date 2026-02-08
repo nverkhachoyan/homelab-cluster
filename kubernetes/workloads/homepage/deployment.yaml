@@ -15,12 +15,11 @@ spec:
       labels:
         app.kubernetes.io/name: homepage
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: k3s-agent-02
       serviceAccountName: homepage
       automountServiceAccountToken: true
       dnsPolicy: ClusterFirst
       enableServiceLinks: true
+      nodeName: k3s-agent-02
       containers:
         - name: homepage
           image: ghcr.io/gethomepage/homepage:latest
