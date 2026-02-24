@@ -1,12 +1,12 @@
-
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: filebrowser-ingress
-  namespace: default
+  namespace: media
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
+  ingressClassName: traefik
   rules:
     - host: files.nverk.me
       http:

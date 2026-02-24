@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: kavita-config-pvc
-  namespace: default
+  name: kavita-config-pvc-lp
+  namespace: media
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: local-path
   resources:
     requests:
       storage: 10Gi

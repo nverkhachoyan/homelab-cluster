@@ -2,9 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: flaresolverr
-  namespace: default
+  namespace: media
 spec:
   replicas: 1
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
       app: flaresolverr
@@ -13,11 +14,15 @@ spec:
       labels:
         app: flaresolverr
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: flaresolverr
-          image: ghcr.io/flaresolverr/flaresolverr:latest
+          image: ghcr.io/flaresolverr/flaresolverr@sha256:7962759d99d7e125e108e0f5e7f3cdbcd36161776d058d1d9b7153b92ef1af9e
           ports:
-            - containerPort: 8191
+            - name: http
+              containerPort: 8191
           env:
             - name: LOG_LEVEL
               value: info
@@ -25,7 +30,27 @@ spec:
               value: America/Los_Angeles
           resources:
             requests:
-              memory: "256Mi"
               cpu: "200m"
+              memory: "256Mi"
             limits:
+              cpu: "500m"
               memory: "1024Mi"
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 6
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 2
+            failureThreshold: 6
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL

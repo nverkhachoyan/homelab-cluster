@@ -2,9 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: prowlarr
-  namespace: default
+  namespace: media
 spec:
   replicas: 1
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: prowlarr
@@ -13,20 +16,52 @@ spec:
       labels:
         app: prowlarr
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: prowlarr
-          image: lscr.io/linuxserver/prowlarr:latest
+          image: lscr.io/linuxserver/prowlarr@sha256:e74a1e093dcc223d671d4b7061e2b4946f1989a4d3059654ff4e623b731c9134
           env:
             - name: PUID
               value: "1000"
             - name: PGID
               value: "1000"
+            - name: TZ
+              value: America/Los_Angeles
           ports:
-            - containerPort: 9696
+            - name: http
+              containerPort: 9696
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1024Mi"
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 6
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 2
+            failureThreshold: 6
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           volumeMounts:
             - name: config
               mountPath: /config
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: prowlarr-config-pvc
+            claimName: prowlarr-config-pvc-lp

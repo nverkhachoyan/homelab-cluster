@@ -1,43 +1,68 @@
-# Homelab Setup
+# Homelab k3s Cluster
 
-This is my homelab k3s cluster setup.
+Minimal homelab setup focused on media workloads.
 
-## Architecture
+## Stack
 
-- **k3s-master**: Master node running k3s server
-- **media-workers**: Worker nodes running k3s agents with media storage
+- Platform: MetalLB, Traefik, Cloudflared
+- Workloads: Radarr, Sonarr, Readarr, Prowlarr, FlareSolverr, Jellyfin, Jellyseerr, Kavita, qBittorrent, Filebrowser
+- Storage:
+  - Shared media data on NFS (`media-pv` / `media-pvc`)
+  - App config PVCs on k3s `local-path`
 
-### Infrastructure Components
+Removed from this repo:
 
-- **ArgoCD**: GitOps continuous delivery
-- **MetalLB**: Bare-metal load balancer
-- **Traefik**: Ingress controller
-- **Cloudflare Tunnel**: Secure external access via `*.nverk.me`
+- ArgoCD
+- Longhorn
+- Homepage
 
 ## Structure
 
-### `kubernetes/`
+- `kubernetes/platform/`: infrastructure manifests and top-level platform kustomization
+- `kubernetes/workloads/`: media namespace, storage, app manifests, and top-level workload kustomization
+- `scripts/deploy.sh`: ordered deployment workflow
+- `scripts/generate_secrets.sh`: generates `scripts/secrets_cmd.sh` to apply secrets in `media` and `cloudflared`
+- `scripts/migrate_longhorn_to_local_path.sh`: one-time PVC migration helper
 
-All Kubernetes + GitOps content. Contains `bootstrap/` (ArgoCD app-of-apps), `platform/` (argocd, cloudflare, etc.), and `workloads/` (storage, jellyfin, sonarr, radarr, prowlarr, etc).
+## Deploy
 
-### `nixos/`
+Prerequisites:
 
-NixOS flake configs for building VMs.
+- `kubectl`
+- `helm` (used by kustomize for Traefik chart rendering)
+- outbound network access to fetch upstream chart/base manifests
 
-### `scripts/`
-
-Utility scripts (e.g. secret generation).
-
-### Steps
-
-1. Deploy argocd first.
+1. Generate and run secrets script:
 
 ```sh
-kubectl apply -k "kubernetes/platform/argocd"
+./scripts/generate_secrets.sh
+./scripts/secrets_cmd.sh
 ```
 
-2. Wait argocd to deploy, and run the bootstrap.
+2. Deploy platform + workloads:
 
 ```sh
-kubectl apply -f "kubernetes/bootstrap/root.yaml"
+./scripts/deploy.sh
+```
+
+## Longhorn -> local-path migration (one-time)
+
+This repo uses new `*-lp` config PVC names. To preserve existing app data from old Longhorn PVCs:
+
+1. Apply updated manifests first so new `*-lp` PVCs exist.
+2. Run migration script:
+
+```sh
+./scripts/migrate_longhorn_to_local_path.sh
+```
+
+3. Validate app configs, then remove old Longhorn PVCs/PVs and uninstall Longhorn from the cluster.
+
+## Validation
+
+```sh
+kubectl kustomize --enable-helm kubernetes/platform >/dev/null
+kubectl kustomize kubernetes/workloads >/dev/null
+kubectl -n media get deploy,pvc,ingress
+kubectl -n cloudflared get deploy
 ```

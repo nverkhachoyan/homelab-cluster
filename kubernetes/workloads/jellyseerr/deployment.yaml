@@ -2,9 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: jellyseerr
-  namespace: default
+  namespace: media
 spec:
   replicas: 1
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: jellyseerr
@@ -13,18 +16,48 @@ spec:
       labels:
         app: jellyseerr
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: jellyseerr
-          image: ghcr.io/fallenbagel/jellyseerr:latest
+          image: ghcr.io/fallenbagel/jellyseerr@sha256:9cc9e9ee6cd5cf5a23feb45c37742ba34cfd6314d81d259cddb373a97ac92cdd
           env:
             - name: TZ
-              value: UTC
+              value: America/Los_Angeles
           ports:
-            - containerPort: 5055
+            - name: http
+              containerPort: 5055
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 6
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 2
+            failureThreshold: 6
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           volumeMounts:
             - name: config
               mountPath: /app/config
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: jellyseerr-config-pvc
+            claimName: jellyseerr-config-pvc-lp

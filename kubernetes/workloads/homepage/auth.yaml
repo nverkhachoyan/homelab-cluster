@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: homepage-auth
-  namespace: default
-  labels:
-    app.kubernetes.io/name: homepage
-data:
-  users: bnZlcmsxOTk3OiRhcHIxJGxLcmt6ejNIJEZGOW9zUUswNFBtekJTclUuQXhoNDAK

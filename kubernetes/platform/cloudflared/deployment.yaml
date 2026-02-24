@@ -7,6 +7,7 @@ metadata:
     app: cloudflared
 spec:
   replicas: 1
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
       app: cloudflared
@@ -15,15 +16,23 @@ spec:
       labels:
         app: cloudflared
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: cloudflared
-          image: cloudflare/cloudflared:2024.12.2
+          image: cloudflare/cloudflared@sha256:cb38f3f30910a7d51545118a179b8516eb7066eac61855d62ce6ed733c54ce70
           args:
             - tunnel
             - --no-autoupdate
             - --protocol
             - http2
+            - --metrics
+            - 0.0.0.0:2000
             - run
+          ports:
+            - name: metrics
+              containerPort: 2000
           env:
             - name: TUNNEL_TOKEN
               valueFrom:
@@ -35,5 +44,26 @@ spec:
               cpu: "50m"
               memory: "64Mi"
             limits:
-              cpu: "500m"
-              memory: "512Mi"
+              cpu: "250m"
+              memory: "256Mi"
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: metrics
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /ready
+              port: metrics
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 2
+            failureThreshold: 6
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL

@@ -2,9 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: filebrowser
-  namespace: default
+  namespace: media
 spec:
   replicas: 1
+  revisionHistoryLimit: 2
   strategy:
     type: Recreate
   selector:
@@ -15,14 +16,44 @@ spec:
       labels:
         app: filebrowser
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: filebrowser
-          image: filebrowser/filebrowser:latest
+          image: filebrowser/filebrowser@sha256:a7b81cab28cf93de4c3ac97403d92f38d23191d7247e9c37611d4afa2d8d0c69
           ports:
-            - containerPort: 80
+            - name: http
+              containerPort: 80
           env:
             - name: FB_BASEURL
               value: ""
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "128Mi"
+            limits:
+              cpu: "300m"
+              memory: "512Mi"
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 6
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 2
+            failureThreshold: 6
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           volumeMounts:
             - name: database
               mountPath: /database.db
@@ -32,7 +63,7 @@ spec:
       volumes:
         - name: database
           persistentVolumeClaim:
-            claimName: filebrowser-db-pvc
+            claimName: filebrowser-db-pvc-lp
         - name: media
           persistentVolumeClaim:
             claimName: media-pvc

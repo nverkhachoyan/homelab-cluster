@@ -1,7 +1,0 @@
-persistence:
-  defaultClass: false
-defaultSettings:
-  defaultReplicaCount: 3
-  replicaSoftAntiAffinity: true
-  defaultDataPath: /mnt/longhorn
-  node-drain-policy: always-evict

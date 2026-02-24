@@ -2,9 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kavita
-  namespace: default
+  namespace: media
 spec:
   replicas: 1
+  revisionHistoryLimit: 2
   strategy:
     type: Recreate
   selector:
@@ -15,14 +16,44 @@ spec:
       labels:
         app: kavita
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: kavita
-          image: jvmilazz0/kavita:latest
+          image: jvmilazz0/kavita@sha256:1f2acae7466d022f037ea09f7989eb7c487f916b881174c7a6de33dbfa8acb39
           ports:
-            - containerPort: 5000
+            - name: http
+              containerPort: 5000
           env:
             - name: TZ
               value: America/Los_Angeles
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1024Mi"
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 6
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 2
+            failureThreshold: 6
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           volumeMounts:
             - name: config
               mountPath: /kavita/config
@@ -31,7 +62,7 @@ spec:
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: kavita-config-pvc
+            claimName: kavita-config-pvc-lp
         - name: media
           persistentVolumeClaim:
             claimName: media-pvc

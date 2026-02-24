@@ -2,9 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: qbittorrent
-  namespace: default
+  namespace: media
 spec:
   replicas: 1
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: qbittorrent
@@ -13,9 +16,12 @@ spec:
       labels:
         app: qbittorrent
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: qbittorrent
-          image: lscr.io/linuxserver/qbittorrent:latest
+          image: lscr.io/linuxserver/qbittorrent@sha256:065792d2b11f0facff340210fc1cf13623b029a94ecdf08b02d06d922205f618
           env:
             - name: PUID
               value: "1000"
@@ -26,8 +32,40 @@ spec:
             - name: WEBUI_PORT
               value: "8080"
           ports:
-            - containerPort: 8080
-            - containerPort: 6881
+            - name: webui
+              containerPort: 8080
+            - name: bittorrent
+              containerPort: 6881
+              protocol: TCP
+            - name: bittorrent-udp
+              containerPort: 6881
+              protocol: UDP
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "1500m"
+              memory: "2048Mi"
+          readinessProbe:
+            tcpSocket:
+              port: webui
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 6
+          livenessProbe:
+            tcpSocket:
+              port: webui
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 2
+            failureThreshold: 6
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           volumeMounts:
             - name: qbit-config
               mountPath: /config
@@ -36,7 +74,7 @@ spec:
       volumes:
         - name: qbit-config
           persistentVolumeClaim:
-            claimName: qbit-config-pvc
+            claimName: qbit-config-pvc-lp
         - name: media-volume
           persistentVolumeClaim:
             claimName: media-pvc

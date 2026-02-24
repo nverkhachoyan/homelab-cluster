@@ -2,9 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: readarr
-  namespace: default
+  namespace: media
 spec:
   replicas: 1
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: readarr
@@ -13,9 +16,12 @@ spec:
       labels:
         app: readarr
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: readarr
-          image: lscr.io/linuxserver/readarr:0.4.18-develop
+          image: lscr.io/linuxserver/readarr@sha256:baf471a7101b58f361ef960de91cd15f23bae82d0126df6a9edbeaf5c5aa4392
           env:
             - name: PUID
               value: "1000"
@@ -24,7 +30,34 @@ spec:
             - name: TZ
               value: America/Los_Angeles
           ports:
-            - containerPort: 8787
+            - name: http
+              containerPort: 8787
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1024Mi"
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 6
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 2
+            failureThreshold: 6
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           volumeMounts:
             - name: config
               mountPath: /config
@@ -33,7 +66,7 @@ spec:
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: readarr-config-pvc
+            claimName: readarr-config-pvc-lp
         - name: data
           persistentVolumeClaim:
             claimName: media-pvc
