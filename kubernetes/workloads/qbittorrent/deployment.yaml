@@ -63,9 +63,6 @@ spec:
             failureThreshold: 6
           securityContext:
             allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
           volumeMounts:
             - name: qbit-config
               mountPath: /config
