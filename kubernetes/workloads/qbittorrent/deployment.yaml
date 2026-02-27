@@ -19,6 +19,8 @@ spec:
       securityContext:
         seccompProfile:
           type: RuntimeDefault
+      nodeSelector:
+        kubernetes.io/hostname: k3s-server-01
       containers:
         - name: qbittorrent
           image: lscr.io/linuxserver/qbittorrent@sha256:065792d2b11f0facff340210fc1cf13623b029a94ecdf08b02d06d922205f618

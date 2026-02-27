@@ -19,6 +19,8 @@ spec:
       securityContext:
         seccompProfile:
           type: RuntimeDefault
+      nodeSelector:
+        kubernetes.io/hostname: k3s-server-01
       containers:
         - name: kavita
           image: jvmilazz0/kavita@sha256:1f2acae7466d022f037ea09f7989eb7c487f916b881174c7a6de33dbfa8acb39

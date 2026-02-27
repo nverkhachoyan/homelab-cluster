@@ -19,6 +19,8 @@ spec:
       securityContext:
         seccompProfile:
           type: RuntimeDefault
+      nodeSelector:
+        kubernetes.io/hostname: k3s-server-01
       containers:
         - name: sonarr
           image: lscr.io/linuxserver/sonarr@sha256:37be832b78548e3f55f69c45b50e3b14d18df1b6def2a4994258217e67efb1a1
