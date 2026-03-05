@@ -19,12 +19,26 @@ spec:
       securityContext:
         seccompProfile:
           type: RuntimeDefault
+        fsGroup: 1000 # Forces the mounted volume to be owned by group 1000
+        fsGroupChangePolicy: "OnRootMismatch"
       nodeSelector:
         kubernetes.io/hostname: k3s-server-01
+
+      initContainers:
+        - name: fix-permissions
+          image: busybox
+          command: ["sh", "-c", "chown -R 1000:1000 /app/config"]
+          volumeMounts:
+            - name: config
+              mountPath: /app/config
       containers:
         - name: jellyseerr
-          image: ghcr.io/fallenbagel/jellyseerr@sha256:9cc9e9ee6cd5cf5a23feb45c37742ba34cfd6314d81d259cddb373a97ac92cdd
+          image: ghcr.io/seerr-team/seerr:latest
           env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
             - name: TZ
               value: America/Los_Angeles
           ports:
