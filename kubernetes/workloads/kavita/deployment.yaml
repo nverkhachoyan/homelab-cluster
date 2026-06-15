@@ -23,7 +23,7 @@ spec:
         kubernetes.io/hostname: k3s-server-01
       containers:
         - name: kavita
-          image: jvmilazz0/kavita@sha256:1f2acae7466d022f037ea09f7989eb7c487f916b881174c7a6de33dbfa8acb39
+          image: jvmilazz0/kavita:0.9.0.2
           ports:
             - name: http
               containerPort: 5000
