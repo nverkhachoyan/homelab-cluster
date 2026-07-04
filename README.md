@@ -6,6 +6,7 @@ Minimal homelab setup for media workloads
 
 - Platform: MetalLB, Traefik, Cloudflared
 - Workloads: Radarr, Sonarr, Readarr, Prowlarr, FlareSolverr, Jellyfin, Jellyseerr, Kavita, qBittorrent, Filebrowser
+- Network privacy: qBittorrent runs through a Gluetun sidecar using Proton VPN WireGuard and Proton VPN port forwarding
 - Storage:
   - Shared media data on NFS (`media-pv` / `media-pvc`)
   - App config PVCs on k3s `local-path`

@@ -22,8 +22,58 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: k3s-server-01
       containers:
+        - name: gluetun
+          image: qmcgaw/gluetun@sha256:b0ee2135e6ba52ad3f102aae9663707cd1c9531485117067a380d3b2b6dd991d
+          env:
+            - name: VPN_SERVICE_PROVIDER
+              value: protonvpn
+            - name: VPN_TYPE
+              value: wireguard
+            - name: WIREGUARD_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: protonvpn-secrets
+                  key: wireguard_private_key
+            - name: SERVER_COUNTRIES
+              value: United States
+            - name: PORT_FORWARD_ONLY
+              value: "on"
+            - name: VPN_PORT_FORWARDING
+              value: "on"
+            - name: FIREWALL_INPUT_PORTS
+              value: "8080"
+            - name: VPN_PORT_FORWARDING_UP_COMMAND
+              value: >-
+                /bin/sh -c 'wget -O- -nv --retry-connrefused --post-data "json={\"listen_port\":{{PORT}},\"current_network_interface\":\"{{VPN_INTERFACE}}\",\"random_port\":false,\"upnp\":false}" http://127.0.0.1:8080/api/v2/app/setPreferences'
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - NET_ADMIN
+          volumeMounts:
+            - name: dev-net-tun
+              mountPath: /dev/net/tun
         - name: qbittorrent
           image: lscr.io/linuxserver/qbittorrent@sha256:065792d2b11f0facff340210fc1cf13623b029a94ecdf08b02d06d922205f618
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - |
+              until [ -d /sys/class/net/tun0 ]; do
+                echo "waiting for VPN interface tun0"
+                sleep 2
+              done
+              exec /init
           env:
             - name: PUID
               value: "1000"
@@ -36,12 +86,6 @@ spec:
           ports:
             - name: webui
               containerPort: 8080
-            - name: bittorrent
-              containerPort: 6881
-              protocol: TCP
-            - name: bittorrent-udp
-              containerPort: 6881
-              protocol: UDP
           resources:
             requests:
               cpu: "100m"
@@ -77,3 +121,7 @@ spec:
         - name: media-volume
           persistentVolumeClaim:
             claimName: media-pvc
+        - name: dev-net-tun
+          hostPath:
+            path: /dev/net/tun
+            type: CharDevice

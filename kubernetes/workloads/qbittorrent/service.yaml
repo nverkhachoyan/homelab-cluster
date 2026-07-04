@@ -10,12 +10,3 @@ spec:
     - name: web-ui
       port: 8080
       targetPort: webui
-    - name: bittorrent-tcp
-      port: 6881
-      targetPort: bittorrent
-      protocol: TCP
-    - name: bittorrent-udp
-      port: 6881
-      targetPort: bittorrent-udp
-      protocol: UDP
-  type: LoadBalancer
