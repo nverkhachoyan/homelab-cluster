@@ -28,7 +28,7 @@ export TF_VAR_proxmox_insecure="${TF_VAR_proxmox_insecure:-$PROXMOX_VE_INSECURE}
 export TF_VAR_proxmox_ssh_username="${TF_VAR_proxmox_ssh_username:-$PROXMOX_VE_SSH_USERNAME}"
 export TF_VAR_proxmox_ssh_agent="${TF_VAR_proxmox_ssh_agent:-$PROXMOX_VE_SSH_AGENT}"
 
-proxmox_token_ready=false
+proxmox_credentials_ready=false
 aws_backend_ready=false
 item_json=""
 
@@ -51,10 +51,12 @@ field_value() {
 }
 
 if [[ -n "${PROXMOX_VE_API_TOKEN:-}" ]]; then
-  proxmox_token_ready=true
+  proxmox_credentials_ready=true
 elif [[ -n "${PROXMOX_VE_API_TOKEN_ID:-}" && -n "${PROXMOX_VE_API_TOKEN_SECRET:-}" ]]; then
   export PROXMOX_VE_API_TOKEN="${PROXMOX_VE_API_TOKEN_ID}=${PROXMOX_VE_API_TOKEN_SECRET}"
-  proxmox_token_ready=true
+  proxmox_credentials_ready=true
+elif [[ -n "${PROXMOX_VE_USERNAME:-}" && -n "${PROXMOX_VE_PASSWORD:-}" ]]; then
+  proxmox_credentials_ready=true
 fi
 
 if [[ -n "${AWS_ACCESS_KEY_ID:-}" && -n "${AWS_SECRET_ACCESS_KEY:-}" ]]; then
@@ -67,19 +69,19 @@ elif [[ -n "${OPENTOFU_STATE_AWS_ACCESS_KEY_ID:-}" && -n "${OPENTOFU_STATE_AWS_S
   aws_backend_ready=true
 fi
 
-if [[ "$proxmox_token_ready" != "true" || "$aws_backend_ready" != "true" ]]; then
+if [[ "$proxmox_credentials_ready" != "true" || "$aws_backend_ready" != "true" ]]; then
   if command -v op >/dev/null 2>&1 && command -v jq >/dev/null 2>&1; then
     item_name="${OP_ITEM_NAME:-homelab-secrets}"
     item_json="$(op item get "$item_name" --format json)"
   fi
 fi
 
-if [[ "$proxmox_token_ready" != "true" && -n "$item_json" ]]; then
+if [[ "$proxmox_credentials_ready" != "true" && -n "$item_json" ]]; then
   if field_exists proxmox_api_token_id && field_exists proxmox_api_token_secret; then
     token_id="$(field_value proxmox_api_token_id)"
     token_secret="$(field_value proxmox_api_token_secret)"
     export PROXMOX_VE_API_TOKEN="${token_id}=${token_secret}"
-    proxmox_token_ready=true
+    proxmox_credentials_ready=true
   fi
 fi
 
@@ -96,8 +98,8 @@ fi
 export AWS_REGION="${AWS_REGION:-us-west-1}"
 export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-us-west-1}"
 
-if [[ "$proxmox_token_ready" != "true" ]]; then
-  echo "Missing Proxmox credentials. Set PROXMOX_VE_API_TOKEN, or add proxmox_api_token_id/proxmox_api_token_secret to 1Password item homelab-secrets." >&2
+if [[ "$proxmox_credentials_ready" != "true" ]]; then
+  echo "Missing Proxmox credentials. Set PROXMOX_VE_API_TOKEN, set PROXMOX_VE_USERNAME/PROXMOX_VE_PASSWORD, or add proxmox_api_token_id/proxmox_api_token_secret to 1Password item homelab-secrets." >&2
   restore_xtrace
   unset proxmox_restore_xtrace
   unset -f restore_xtrace field_exists field_value
@@ -113,6 +115,6 @@ if [[ "$aws_backend_ready" != "true" ]]; then
 fi
 
 restore_xtrace
-unset proxmox_token_ready aws_backend_ready item_json access_key_id secret_access_key
+unset proxmox_credentials_ready aws_backend_ready item_json access_key_id secret_access_key
 unset proxmox_restore_xtrace
 unset -f restore_xtrace field_exists field_value

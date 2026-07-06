@@ -25,6 +25,31 @@ variable "on_boot" {
   default = false
 }
 
+variable "started" {
+  type    = bool
+  default = null
+}
+
+variable "stop_on_destroy" {
+  type    = bool
+  default = null
+}
+
+variable "protection" {
+  type    = bool
+  default = null
+}
+
+variable "purge_on_destroy" {
+  type    = bool
+  default = null
+}
+
+variable "delete_unreferenced_disks_on_destroy" {
+  type    = bool
+  default = null
+}
+
 variable "bios" {
   type    = string
   default = "seabios"
@@ -42,6 +67,15 @@ variable "scsi_hardware" {
 
 variable "boot_order" {
   type    = list(string)
+  default = null
+}
+
+variable "startup" {
+  type = object({
+    down_delay = optional(number)
+    order      = optional(number)
+    up_delay   = optional(number)
+  })
   default = null
 }
 
@@ -94,6 +128,14 @@ variable "efi_disk" {
   default = null
 }
 
+variable "tpm_state" {
+  type = object({
+    datastore_id = optional(string)
+    version      = optional(string)
+  })
+  default = null
+}
+
 variable "disks" {
   type = list(object({
     interface         = string
@@ -113,6 +155,15 @@ variable "disks" {
     size              = optional(number)
     ssd               = optional(bool)
   }))
+}
+
+variable "cdrom" {
+  type = object({
+    enabled   = optional(bool)
+    file_id   = optional(string)
+    interface = optional(string)
+  })
+  default = null
 }
 
 variable "network_devices" {

@@ -7,11 +7,27 @@ resource "proxmox_virtual_environment_vm" "this" {
   tags      = var.tags
   template  = var.template
   on_boot   = var.on_boot
+  started   = var.started
+
+  delete_unreferenced_disks_on_destroy = var.delete_unreferenced_disks_on_destroy
+  protection                           = var.protection
+  purge_on_destroy                     = var.purge_on_destroy
+  stop_on_destroy                      = var.stop_on_destroy
 
   bios          = var.bios
   machine       = var.machine
   scsi_hardware = var.scsi_hardware
   boot_order    = var.boot_order
+
+  dynamic "startup" {
+    for_each = var.startup == null ? [] : [var.startup]
+
+    content {
+      down_delay = startup.value.down_delay
+      order      = startup.value.order
+      up_delay   = startup.value.up_delay
+    }
+  }
 
   dynamic "agent" {
     for_each = var.agent == null ? [] : [var.agent]
@@ -65,6 +81,15 @@ resource "proxmox_virtual_environment_vm" "this" {
     }
   }
 
+  dynamic "tpm_state" {
+    for_each = var.tpm_state == null ? [] : [var.tpm_state]
+
+    content {
+      datastore_id = tpm_state.value.datastore_id
+      version      = tpm_state.value.version
+    }
+  }
+
   dynamic "disk" {
     for_each = var.disks
 
@@ -85,6 +110,16 @@ resource "proxmox_virtual_environment_vm" "this" {
       serial            = disk.value.serial
       size              = disk.value.size
       ssd               = disk.value.ssd
+    }
+  }
+
+  dynamic "cdrom" {
+    for_each = var.cdrom == null ? [] : [var.cdrom]
+
+    content {
+      enabled   = cdrom.value.enabled
+      file_id   = cdrom.value.file_id
+      interface = cdrom.value.interface
     }
   }
 
@@ -189,8 +224,6 @@ resource "proxmox_virtual_environment_vm" "this" {
   }
 
   lifecycle {
-    prevent_destroy = true
-
     ignore_changes = [
       # VM 9000 has a brownfield 3584M boot disk; the provider only accepts whole GB sizes in config.
       disk[0].size,

@@ -85,8 +85,6 @@ proxmox/scripts/plan.sh
 ```
 
 Only run `proxmox/scripts/apply.sh` after reviewing the first plan carefully.
-Imported brownfield resources are protected with `prevent_destroy`, but a plan
-can still propose in-place changes if the imported state differs from the HCL.
 
 ## First-Pass Scope
 
@@ -95,12 +93,6 @@ Managed/imported first:
 - current SDN VXLAN zone, VNet, and subnet
 - k3s VMs
 - Linux utility VMs
+- appliance VMs imported for Proxmox inventory and drift control
 - GitHub Actions runner templates
 - Ubuntu cloud-init templates
-
-Left manual initially:
-
-- `pfsense` because it is the gateway appliance
-- `home-assistant` because the important state lives inside the guest
-- `win11` because installer ISO, TPM, and guest-local state are not worth
-  modeling in the first pass
