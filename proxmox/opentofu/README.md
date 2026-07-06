@@ -109,7 +109,7 @@ Managed/imported first:
 - current SDN VXLAN zone, VNet, and subnet
 - k3s VMs
 - Linux utility VMs
-- GitHub Actions runner VMs/templates
+- GitHub Actions runner templates
 - Ubuntu cloud-init templates
 
 Left manual initially:

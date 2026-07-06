@@ -48,11 +48,6 @@ module.vms["k3s_agent_02"].proxmox_virtual_environment_vm.this|hera/106
 module.vms["bootboy"].proxmox_virtual_environment_vm.this|zeus/108
 module.vms["llm_runner"].proxmox_virtual_environment_vm.this|hera/109
 
-# CI runner VMs
-module.vms["actions_runner"].proxmox_virtual_environment_vm.this|poseidon/111
-module.vms["actions_runner_1"].proxmox_virtual_environment_vm.this|zeus/112
-module.vms["actions_runner_2"].proxmox_virtual_environment_vm.this|hera/114
-
 # Templates
 module.vms["ubuntu_cloudinit_template"].proxmox_virtual_environment_vm.this|zeus/1000
 module.vms["actions_runner_template"].proxmox_virtual_environment_vm.this|hera/113
