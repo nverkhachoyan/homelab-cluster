@@ -19,28 +19,14 @@ state_addresses="$("$TOFU_BIN" -chdir="$TOFU_DIR" state list 2>/dev/null || true
 
 already_imported() {
   local address="$1"
-  local previous_address="${2:-}"
 
-  if grep -Fxq "$address" <<< "$state_addresses"; then
-    return 0
-  fi
-
-  if [[ -n "$previous_address" ]]; then
-    grep -Fxq "$previous_address" <<< "$state_addresses" && return 0
-  fi
-
-  return 1
+  grep -Fxq "$address" <<< "$state_addresses"
 }
 
 while IFS='|' read -r address import_id; do
   [[ -z "$address" || "$address" == \#* ]] && continue
 
-  previous_address=""
-  if [[ "$address" == module.vms\[* ]]; then
-    previous_address="module.brownfield_vms[${address:11}"
-  fi
-
-  if already_imported "$address" "$previous_address"; then
+  if already_imported "$address"; then
     echo "Already imported: $address"
     continue
   fi

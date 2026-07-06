@@ -20,7 +20,6 @@ State is stored in S3:
 - `sdn.tf`: brownfield Proxmox SDN resources
 - `vms.tf`: stable module call for imported VMs
 - `vms-*.tf`: grouped VM inventory by role
-- `moved.tf`: state-safe address moves for refactors
 - `modules/proxmox-vm/`: reusable VM shape with brownfield lifecycle guards
 
 ## Credential Setup
