@@ -42,9 +42,26 @@ spec:
               value: "on"
             - name: FIREWALL_INPUT_PORTS
               value: "8080"
+            - name: DNS_UPSTREAM_RESOLVER_TYPE
+              value: doh
+            - name: HEALTH_TARGET_ADDRESSES
+              value: 1.1.1.1:443,8.8.8.8:443
+            - name: QBITTORRENT_WEBUI_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: qbittorrent-webui-secrets
+                  key: username
+            - name: QBITTORRENT_WEBUI_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: qbittorrent-webui-secrets
+                  key: password
             - name: VPN_PORT_FORWARDING_UP_COMMAND
               value: >-
-                /bin/sh -c 'wget -O- -nv --retry-connrefused --post-data "json={\"listen_port\":{{PORT}},\"current_network_interface\":\"{{VPN_INTERFACE}}\",\"random_port\":false,\"upnp\":false}" http://127.0.0.1:8080/api/v2/app/setPreferences'
+                /bin/sh -c 'rm -f /tmp/qbittorrent-cookies && wget -qO- --retry-connrefused --save-cookies /tmp/qbittorrent-cookies --keep-session-cookies --post-data "username=${QBITTORRENT_WEBUI_USERNAME}&password=${QBITTORRENT_WEBUI_PASSWORD}" http://127.0.0.1:8080/api/v2/auth/login && wget -qO- --load-cookies /tmp/qbittorrent-cookies --post-data "json={\"listen_port\":{{PORT}},\"current_network_interface\":\"{{VPN_INTERFACE}}\",\"random_port\":false,\"upnp\":false}" http://127.0.0.1:8080/api/v2/app/setPreferences'
+            - name: VPN_PORT_FORWARDING_DOWN_COMMAND
+              value: >-
+                /bin/sh -c 'rm -f /tmp/qbittorrent-cookies && wget -qO- --retry-connrefused --save-cookies /tmp/qbittorrent-cookies --keep-session-cookies --post-data "username=${QBITTORRENT_WEBUI_USERNAME}&password=${QBITTORRENT_WEBUI_PASSWORD}" http://127.0.0.1:8080/api/v2/auth/login && wget -qO- --load-cookies /tmp/qbittorrent-cookies --post-data "json={\"listen_port\":0,\"current_network_interface\":\"lo\"}" http://127.0.0.1:8080/api/v2/app/setPreferences'
           resources:
             requests:
               cpu: "50m"
@@ -58,10 +75,14 @@ spec:
               drop:
                 - ALL
               add:
+                - CHOWN
                 - NET_ADMIN
+                - NET_RAW
           volumeMounts:
             - name: dev-net-tun
               mountPath: /dev/net/tun
+            - name: gluetun-tmp
+              mountPath: /tmp/gluetun
         - name: qbittorrent
           image: lscr.io/linuxserver/qbittorrent@sha256:065792d2b11f0facff340210fc1cf13623b029a94ecdf08b02d06d922205f618
           command:
@@ -125,3 +146,5 @@ spec:
           hostPath:
             path: /dev/net/tun
             type: CharDevice
+        - name: gluetun-tmp
+          emptyDir: {}
