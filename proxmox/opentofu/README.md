@@ -88,20 +88,6 @@ Only run `proxmox/scripts/apply.sh` after reviewing the first plan carefully.
 Imported brownfield resources are protected with `prevent_destroy`, but a plan
 can still propose in-place changes if the imported state differs from the HCL.
 
-## One-Time Bootstrap
-
-These are only needed when standing up this repository from local state or
-adopting resources into an empty remote state:
-
-```sh
-proxmox/scripts/migrate-state.sh
-proxmox/scripts/import.sh
-```
-
-`proxmox/scripts/migrate-state.sh` copies an existing local state file to the
-configured S3 backend. `proxmox/scripts/import.sh` imports the brownfield
-resources listed in the script and skips any addresses already in state.
-
 ## First-Pass Scope
 
 Managed/imported first:

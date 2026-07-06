@@ -1,7 +1,6 @@
 locals {
   template_vms = {
     ubuntu_cloudinit_template = {
-      import_id     = "zeus/1000"
       node_name     = "zeus"
       vm_id         = 1000
       name          = "ubuntu-cloudinit"
@@ -30,7 +29,6 @@ locals {
     }
 
     actions_runner_template = {
-      import_id     = "hera/113"
       node_name     = "hera"
       vm_id         = 113
       name          = "actions-runner-template"
@@ -61,7 +59,6 @@ locals {
     }
 
     ubuntu_runner_template = {
-      import_id     = "athena/9000"
       node_name     = "athena"
       vm_id         = 9000
       name          = "ubuntu-runner-template"

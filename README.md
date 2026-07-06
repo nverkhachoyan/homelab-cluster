@@ -20,7 +20,7 @@ Minimal homelab setup for media workloads
 - `kubernetes/scripts/render-traefik.sh`: renders the Traefik Helm chart
 - `kubernetes/scripts/validate.sh`: renders platform, Traefik, and workload manifests
 - `kubernetes/scripts/deploy.sh`: ordered deployment workflow
-- `proxmox/scripts/`: validates, migrates, imports, plans, and applies Proxmox OpenTofu state
+- `proxmox/scripts/`: validates, plans, and applies Proxmox OpenTofu state
 
 ## Workflow
 

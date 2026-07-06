@@ -1,7 +1,6 @@
 locals {
   k3s_vms = {
     k3s_server_01 = {
-      import_id     = "zeus/100"
       node_name     = "zeus"
       vm_id         = 100
       name          = "k3s-server-01"
@@ -32,7 +31,6 @@ locals {
     }
 
     k3s_server_02 = {
-      import_id     = "poseidon/101"
       node_name     = "poseidon"
       vm_id         = 101
       name          = "k3s-server-02"
@@ -62,7 +60,6 @@ locals {
     }
 
     k3s_agent_02 = {
-      import_id     = "hera/106"
       node_name     = "hera"
       vm_id         = 106
       name          = "k3s-agent-02"

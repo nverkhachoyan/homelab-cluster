@@ -1,7 +1,6 @@
 locals {
   utility_vms = {
     bootboy = {
-      import_id     = "zeus/108"
       node_name     = "zeus"
       vm_id         = 108
       name          = "bootboy"
@@ -31,7 +30,6 @@ locals {
     }
 
     llm_runner = {
-      import_id     = "hera/109"
       node_name     = "hera"
       vm_id         = 109
       name          = "llm-runner"
