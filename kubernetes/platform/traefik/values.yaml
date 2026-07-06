@@ -24,6 +24,8 @@ logs:
   access:
     enabled: false
 providers:
+  kubernetesCRD:
+    enabled: false
   kubernetesIngress:
     enabled: true
     allowExternalNameServices: true

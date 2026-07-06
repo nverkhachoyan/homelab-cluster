@@ -4,7 +4,26 @@ qBittorrent runs in the same Pod as a Gluetun sidecar. Gluetun owns the Pod netw
 
 ## Required Secrets
 
-Create the Proton VPN WireGuard Secret before deploying qBittorrent:
+Run the repository secret script before deploying:
+
+```sh
+scripts/apply_secrets.sh
+```
+
+It reads the `homelab-secrets` 1Password item and creates:
+
+- `cloudflared/homelab-secrets`
+- `media/protonvpn-secrets`
+- `media/qbittorrent-webui-secrets`
+
+Required 1Password field labels:
+
+- `cloudflare_tunnel_token`
+- `protonvpn_wireguard_private_key`
+- `qbittorrent_webui_username`
+- `qbittorrent_webui_password`
+
+To create the qBittorrent secrets manually instead, use:
 
 ```sh
 kubectl -n media create secret generic protonvpn-secrets \
