@@ -28,6 +28,7 @@
             kubectl
             kubernetes-helm
             nixpkgs-fmt
+            opentofu
             shellcheck
             yq-go
           ];

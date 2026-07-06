@@ -7,7 +7,7 @@ qBittorrent runs in the same Pod as a Gluetun sidecar. Gluetun owns the Pod netw
 Run the repository secret script before deploying:
 
 ```sh
-scripts/apply_secrets.sh
+kubernetes/scripts/apply_secrets.sh
 ```
 
 It reads the `homelab-secrets` 1Password item and creates:

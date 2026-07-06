@@ -2,7 +2,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(dirname "$SCRIPT_DIR")"
+REPO_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
 
 TRAEFIK_CHART_REPO="${TRAEFIK_CHART_REPO:-https://traefik.github.io/charts}"
 TRAEFIK_CHART_VERSION="${TRAEFIK_CHART_VERSION:-38.0.1}"

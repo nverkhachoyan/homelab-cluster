@@ -1,5 +1,16 @@
 .direnv
 .DS_Store
-scripts/secrets_cmd.sh
+**/secrets_cmd.sh
 test_dns_per_node.sh
 **/charts/
+
+# OpenTofu / Terraform local state and secrets
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+*.tfplan
+*.plan
+crash.log
+crash.*.log
