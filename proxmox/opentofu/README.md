@@ -96,3 +96,56 @@ Managed/imported first:
 - appliance VMs imported for Proxmox inventory and drift control
 - GitHub Actions runner templates
 - Ubuntu cloud-init templates
+
+## Roadmap
+
+1. Manage reusable media.
+   - Use `proxmox_download_file` for cloud images because it downloads directly
+     from the Proxmox node and replaces the deprecated
+     `proxmox_virtual_environment_download_file` resource.
+   - Media downloads are defined but disabled by default with
+     `enable_managed_media_downloads = false`. Enable them only for the apply
+     that should create/adopt managed media.
+   - Store VM disk images as `content_type = "import"` on `local`; this storage
+     already has the Proxmox `Import` content type enabled.
+   - Create downloads per node. The `local` datastore is marked shared, but the
+     actual files differ by node, so a single cluster-wide media resource would
+     hide drift.
+   - Pin release URLs and checksums. Avoid mutable `current/` URLs for baseline
+     images unless intentionally testing an image refresh.
+   - The Proxmox download-url API requires `Datastore.AllocateTemplate`,
+     `Sys.Audit`, and `Sys.Modify`. The current `root@pam!tofu` token has
+     `PVEAdmin`; grant the missing download-url privileges before enabling this
+     flag, or the apply will fail at metadata lookup with `Permission check
+     failed`.
+
+2. Rebuild templates from managed media.
+   - Keep current templates imported until replacement templates have been
+     created and boot-tested.
+   - New Linux templates should import from the managed cloud image file for
+     their node, then use cloud-init for first-boot customization.
+   - Replace consumers node-by-node after a clean plan, not by mutating all
+     templates and guests at once.
+
+3. Manage cloud-init snippets without committing secrets.
+   - Non-secret scripts can be uploaded with
+     `proxmox_virtual_environment_file` and `content_type = "snippets"`.
+   - GitHub runner registration tokens must not be committed as static snippets
+     because they end up in OpenTofu state. Generate them at boot, fetch them
+     from a secret manager, or keep the token-bearing snippet manual.
+
+4. Import low-risk cluster configuration.
+   - Storage can be modeled with `proxmox_storage_directory` and
+     `proxmox_storage_lvmthin`, then imported by storage ID.
+   - The disabled cluster firewall options and `vxlan` security group can be
+     modeled and imported, but should stay a separate plan from media/template
+     work.
+   - The `root@pam!tofu` ACL can be modeled with `proxmox_acl`; the token
+     secret itself remains bootstrap/1Password-owned.
+
+5. Leave installer media and guest state explicit.
+   - Windows and Netgate installer ISOs are not good first-class download
+     targets here because of licensing/source stability.
+   - Windows TPM/CD-ROM modeling should remain separate from the no-drift VM
+     import because this provider version only supports one `cdrom` block and
+     did not import the existing TPM state cleanly.

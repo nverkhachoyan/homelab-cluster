@@ -27,3 +27,9 @@ variable "default_ssh_public_key" {
   type        = string
   default     = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBoVotkT+jNCRAtiZM+tQSh/grcNL17yldLsy1OhnsSb nverkhachoyan@iloveyou-2.local"
 }
+
+variable "enable_managed_media_downloads" {
+  description = "Enable creation of managed Proxmox download-file resources. Requires the Proxmox API token to have the download-url privileges documented in README.md."
+  type        = bool
+  default     = false
+}
