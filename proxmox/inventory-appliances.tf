@@ -19,7 +19,7 @@ locals {
       ]
       network_devices = [
         { bridge = "vmbr0", firewall = true, mac_address = "BC:24:11:75:B6:4D", model = "virtio" },
-        { bridge = "vxvnet1", firewall = true, mac_address = "BC:24:11:CC:F3:0E", model = "virtio" },
+        { bridge = proxmox_sdn_vnet.internal_lan.id, firewall = true, mac_address = "BC:24:11:CC:F3:0E", model = "virtio" },
       ]
       operating_system = { type = "l26" }
     }
@@ -41,7 +41,7 @@ locals {
       ]
       network_devices = [
         { bridge = "vmbr0", firewall = true, mac_address = "BC:24:11:CB:25:50", model = "virtio" },
-        { bridge = "vxvnet1", firewall = true, mac_address = "BC:24:11:73:48:F4", model = "virtio", mtu = 1450 },
+        { bridge = proxmox_sdn_vnet.internal_lan.id, firewall = true, mac_address = "BC:24:11:73:48:F4", model = "virtio", mtu = 1450 },
       ]
     }
   }

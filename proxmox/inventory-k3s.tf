@@ -18,7 +18,7 @@ locals {
         { interface = "scsi1", size = 100, discard = "on", iothread = true, ssd = true },
       ]
       network_devices = [
-        { bridge = "vxvnet1", mac_address = "BC:24:11:BD:43:33", model = "virtio", mtu = 1450 },
+        { bridge = proxmox_sdn_vnet.internal_lan.id, mac_address = "BC:24:11:BD:43:33", model = "virtio", mtu = 1450 },
       ]
       initialization = {
         ipv4         = { address = "10.0.0.100/24", gateway = "10.0.0.1" }

@@ -132,6 +132,9 @@ tofu apply -parallelism=1
 Managed/imported:
 
 - current SDN VXLAN zone, VNet, and subnet
+  - zone: `intvxlan`
+  - VNet/bridge: `intlan`
+  - subnet: `10.0.0.0/24`
 - running k3s VM
 - running appliance VMs imported for Proxmox inventory and drift control
 

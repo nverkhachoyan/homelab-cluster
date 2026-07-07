@@ -8,23 +8,23 @@ locals {
   ]
 }
 
-resource "proxmox_sdn_zone_vxlan" "myzone" {
-  id   = "myzone"
+resource "proxmox_sdn_zone_vxlan" "internal_vxlan" {
+  id   = "intvxlan"
   ipam = "pve"
   mtu  = 1450
 
   peers = local.sdn_vxlan_peers
 }
 
-resource "proxmox_sdn_vnet" "vxvnet1" {
-  id   = "vxvnet1"
-  zone = proxmox_sdn_zone_vxlan.myzone.id
+resource "proxmox_sdn_vnet" "internal_lan" {
+  id   = "intlan"
+  zone = proxmox_sdn_zone_vxlan.internal_vxlan.id
   tag  = 100000
 }
 
-resource "proxmox_sdn_subnet" "myzone_10_0_0_0_24" {
+resource "proxmox_sdn_subnet" "internal_lan_10_0_0_0_24" {
   cidr    = "10.0.0.0/24"
   gateway = "10.0.0.1"
   snat    = true
-  vnet    = proxmox_sdn_vnet.vxvnet1.id
+  vnet    = proxmox_sdn_vnet.internal_lan.id
 }
