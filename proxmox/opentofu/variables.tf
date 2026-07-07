@@ -29,7 +29,7 @@ variable "default_ssh_public_key" {
 }
 
 variable "enable_managed_media_downloads" {
-  description = "Enable creation of managed Proxmox download-file resources. Requires the Proxmox API token to have the download-url privileges documented in README.md."
+  description = "Create managed Proxmox download-file resources. Set false only while debugging Proxmox download-url privileges."
   type        = bool
-  default     = false
+  default     = true
 }

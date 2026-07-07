@@ -103,9 +103,9 @@ Managed/imported first:
    - Use `proxmox_download_file` for cloud images because it downloads directly
      from the Proxmox node and replaces the deprecated
      `proxmox_virtual_environment_download_file` resource.
-   - Media downloads are defined but disabled by default with
-     `enable_managed_media_downloads = false`. Enable them only for the apply
-     that should create/adopt managed media.
+   - Media downloads are enabled by default. Set
+     `enable_managed_media_downloads = false` only while debugging Proxmox
+     download-url permissions.
    - Store VM disk images as `content_type = "import"` on `local`; this storage
      already has the Proxmox `Import` content type enabled.
    - Create downloads per node. The `local` datastore is marked shared, but the
@@ -114,10 +114,9 @@ Managed/imported first:
    - Pin release URLs and checksums. Avoid mutable `current/` URLs for baseline
      images unless intentionally testing an image refresh.
    - The Proxmox download-url API requires `Datastore.AllocateTemplate`,
-     `Sys.Audit`, and `Sys.Modify`. The current `root@pam!tofu` token has
-     `PVEAdmin`; grant the missing download-url privileges before enabling this
-     flag, or the apply will fail at metadata lookup with `Permission check
-     failed`.
+     `Sys.Audit`, and `Sys.Modify`. `PVEAdmin` already covers the datastore
+     and audit privileges, and `permissions.tf` grants the existing
+     `root@pam!tofu` token the narrow `OpenTofuDownload` role for `Sys.Modify`.
 
 2. Rebuild templates from managed media.
    - Keep current templates imported until replacement templates have been
@@ -140,8 +139,8 @@ Managed/imported first:
    - The disabled cluster firewall options and `vxlan` security group can be
      modeled and imported, but should stay a separate plan from media/template
      work.
-   - The `root@pam!tofu` ACL can be modeled with `proxmox_acl`; the token
-     secret itself remains bootstrap/1Password-owned.
+   - The additional `root@pam!tofu` download ACL is modeled with `proxmox_acl`;
+     the token secret itself remains bootstrap/1Password-owned.
 
 5. Leave installer media and guest state explicit.
    - Windows and Netgate installer ISOs are not good first-class download
