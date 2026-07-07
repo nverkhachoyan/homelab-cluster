@@ -1,8 +1,3 @@
-output "manual_initially" {
-  description = "Existing guests intentionally left outside OpenTofu management."
-  value       = local.manual_initially
-}
-
 output "cloud_image_file_ids" {
   description = "Managed cloud image file IDs by image name and Proxmox node."
   value = var.enable_managed_media_downloads ? {
