@@ -117,8 +117,10 @@ resource "proxmox_virtual_environment_vm" "this" {
     for_each = var.cdrom == null ? [] : [var.cdrom]
 
     content {
-      enabled   = cdrom.value.enabled
-      file_id   = cdrom.value.file_id
+      # Provider deprecated cdrom.enabled; "none" represents an empty drive.
+      file_id = cdrom.value.enabled == false || (
+        cdrom.value.enabled == null && cdrom.value.file_id == null
+      ) ? "none" : cdrom.value.file_id
       interface = cdrom.value.interface
     }
   }
