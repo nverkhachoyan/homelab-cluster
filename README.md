@@ -20,6 +20,7 @@ Minimal homelab setup for media workloads
 - `kubernetes/scripts/render-traefik.sh`: renders the Traefik Helm chart
 - `kubernetes/scripts/validate.sh`: renders platform, Traefik, and workload manifests
 - `kubernetes/scripts/deploy.sh`: ordered deployment workflow
+- `proxmox/scripts/reconcile-k3s-node-dns.sh`: enforces the live k3s node DNS settings through the Proxmox guest agent
 - `proxmox/`: Proxmox OpenTofu state and workflow documentation
 
 ## Workflow

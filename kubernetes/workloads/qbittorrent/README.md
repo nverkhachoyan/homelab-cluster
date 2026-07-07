@@ -48,6 +48,7 @@ qBittorrent has one Web UI user, so this is not a separate human account. It is 
 - The Kubernetes Service only exposes the Web UI port inside the cluster.
 - BitTorrent TCP/UDP ports are no longer exposed through a home-network LoadBalancer Service.
 - Proton VPN assigns a forwarded port dynamically; Gluetun writes it to `/tmp/gluetun/forwarded_port` inside the Pod.
+- An init container prepares `/tmp/gluetun` for Gluetun's runtime UID/GID (`1000:1000`); the Gluetun sidecar also keeps `DAC_OVERRIDE` because some of its helper writes still run as root after capabilities are dropped.
 - Gluetun authenticates to qBittorrent with `qbittorrent-webui-secrets` and updates qBittorrent's listening port when Proton changes the forwarded port.
 - If the VPN tunnel is down, Gluetun's firewall should prevent qBittorrent from falling back to the home ISP connection.
 

@@ -21,6 +21,7 @@ locals {
         { bridge = proxmox_sdn_vnet.internal_lan.id, mac_address = "BC:24:11:BD:43:33", model = "virtio", mtu = 1450 },
       ]
       initialization = {
+        dns          = { domain = "alligator-rainbow.ts.net", servers = ["1.1.1.1", "1.0.0.1"] }
         ipv4         = { address = "10.0.0.100/24", gateway = "10.0.0.1" }
         user_account = { username = "nverk", keys = local.default_ssh_keys_with_comment }
       }

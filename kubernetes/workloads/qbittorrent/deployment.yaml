@@ -21,6 +21,27 @@ spec:
           type: RuntimeDefault
       nodeSelector:
         kubernetes.io/hostname: k3s-server-01
+      initContainers:
+        - name: prepare-gluetun-tmp
+          image: qmcgaw/gluetun@sha256:b0ee2135e6ba52ad3f102aae9663707cd1c9531485117067a380d3b2b6dd991d
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - chmod 0775 /tmp/gluetun && chown 1000:1000 /tmp/gluetun
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 0
+            runAsGroup: 0
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+                - FOWNER
+          volumeMounts:
+            - name: gluetun-tmp
+              mountPath: /tmp/gluetun
       containers:
         - name: gluetun
           image: qmcgaw/gluetun@sha256:b0ee2135e6ba52ad3f102aae9663707cd1c9531485117067a380d3b2b6dd991d
@@ -76,6 +97,7 @@ spec:
                 - ALL
               add:
                 - CHOWN
+                - DAC_OVERRIDE
                 - NET_ADMIN
                 - NET_RAW
           volumeMounts:

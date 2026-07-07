@@ -127,6 +127,17 @@ Only apply after reviewing the first plan carefully:
 tofu apply -parallelism=1
 ```
 
+After changing the k3s VM network metadata or after a manual VM recovery,
+reconcile the running guest resolver state through the Proxmox guest agent:
+
+```sh
+scripts/reconcile-k3s-node-dns.sh
+```
+
+This keeps Tailscale DNS disabled on the node, pins `eth0` to
+`1.1.1.1`/`1.0.0.1`, verifies Cloudflare Tunnel DNS resolution, and enables the
+guest SSH service.
+
 ## Managed Scope
 
 Managed/imported:
