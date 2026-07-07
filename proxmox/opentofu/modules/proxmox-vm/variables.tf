@@ -14,7 +14,7 @@ variable "vm" {
     delete_unreferenced_disks_on_destroy = optional(bool)
     bios                                 = optional(string, "seabios")
     machine                              = optional(string)
-    scsi_hardware                        = optional(string)
+    scsi_hardware                        = optional(string, "virtio-scsi-single")
     boot_order                           = optional(list(string))
     startup = optional(object({
       down_delay = optional(number)
@@ -51,10 +51,10 @@ variable "vm" {
       shared         = optional(number)
     })
     efi_disk = optional(object({
-      datastore_id      = optional(string)
+      datastore_id      = optional(string, "local-lvm")
       file_format       = optional(string)
       pre_enrolled_keys = optional(bool)
-      type              = optional(string)
+      type              = optional(string, "4m")
     }))
     tpm_state = optional(object({
       datastore_id = optional(string)
@@ -62,7 +62,7 @@ variable "vm" {
     }))
     disks = list(object({
       interface         = string
-      datastore_id      = optional(string)
+      datastore_id      = optional(string, "local-lvm")
       aio               = optional(string)
       backup            = optional(bool)
       cache             = optional(string)
@@ -97,9 +97,9 @@ variable "vm" {
       vlan_id      = optional(number)
     })), [])
     initialization = optional(object({
-      datastore_id         = optional(string)
+      datastore_id         = optional(string, "local-lvm")
       file_format          = optional(string)
-      interface            = optional(string)
+      interface            = optional(string, "ide2")
       meta_data_file_id    = optional(string)
       network_data_file_id = optional(string)
       type                 = optional(string)
