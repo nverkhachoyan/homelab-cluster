@@ -227,8 +227,6 @@ resource "proxmox_virtual_environment_vm" "this" {
 
   lifecycle {
     ignore_changes = [
-      # VM 9000 has a brownfield 3584M boot disk; the provider only accepts whole GB sizes in config.
-      disk[0].size,
       reboot,
       started,
       initialization[0].user_account[0].password,

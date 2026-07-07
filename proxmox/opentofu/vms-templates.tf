@@ -72,7 +72,7 @@ locals {
       memory        = { dedicated = 8192 }
       efi_disk      = { datastore_id = "local-lvm", type = "4m" }
       disks = [
-        { interface = "scsi0", datastore_id = "local-lvm", discard = "on", iothread = true },
+        { interface = "scsi0", datastore_id = "local-lvm", size = 4, discard = "on", iothread = true },
       ]
       network_devices = [
         { bridge = "vmbr0", mac_address = "BC:24:11:3A:5D:47", model = "virtio" },
