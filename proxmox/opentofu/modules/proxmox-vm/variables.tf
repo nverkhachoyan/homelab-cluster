@@ -16,11 +16,6 @@ variable "vm" {
     machine                              = optional(string)
     scsi_hardware                        = optional(string, "virtio-scsi-single")
     boot_order                           = optional(list(string))
-    startup = optional(object({
-      down_delay = optional(number)
-      order      = optional(number)
-      up_delay   = optional(number)
-    }))
     agent = optional(object({
       enabled = optional(bool, true)
       timeout = optional(string)
@@ -33,22 +28,12 @@ variable "vm" {
       }))
     }))
     cpu = object({
-      cores        = number
-      sockets      = optional(number, 1)
-      type         = optional(string, "x86-64-v2-AES")
-      architecture = optional(string)
-      flags        = optional(list(string))
-      hotplugged   = optional(number)
-      limit        = optional(number)
-      numa         = optional(bool)
-      units        = optional(number)
+      cores   = number
+      sockets = optional(number, 1)
+      type    = optional(string, "x86-64-v2-AES")
     })
     memory = object({
-      dedicated      = number
-      floating       = optional(number)
-      hugepages      = optional(string)
-      keep_hugepages = optional(bool)
-      shared         = optional(number)
+      dedicated = number
     })
     efi_disk = optional(object({
       datastore_id      = optional(string, "local-lvm")
@@ -56,32 +41,13 @@ variable "vm" {
       pre_enrolled_keys = optional(bool)
       type              = optional(string, "4m")
     }))
-    tpm_state = optional(object({
-      datastore_id = optional(string)
-      version      = optional(string)
-    }))
     disks = list(object({
-      interface         = string
-      datastore_id      = optional(string, "local-lvm")
-      aio               = optional(string)
-      backup            = optional(bool)
-      cache             = optional(string)
-      discard           = optional(string)
-      file_format       = optional(string)
-      file_id           = optional(string)
-      import_from       = optional(string)
-      iothread          = optional(bool)
-      path_in_datastore = optional(string)
-      queues            = optional(number)
-      replicate         = optional(bool)
-      serial            = optional(string)
-      size              = optional(number)
-      ssd               = optional(bool)
-    }))
-    cdrom = optional(object({
-      enabled   = optional(bool)
-      file_id   = optional(string)
-      interface = optional(string)
+      interface    = string
+      datastore_id = optional(string, "local-lvm")
+      discard      = optional(string)
+      iothread     = optional(bool)
+      size         = optional(number)
+      ssd          = optional(bool)
     }))
     network_devices = optional(list(object({
       bridge       = string

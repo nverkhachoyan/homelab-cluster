@@ -19,16 +19,6 @@ resource "proxmox_virtual_environment_vm" "this" {
   scsi_hardware = var.vm.scsi_hardware
   boot_order    = var.vm.boot_order
 
-  dynamic "startup" {
-    for_each = var.vm.startup == null ? [] : [var.vm.startup]
-
-    content {
-      down_delay = startup.value.down_delay
-      order      = startup.value.order
-      up_delay   = startup.value.up_delay
-    }
-  }
-
   dynamic "agent" {
     for_each = var.vm.agent == null ? [] : [var.vm.agent]
 
@@ -51,23 +41,13 @@ resource "proxmox_virtual_environment_vm" "this" {
   }
 
   cpu {
-    architecture = var.vm.cpu.architecture
-    cores        = var.vm.cpu.cores
-    flags        = var.vm.cpu.flags
-    hotplugged   = var.vm.cpu.hotplugged
-    limit        = var.vm.cpu.limit
-    numa         = var.vm.cpu.numa
-    sockets      = var.vm.cpu.sockets
-    type         = var.vm.cpu.type
-    units        = var.vm.cpu.units
+    cores   = var.vm.cpu.cores
+    sockets = var.vm.cpu.sockets
+    type    = var.vm.cpu.type
   }
 
   memory {
-    dedicated      = var.vm.memory.dedicated
-    floating       = var.vm.memory.floating
-    hugepages      = var.vm.memory.hugepages
-    keep_hugepages = var.vm.memory.keep_hugepages
-    shared         = var.vm.memory.shared
+    dedicated = var.vm.memory.dedicated
   }
 
   dynamic "efi_disk" {
@@ -81,47 +61,16 @@ resource "proxmox_virtual_environment_vm" "this" {
     }
   }
 
-  dynamic "tpm_state" {
-    for_each = var.vm.tpm_state == null ? [] : [var.vm.tpm_state]
-
-    content {
-      datastore_id = tpm_state.value.datastore_id
-      version      = tpm_state.value.version
-    }
-  }
-
   dynamic "disk" {
     for_each = var.vm.disks
 
     content {
-      aio               = disk.value.aio
-      backup            = disk.value.backup
-      cache             = disk.value.cache
-      datastore_id      = disk.value.datastore_id
-      discard           = disk.value.discard
-      file_format       = disk.value.file_format
-      file_id           = disk.value.file_id
-      import_from       = disk.value.import_from
-      interface         = disk.value.interface
-      iothread          = disk.value.iothread
-      path_in_datastore = disk.value.path_in_datastore
-      queues            = disk.value.queues
-      replicate         = disk.value.replicate
-      serial            = disk.value.serial
-      size              = disk.value.size
-      ssd               = disk.value.ssd
-    }
-  }
-
-  dynamic "cdrom" {
-    for_each = var.vm.cdrom == null ? [] : [var.vm.cdrom]
-
-    content {
-      # Provider deprecated cdrom.enabled; "none" represents an empty drive.
-      file_id = cdrom.value.enabled == false || (
-        cdrom.value.enabled == null && cdrom.value.file_id == null
-      ) ? "none" : cdrom.value.file_id
-      interface = cdrom.value.interface
+      datastore_id = disk.value.datastore_id
+      discard      = disk.value.discard
+      interface    = disk.value.interface
+      iothread     = disk.value.iothread
+      size         = disk.value.size
+      ssd          = disk.value.ssd
     }
   }
 
