@@ -33,3 +33,9 @@ variable "enable_managed_media_downloads" {
   type        = bool
   default     = true
 }
+
+variable "download_token_id" {
+  description = "Proxmox API token ID granted the narrow media download role."
+  type        = string
+  default     = "root@pam!tofu"
+}

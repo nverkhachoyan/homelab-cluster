@@ -24,7 +24,7 @@ locals {
         interface    = "ide2"
         ipv4         = { address = "dhcp" }
         ipv6         = { address = "dhcp" }
-        user_account = { username = "nverk", keys = local.default_ssh_keys }
+        user_account = { username = "nverk", keys = local.default_ssh_keys_with_comment }
       }
       operating_system = { type = "l26" }
     }
@@ -51,7 +51,7 @@ locals {
         datastore_id = "local-lvm"
         interface    = "ide2"
         ipv4         = { address = "dhcp" }
-        user_account = { username = "nverk", keys = local.default_ssh_keys }
+        user_account = { username = "nverk", keys = local.default_ssh_keys_with_comment }
       }
       operating_system = { type = "l26" }
     }

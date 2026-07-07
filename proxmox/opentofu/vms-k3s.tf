@@ -25,7 +25,7 @@ locals {
         datastore_id = "local-lvm"
         interface    = "ide2"
         ipv4         = { address = "10.0.0.100/24", gateway = "10.0.0.1" }
-        user_account = { username = "nverk", keys = local.default_ssh_keys }
+        user_account = { username = "nverk", keys = local.default_ssh_keys_with_comment }
       }
       operating_system = { type = "l26" }
     }

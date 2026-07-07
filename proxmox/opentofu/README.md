@@ -71,7 +71,8 @@ If a 1Password item stores the Proxmox token ID and secret as separate fields,
 normalize them into the single `PROXMOX_VE_API_TOKEN` value in `.env`.
 
 Privilege-separated Proxmox API tokens need an ACL of their own. The current
-token is granted `PVEAdmin` at `/`:
+token is granted `PVEAdmin` at `/`. If you use a different token ID, set
+`download_token_id` to match it:
 
 ```sh
 pveum acl modify / --roles PVEAdmin --tokens "root@pam!tofu" --propagate 1

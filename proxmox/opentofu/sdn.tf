@@ -1,15 +1,19 @@
-resource "proxmox_sdn_zone_vxlan" "myzone" {
-  id   = "myzone"
-  ipam = "pve"
-  mtu  = 1450
-
-  peers = [
+locals {
+  sdn_vxlan_peers = [
     "192.168.1.80",
     "192.168.1.81",
     "192.168.1.127",
     "192.168.1.77",
     "192.168.1.146",
   ]
+}
+
+resource "proxmox_sdn_zone_vxlan" "myzone" {
+  id   = "myzone"
+  ipam = "pve"
+  mtu  = 1450
+
+  peers = local.sdn_vxlan_peers
 }
 
 resource "proxmox_sdn_vnet" "vxvnet1" {
