@@ -68,8 +68,7 @@ PROXMOX_VE_API_TOKEN="user@realm!token_id=secret"
 ```
 
 If a 1Password item stores the Proxmox token ID and secret as separate fields,
-normalize them into the single `PROXMOX_VE_API_TOKEN` value in `.env`. The
-scripts do not assemble credentials at runtime.
+normalize them into the single `PROXMOX_VE_API_TOKEN` value in `.env`.
 
 Privilege-separated Proxmox API tokens need an ACL of their own. The current
 token is granted `PVEAdmin` at `/`:
@@ -80,12 +79,35 @@ pveum acl modify / --roles PVEAdmin --tokens "root@pam!tofu" --propagate 1
 
 ## Workflow
 
+Install OpenTofu locally first. From the repo root, change into this directory:
+
 ```sh
-proxmox/scripts/validate.sh
-proxmox/scripts/plan.sh
+cd proxmox/opentofu
 ```
 
-Only run `proxmox/scripts/apply.sh` after reviewing the first plan carefully.
+Validate formatting and configuration without touching the remote backend:
+
+```sh
+tofu fmt -check -recursive
+
+tmp_dir="$(mktemp -d)"
+trap 'rm -rf "$tmp_dir"' EXIT
+TF_DATA_DIR="$tmp_dir" tofu init -backend=false -input=false
+TF_DATA_DIR="$tmp_dir" tofu validate
+```
+
+Create a plan:
+
+```sh
+tofu init -input=false
+tofu plan -parallelism=1
+```
+
+Only apply after reviewing the first plan carefully:
+
+```sh
+tofu apply -parallelism=1
+```
 
 ## First-Pass Scope
 

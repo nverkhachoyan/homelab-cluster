@@ -20,13 +20,17 @@ Minimal homelab setup for media workloads
 - `kubernetes/scripts/render-traefik.sh`: renders the Traefik Helm chart
 - `kubernetes/scripts/validate.sh`: renders platform, Traefik, and workload manifests
 - `kubernetes/scripts/deploy.sh`: ordered deployment workflow
-- `proxmox/scripts/`: validates, plans, and applies Proxmox OpenTofu state
+- `proxmox/opentofu/`: Proxmox OpenTofu state and workflow documentation
 
 ## Workflow
 
-Secrets are supplied from environment variables. With direnv, `.envrc` loads
-the ignored local `.env` file automatically; use the variable names in
-`.env.example`. Run `direnv allow` after changing `.envrc`.
+Install the command-line tools used by the Kubernetes helper scripts: `kubectl`,
+`helm`, and `kubeconform`.
+
+Secrets are supplied from environment variables. With direnv, `.envrc` loads the
+ignored local `.env` file automatically; use the variable names in
+`.env.example`. You can also export the same variables in your shell directly.
+Run `direnv allow` after changing `.envrc`.
 
 ```sh
 kubernetes/scripts/apply_secrets.sh
@@ -34,14 +38,7 @@ kubernetes/scripts/validate.sh
 kubernetes/scripts/deploy.sh
 ```
 
-Proxmox workflow:
-
-```sh
-proxmox/scripts/validate.sh
-proxmox/scripts/plan.sh
-```
-
-Review the first Proxmox plan before running `proxmox/scripts/apply.sh`.
+For the Proxmox workflow, see `proxmox/opentofu/README.md`.
 
 Traefik is rendered directly with Helm instead of through Kustomize because the
 current Kustomize Helm integration calls a Helm v3-only flag and fails with Helm
