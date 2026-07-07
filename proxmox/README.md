@@ -104,7 +104,7 @@ intentionally committed non-secret defaults.
 Install OpenTofu locally first. From the repo root, change into this directory:
 
 ```sh
-cd proxmox/opentofu
+cd proxmox
 ```
 
 Validate formatting and configuration without touching the remote backend:

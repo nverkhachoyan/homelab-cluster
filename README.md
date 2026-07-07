@@ -10,7 +10,7 @@ Minimal homelab setup for media workloads
 - Storage:
   - Shared media data on NFS (`media-pv` / `media-pvc`)
   - App config PVCs on k3s `local-path`
-- Proxmox: OpenTofu definitions for brownfield VM import under `proxmox/opentofu/`
+- Proxmox: OpenTofu definitions for brownfield VM import under `proxmox/`
 
 ## Structure
 
@@ -20,7 +20,7 @@ Minimal homelab setup for media workloads
 - `kubernetes/scripts/render-traefik.sh`: renders the Traefik Helm chart
 - `kubernetes/scripts/validate.sh`: renders platform, Traefik, and workload manifests
 - `kubernetes/scripts/deploy.sh`: ordered deployment workflow
-- `proxmox/opentofu/`: Proxmox OpenTofu state and workflow documentation
+- `proxmox/`: Proxmox OpenTofu state and workflow documentation
 
 ## Workflow
 
@@ -38,7 +38,7 @@ kubernetes/scripts/validate.sh
 kubernetes/scripts/deploy.sh
 ```
 
-For the Proxmox workflow, see `proxmox/opentofu/README.md`.
+For the Proxmox workflow, see `proxmox/README.md`.
 
 Traefik is rendered directly with Helm instead of through Kustomize because the
 current Kustomize Helm integration calls a Helm v3-only flag and fails with Helm
