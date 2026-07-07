@@ -11,8 +11,5 @@ if ! command -v "$TOFU_BIN" >/dev/null 2>&1; then
   exit 1
 fi
 
-# shellcheck source=proxmox/scripts/env.sh
-source "${SCRIPT_DIR}/env.sh"
-
 "$TOFU_BIN" -chdir="$TOFU_DIR" init -input=false
 "$TOFU_BIN" -chdir="$TOFU_DIR" plan -parallelism=1 "$@"

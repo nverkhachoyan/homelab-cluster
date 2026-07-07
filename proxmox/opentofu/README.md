@@ -4,9 +4,9 @@ This directory manages Proxmox VM lifecycle with the `bpg/proxmox` provider.
 It starts as a brownfield import of the Linux/cloud-init guests and templates
 already running in the `olympus` cluster.
 
-Credentials are intentionally not stored here. The helper scripts read
-`PROXMOX_VE_API_TOKEN` and AWS credentials directly, or build them from
-1Password fields.
+Credentials are intentionally not stored here. With direnv, `.envrc` loads the
+ignored repo-local `.env` file automatically. You can also export the variables
+in your shell directly; use the variable names in `.env.example`.
 
 State is stored in S3:
 
@@ -24,12 +24,12 @@ State is stored in S3:
 
 ## Credential Setup
 
-Add these fields to the `homelab-secrets` 1Password item:
+Set these variables in `.env` or your shell:
 
-- `proxmox_api_token_id`
-- `proxmox_api_token_secret`
-- `aws_s3_backend_access_key_id`
-- `aws_s3_backend_secret_access_key`
+- `PROXMOX_VE_API_TOKEN`
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+- `AWS_EC2_METADATA_DISABLED=true`
 
 The AWS access key only needs permission to read/write this state object and
 its lock file. A scoped IAM policy can look like this:
@@ -67,8 +67,9 @@ The token value format used by the provider is:
 PROXMOX_VE_API_TOKEN="user@realm!token_id=secret"
 ```
 
-You can also export `PROXMOX_VE_API_TOKEN` and
-`AWS_ACCESS_KEY_ID`/`AWS_SECRET_ACCESS_KEY` yourself and skip 1Password.
+If a 1Password item stores the Proxmox token ID and secret as separate fields,
+normalize them into the single `PROXMOX_VE_API_TOKEN` value in `.env`. The
+scripts do not assemble credentials at runtime.
 
 Privilege-separated Proxmox API tokens need an ACL of their own. The current
 token is granted `PVEAdmin` at `/`:

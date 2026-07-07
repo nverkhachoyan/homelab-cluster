@@ -10,18 +10,18 @@ Run the repository secret script before deploying:
 kubernetes/scripts/apply_secrets.sh
 ```
 
-It reads the `homelab-secrets` 1Password item and creates:
+It reads environment variables loaded by direnv or the current shell and creates:
 
 - `cloudflared/homelab-secrets`
 - `media/protonvpn-secrets`
 - `media/qbittorrent-webui-secrets`
 
-Required 1Password field labels:
+Required environment variables:
 
-- `cloudflare_tunnel_token`
-- `protonvpn_wireguard_private_key`
-- `qbittorrent_webui_username`
-- `qbittorrent_webui_password`
+- `CLOUDFLARE_TUNNEL_TOKEN`
+- `PROTONVPN_WIREGUARD_PRIVATE_KEY`
+- `QBITTORRENT_WEBUI_USERNAME`
+- `QBITTORRENT_WEBUI_PASSWORD`
 
 To create the qBittorrent secrets manually instead, use:
 

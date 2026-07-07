@@ -16,13 +16,17 @@ Minimal homelab setup for media workloads
 
 - `kubernetes/platform/`: infrastructure manifests and top-level platform kustomization
 - `kubernetes/workloads/`: media namespace, storage, app manifests, and top-level workload kustomization
-- `kubernetes/scripts/apply_secrets.sh`: creates Kubernetes Secrets from the `homelab-secrets` 1Password item
+- `kubernetes/scripts/apply_secrets.sh`: creates Kubernetes Secrets from local environment variables
 - `kubernetes/scripts/render-traefik.sh`: renders the Traefik Helm chart
 - `kubernetes/scripts/validate.sh`: renders platform, Traefik, and workload manifests
 - `kubernetes/scripts/deploy.sh`: ordered deployment workflow
 - `proxmox/scripts/`: validates, plans, and applies Proxmox OpenTofu state
 
 ## Workflow
+
+Secrets are supplied from environment variables. With direnv, `.envrc` loads
+the ignored local `.env` file automatically; use the variable names in
+`.env.example`. Run `direnv allow` after changing `.envrc`.
 
 ```sh
 kubernetes/scripts/apply_secrets.sh
