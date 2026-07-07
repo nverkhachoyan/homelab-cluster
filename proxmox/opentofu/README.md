@@ -17,21 +17,27 @@ State is stored in S3:
 ## File Layout
 
 - `backend.tf`, `providers.tf`, `versions.tf`: OpenTofu backend and provider setup
-- `variables.tf`, `locals.tf`, `outputs.tf`: shared inputs, derived values, and outputs
+- `variables.tf`, `outputs.tf`: shared inputs and outputs
+- `ssh-keys.tf`: cloud-init SSH key shaping
 - `acl.tf`: Proxmox token ACLs and custom roles
 - `cloud-images.tf`: managed cloud image downloads
 - `sdn.tf`: brownfield Proxmox SDN resources
-- `vms.tf`: stable module call for imported VMs
-- `inventory-*.tf`: grouped VM inventory by role
-- `modules/proxmox-vm/`: reusable VM shape with brownfield lifecycle guards
+- `vm-resource.tf`: direct Proxmox VM resources for imported VMs
+- `inventory.tf`: merged VM inventory map
+- `inventory-*.tf`: grouped VM inventory by role; split these further if a role
+  grows too large to scan comfortably
 
 ## Refactoring Safely
 
 - OpenTofu concatenates all `*.tf` files in this directory, so file renames and
   inventory splits do not change the resource graph by themselves.
 - `local.vms` map keys are part of each VM's state address. Renaming a key
-  requires a `moved {}` block and a clean plan.
-- Every change must keep `tofu plan` empty before merge.
+  requires a `moved {}` block from the old
+  `proxmox_virtual_environment_vm.vms["key"]` address to the new one and a
+  clean plan.
+- Every change must keep `tofu plan` free of infrastructure add/change/destroy
+  actions before merge. Address-only `moved {}` plans are acceptable for state
+  migrations.
 
 ## Credential Setup
 
