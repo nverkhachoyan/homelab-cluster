@@ -227,10 +227,6 @@ resource "proxmox_virtual_environment_vm" "this" {
 
   lifecycle {
     ignore_changes = [
-      # VM 9000 is a template with a base-* boot disk. The bpg/proxmox provider
-      # only resizes vm-* disks it considers VM-owned, so this stays ignored
-      # until template base disks can be modeled separately.
-      disk[0].size,
       reboot,
       started,
       initialization[0].user_account[0].password,
