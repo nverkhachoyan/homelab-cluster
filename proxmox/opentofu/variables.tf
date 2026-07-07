@@ -1,3 +1,5 @@
+# The endpoint and SSH public key defaults are non-secret homelab defaults;
+# credentials stay in environment variables.
 variable "proxmox_endpoint" {
   description = "Proxmox API endpoint. Credentials are provided by PROXMOX_VE_API_TOKEN."
   type        = string

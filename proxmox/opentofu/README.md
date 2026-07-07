@@ -17,10 +17,21 @@ State is stored in S3:
 ## File Layout
 
 - `backend.tf`, `providers.tf`, `versions.tf`: OpenTofu backend and provider setup
+- `variables.tf`, `locals.tf`, `outputs.tf`: shared inputs, derived values, and outputs
+- `acl.tf`: Proxmox token ACLs and custom roles
+- `cloud-images.tf`: managed cloud image downloads
 - `sdn.tf`: brownfield Proxmox SDN resources
 - `vms.tf`: stable module call for imported VMs
-- `vms-*.tf`: grouped VM inventory by role
+- `inventory-*.tf`: grouped VM inventory by role
 - `modules/proxmox-vm/`: reusable VM shape with brownfield lifecycle guards
+
+## Refactoring Safely
+
+- OpenTofu concatenates all `*.tf` files in this directory, so file renames and
+  inventory splits do not change the resource graph by themselves.
+- `local.vms` map keys are part of each VM's state address. Renaming a key
+  requires a `moved {}` block and a clean plan.
+- Every change must keep `tofu plan` empty before merge.
 
 ## Credential Setup
 
@@ -71,12 +82,16 @@ If a 1Password item stores the Proxmox token ID and secret as separate fields,
 normalize them into the single `PROXMOX_VE_API_TOKEN` value in `.env`.
 
 Privilege-separated Proxmox API tokens need an ACL of their own. The current
-token is granted `PVEAdmin` at `/`. If you use a different token ID, set
-`download_token_id` to match it:
+token is granted `PVEAdmin` at `/`, plus the `OpenTofuDownload` role from
+`acl.tf` for the media download `Sys.Modify` permission. If you use a different
+token ID, set `download_token_id` to match it:
 
 ```sh
 pveum acl modify / --roles PVEAdmin --tokens "root@pam!tofu" --propagate 1
 ```
+
+The `proxmox_endpoint` and default SSH public key values in `variables.tf` are
+intentionally committed non-secret defaults.
 
 ## Workflow
 
@@ -139,7 +154,7 @@ Managed/imported first:
      images unless intentionally testing an image refresh.
    - The Proxmox download-url API requires `Datastore.AllocateTemplate`,
      `Sys.Audit`, and `Sys.Modify`. `PVEAdmin` already covers the datastore
-     and audit privileges, and `permissions.tf` grants the existing
+     and audit privileges, and `acl.tf` grants the existing
      `root@pam!tofu` token the narrow `OpenTofuDownload` role for `Sys.Modify`.
 
 2. Rebuild templates from managed media.
