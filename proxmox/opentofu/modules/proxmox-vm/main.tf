@@ -1,26 +1,26 @@
 # Brownfield VMs should never be deleted by OpenTofu. In-place changes are still
 # possible, so plan output must be reviewed before applying.
 resource "proxmox_virtual_environment_vm" "this" {
-  name      = var.name
-  node_name = var.node_name
-  vm_id     = var.vm_id
-  tags      = var.tags
-  template  = var.template
-  on_boot   = var.on_boot
-  started   = var.started
+  name      = var.vm.name
+  node_name = var.vm.node_name
+  vm_id     = var.vm.vm_id
+  tags      = var.vm.tags
+  template  = var.vm.template
+  on_boot   = var.vm.on_boot
+  started   = var.vm.started
 
-  delete_unreferenced_disks_on_destroy = var.delete_unreferenced_disks_on_destroy
-  protection                           = var.protection
-  purge_on_destroy                     = var.purge_on_destroy
-  stop_on_destroy                      = var.stop_on_destroy
+  delete_unreferenced_disks_on_destroy = var.vm.delete_unreferenced_disks_on_destroy
+  protection                           = var.vm.protection
+  purge_on_destroy                     = var.vm.purge_on_destroy
+  stop_on_destroy                      = var.vm.stop_on_destroy
 
-  bios          = var.bios
-  machine       = var.machine
-  scsi_hardware = var.scsi_hardware
-  boot_order    = var.boot_order
+  bios          = var.vm.bios
+  machine       = var.vm.machine
+  scsi_hardware = var.vm.scsi_hardware
+  boot_order    = var.vm.boot_order
 
   dynamic "startup" {
-    for_each = var.startup == null ? [] : [var.startup]
+    for_each = var.vm.startup == null ? [] : [var.vm.startup]
 
     content {
       down_delay = startup.value.down_delay
@@ -30,7 +30,7 @@ resource "proxmox_virtual_environment_vm" "this" {
   }
 
   dynamic "agent" {
-    for_each = var.agent == null ? [] : [var.agent]
+    for_each = var.vm.agent == null ? [] : [var.vm.agent]
 
     content {
       enabled = agent.value.enabled
@@ -51,27 +51,27 @@ resource "proxmox_virtual_environment_vm" "this" {
   }
 
   cpu {
-    architecture = var.cpu.architecture
-    cores        = var.cpu.cores
-    flags        = var.cpu.flags
-    hotplugged   = var.cpu.hotplugged
-    limit        = var.cpu.limit
-    numa         = var.cpu.numa
-    sockets      = var.cpu.sockets
-    type         = var.cpu.type
-    units        = var.cpu.units
+    architecture = var.vm.cpu.architecture
+    cores        = var.vm.cpu.cores
+    flags        = var.vm.cpu.flags
+    hotplugged   = var.vm.cpu.hotplugged
+    limit        = var.vm.cpu.limit
+    numa         = var.vm.cpu.numa
+    sockets      = var.vm.cpu.sockets
+    type         = var.vm.cpu.type
+    units        = var.vm.cpu.units
   }
 
   memory {
-    dedicated      = var.memory.dedicated
-    floating       = var.memory.floating
-    hugepages      = var.memory.hugepages
-    keep_hugepages = var.memory.keep_hugepages
-    shared         = var.memory.shared
+    dedicated      = var.vm.memory.dedicated
+    floating       = var.vm.memory.floating
+    hugepages      = var.vm.memory.hugepages
+    keep_hugepages = var.vm.memory.keep_hugepages
+    shared         = var.vm.memory.shared
   }
 
   dynamic "efi_disk" {
-    for_each = var.efi_disk == null ? [] : [var.efi_disk]
+    for_each = var.vm.efi_disk == null ? [] : [var.vm.efi_disk]
 
     content {
       datastore_id      = efi_disk.value.datastore_id
@@ -82,7 +82,7 @@ resource "proxmox_virtual_environment_vm" "this" {
   }
 
   dynamic "tpm_state" {
-    for_each = var.tpm_state == null ? [] : [var.tpm_state]
+    for_each = var.vm.tpm_state == null ? [] : [var.vm.tpm_state]
 
     content {
       datastore_id = tpm_state.value.datastore_id
@@ -91,7 +91,7 @@ resource "proxmox_virtual_environment_vm" "this" {
   }
 
   dynamic "disk" {
-    for_each = var.disks
+    for_each = var.vm.disks
 
     content {
       aio               = disk.value.aio
@@ -114,7 +114,7 @@ resource "proxmox_virtual_environment_vm" "this" {
   }
 
   dynamic "cdrom" {
-    for_each = var.cdrom == null ? [] : [var.cdrom]
+    for_each = var.vm.cdrom == null ? [] : [var.vm.cdrom]
 
     content {
       # Provider deprecated cdrom.enabled; "none" represents an empty drive.
@@ -126,7 +126,7 @@ resource "proxmox_virtual_environment_vm" "this" {
   }
 
   network_device = [
-    for device in var.network_devices : {
+    for device in var.vm.network_devices : {
       bridge       = device.bridge
       disconnected = device.disconnected
       enabled      = device.enabled
@@ -142,7 +142,7 @@ resource "proxmox_virtual_environment_vm" "this" {
   ]
 
   dynamic "initialization" {
-    for_each = var.initialization == null ? [] : [var.initialization]
+    for_each = var.vm.initialization == null ? [] : [var.vm.initialization]
 
     content {
       datastore_id         = initialization.value.datastore_id
@@ -200,7 +200,7 @@ resource "proxmox_virtual_environment_vm" "this" {
   }
 
   dynamic "operating_system" {
-    for_each = var.operating_system == null ? [] : [var.operating_system]
+    for_each = var.vm.operating_system == null ? [] : [var.vm.operating_system]
 
     content {
       type = operating_system.value.type
@@ -208,7 +208,7 @@ resource "proxmox_virtual_environment_vm" "this" {
   }
 
   dynamic "serial_device" {
-    for_each = var.serial_devices
+    for_each = var.vm.serial_devices
 
     content {
       device = serial_device.value.device
@@ -216,7 +216,7 @@ resource "proxmox_virtual_environment_vm" "this" {
   }
 
   dynamic "vga" {
-    for_each = var.vga == null ? [] : [var.vga]
+    for_each = var.vm.vga == null ? [] : [var.vm.vga]
 
     content {
       clipboard = vga.value.clipboard
