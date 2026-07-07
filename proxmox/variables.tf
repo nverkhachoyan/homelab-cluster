@@ -29,15 +29,3 @@ variable "default_ssh_public_key" {
   type        = string
   default     = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBoVotkT+jNCRAtiZM+tQSh/grcNL17yldLsy1OhnsSb nverkhachoyan@iloveyou-2.local"
 }
-
-variable "enable_managed_media_downloads" {
-  description = "Create managed Proxmox download-file resources. Set false only while debugging Proxmox download-url privileges."
-  type        = bool
-  default     = true
-}
-
-variable "download_token_id" {
-  description = "Proxmox API token ID granted the narrow media download role."
-  type        = string
-  default     = "root@pam!tofu"
-}

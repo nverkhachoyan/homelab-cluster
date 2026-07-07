@@ -1,25 +1,5 @@
 locals {
   appliance_vms = {
-    win11 = {
-      node_name  = "zeus"
-      vm_id      = 102
-      name       = "win11"
-      bios       = "ovmf"
-      machine    = "pc-q35-10.1"
-      boot_order = ["scsi0", "ide2", "ide0", "net0"]
-      agent      = { enabled = true }
-      cpu        = { cores = 4, sockets = 1, type = "x86-64-v2-AES" }
-      memory     = { dedicated = 8192 }
-      efi_disk   = { pre_enrolled_keys = true }
-      disks = [
-        { interface = "scsi0", size = 100, discard = "on", iothread = true },
-      ]
-      network_devices = [
-        { bridge = "vmbr0", firewall = false, mac_address = "BC:24:11:4D:15:2B", model = "virtio" },
-      ]
-      operating_system = { type = "win11" }
-    }
-
     home_assistant = {
       node_name  = "apollo"
       vm_id      = 107

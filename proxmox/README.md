@@ -1,8 +1,8 @@
 # Proxmox OpenTofu
 
 This directory manages Proxmox VM lifecycle with the `bpg/proxmox` provider.
-It starts as a brownfield import of the Linux/cloud-init guests and templates
-already running in the `olympus` cluster.
+It is a brownfield import of the running Proxmox guests and the SDN resources
+they need in the `olympus` cluster.
 
 Credentials are intentionally not stored here. With direnv, `.envrc` loads the
 ignored repo-local `.env` file automatically. You can also export the variables
@@ -17,10 +17,8 @@ State is stored in S3:
 ## File Layout
 
 - `backend.tf`, `providers.tf`, `versions.tf`: OpenTofu backend and provider setup
-- `variables.tf`, `outputs.tf`: shared inputs and outputs
+- `variables.tf`: shared inputs
 - `ssh-keys.tf`: cloud-init SSH key shaping
-- `acl.tf`: Proxmox token ACLs and custom roles
-- `cloud-images.tf`: managed cloud image downloads
 - `sdn.tf`: brownfield Proxmox SDN resources
 - `vm-resource.tf`: direct Proxmox VM resources for imported VMs
 - `inventory.tf`: merged VM inventory map
@@ -35,9 +33,9 @@ State is stored in S3:
   requires a `moved {}` block from the old
   `proxmox_virtual_environment_vm.vms["key"]` address to the new one and a
   clean plan.
-- Every change must keep `tofu plan` free of infrastructure add/change/destroy
-  actions before merge. Address-only `moved {}` plans are acceptable for state
-  migrations.
+- Pure refactors should keep `tofu plan` free of infrastructure
+  add/change/destroy actions. Address-only `moved {}` plans are acceptable for
+  state migrations.
 
 ## Credential Setup
 
@@ -88,9 +86,7 @@ If a 1Password item stores the Proxmox token ID and secret as separate fields,
 normalize them into the single `PROXMOX_VE_API_TOKEN` value in `.env`.
 
 Privilege-separated Proxmox API tokens need an ACL of their own. The current
-token is granted `PVEAdmin` at `/`, plus the `OpenTofuDownload` role from
-`acl.tf` for the media download `Sys.Modify` permission. If you use a different
-token ID, set `download_token_id` to match it:
+token is granted `PVEAdmin` at `/`:
 
 ```sh
 pveum acl modify / --roles PVEAdmin --tokens "root@pam!tofu" --propagate 1
@@ -131,63 +127,30 @@ Only apply after reviewing the first plan carefully:
 tofu apply -parallelism=1
 ```
 
-## First-Pass Scope
+## Managed Scope
 
-Managed/imported first:
+Managed/imported:
 
 - current SDN VXLAN zone, VNet, and subnet
-- k3s VMs
-- Linux utility VMs
-- appliance VMs imported for Proxmox inventory and drift control
-- GitHub Actions runner templates
-- Ubuntu cloud-init templates
+- running k3s VM
+- running appliance VMs imported for Proxmox inventory and drift control
 
 ## Roadmap
 
-1. Manage reusable media.
-   - Use `proxmox_download_file` for cloud images because it downloads directly
-     from the Proxmox node and replaces the deprecated
-     `proxmox_virtual_environment_download_file` resource.
-   - Media downloads are enabled by default. Set
-     `enable_managed_media_downloads = false` only while debugging Proxmox
-     download-url permissions.
-   - Store VM disk images as `content_type = "import"` on `local`; this storage
-     already has the Proxmox `Import` content type enabled.
-   - Create downloads per node. The `local` datastore is marked shared, but the
-     actual files differ by node, so a single cluster-wide media resource would
-     hide drift.
-   - Pin release URLs and checksums. Avoid mutable `current/` URLs for baseline
-     images unless intentionally testing an image refresh.
-   - The Proxmox download-url API requires `Datastore.AllocateTemplate`,
-     `Sys.Audit`, and `Sys.Modify`. `PVEAdmin` already covers the datastore
-     and audit privileges, and `acl.tf` grants the existing
-     `root@pam!tofu` token the narrow `OpenTofuDownload` role for `Sys.Modify`.
-
-2. Rebuild templates from managed media.
-   - Keep current templates imported until replacement templates have been
-     created and boot-tested.
-   - New Linux templates should import from the managed cloud image file for
-     their node, then use cloud-init for first-boot customization.
-   - Replace consumers node-by-node after a clean plan, not by mutating all
-     templates and guests at once.
-
-3. Manage cloud-init snippets without committing secrets.
+1. Manage cloud-init snippets without committing secrets.
    - Non-secret scripts can be uploaded with
      `proxmox_virtual_environment_file` and `content_type = "snippets"`.
    - GitHub runner registration tokens must not be committed as static snippets
      because they end up in OpenTofu state. Generate them at boot, fetch them
      from a secret manager, or keep the token-bearing snippet manual.
 
-4. Import low-risk cluster configuration.
+2. Import low-risk cluster configuration.
    - Storage can be modeled with `proxmox_storage_directory` and
      `proxmox_storage_lvmthin`, then imported by storage ID.
    - The disabled cluster firewall options and `vxlan` security group can be
-     modeled and imported, but should stay a separate plan from media/template
-     work.
-   - The additional `root@pam!tofu` download ACL is modeled with `proxmox_acl`;
-     the token secret itself remains bootstrap/1Password-owned.
+     modeled and imported, but should stay a separate plan.
 
-5. Leave installer media and guest state explicit.
+3. Leave installer media and guest state explicit.
    - Windows and Netgate installer ISOs are not good first-class download
      targets here because of licensing/source stability.
    - Windows TPM/CD-ROM modeling should remain separate from the no-drift VM
