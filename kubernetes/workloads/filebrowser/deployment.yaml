@@ -23,7 +23,7 @@ spec:
         kubernetes.io/hostname: k3s-server-01
       containers:
         - name: filebrowser
-          image: filebrowser/filebrowser@sha256:a7b81cab28cf93de4c3ac97403d92f38d23191d7247e9c37611d4afa2d8d0c69
+          image: filebrowser/filebrowser@sha256:c4c627f687668c5a02ab410d8473712c77be7f1f0ea4f8d624d2a1392c495e76
           ports:
             - name: http
               containerPort: 80

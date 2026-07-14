@@ -1,5 +1,6 @@
 service:
-  type: LoadBalancer
+  spec:
+    type: LoadBalancer
 ports:
   web:
     port: 8000
@@ -13,16 +14,16 @@ ports:
       default: true
     exposedPort: 443
     protocol: TCP
-    tls:
-      enabled: false
+    http:
+      tls:
+        enabled: false
 ingressRoute:
   dashboard:
     enabled: false
-logs:
-  general:
-    level: INFO
-  access:
-    enabled: false
+log:
+  level: INFO
+accessLog:
+  enabled: false
 providers:
   kubernetesCRD:
     enabled: false

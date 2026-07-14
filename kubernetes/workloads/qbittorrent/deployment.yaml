@@ -106,7 +106,7 @@ spec:
             - name: gluetun-tmp
               mountPath: /tmp/gluetun
         - name: qbittorrent
-          image: lscr.io/linuxserver/qbittorrent@sha256:065792d2b11f0facff340210fc1cf13623b029a94ecdf08b02d06d922205f618
+          image: lscr.io/linuxserver/qbittorrent@sha256:352371a7242e8b4aa10958ca02076d1023758070519b89a10251475fb9f1a35a
           command:
             - /bin/sh
             - -c
