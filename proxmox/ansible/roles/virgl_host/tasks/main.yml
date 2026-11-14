@@ -1,0 +1,10 @@
+# QEMU needs these to start VMs with vga: virtio-gl (VirGL). They're inert
+# until a VM uses them; installing them everywhere lets such a VM run on any node.
+- name: Install OpenGL/EGL libraries for VirGL guests
+  ansible.builtin.apt:
+    name:
+      - libgl1
+      - libegl1
+    state: present
+    update_cache: true
+    cache_valid_time: 3600

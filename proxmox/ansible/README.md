@@ -39,6 +39,17 @@ This only covers Linux. Firmware screens (HP logo, F10 setup, GRUB) need a
 DisplayPort EDID dummy plug. If a plug ends up on a port other than DP-1, set
 `headless_display_connector` for that host in `inventory.yml`.
 
+### `virgl_host`
+
+Installs `libgl1` and `libegl1`, which QEMU needs to start a VM with
+`vga: virtio-gl` (VirGL: the guest's OpenGL is rendered on the node's iGPU).
+They do nothing until a VM uses them; having them on every node lets a VirGL VM
+migrate or be restored anywhere.
+
+Only enable `virtio-gl` on desktop VMs. Server VMs gain nothing from it,
+FreeBSD (pfSense) has no VirGL guest driver, and the Windows virtio-gpu driver
+has no 3D support.
+
 ## Adding a Role
 
 Create `roles/<name>/` with `tasks/main.yml` (plus `defaults/`, `templates/`,
