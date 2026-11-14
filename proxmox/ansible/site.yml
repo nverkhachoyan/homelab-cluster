@@ -4,3 +4,9 @@
   roles:
     - headless_display
     - virgl_host
+
+- name: Enable Intel GVT-g virtual GPUs
+  hosts: gvt_hosts
+  gather_facts: false
+  roles:
+    - gvt_host

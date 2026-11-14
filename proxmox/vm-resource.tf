@@ -164,6 +164,19 @@ resource "proxmox_virtual_environment_vm" "vms" {
     }
   }
 
+  dynamic "hostpci" {
+    for_each = try(each.value.hostpci, [])
+
+    content {
+      device  = hostpci.value.device
+      mapping = try(hostpci.value.mapping, null)
+      mdev    = try(hostpci.value.mdev, null)
+      pcie    = try(hostpci.value.pcie, null)
+      rombar  = try(hostpci.value.rombar, null)
+      xvga    = try(hostpci.value.xvga, null)
+    }
+  }
+
   dynamic "vga" {
     for_each = try(each.value.vga, null) == null ? [] : [each.value.vga]
 

@@ -26,6 +26,11 @@ locals {
         user_account = { username = "nverk", keys = local.default_ssh_keys_with_comment }
       }
       operating_system = { type = "l26" }
+
+      # GVT-g virtual GPU for Jellyfin Quick Sync; V5_4 is the largest type.
+      hostpci = [
+        { device = "hostpci0", mapping = proxmox_hardware_mapping_pci.igpu.name, mdev = "i915-GVTg_V5_4", pcie = true },
+      ]
     }
   }
 }

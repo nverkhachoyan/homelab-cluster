@@ -21,6 +21,8 @@ State is stored in S3:
 - `ssh-keys.tf`: cloud-init SSH key shaping
 - `sdn.tf`: brownfield Proxmox SDN resources
 - `vm-resource.tf`: direct Proxmox VM resources for imported VMs
+- `hardware-mappings.tf`: cluster PCI resource mappings (the zeus iGPU for
+  GVT-g virtual GPUs)
 - `inventory.tf`: merged VM inventory map
 - `inventory-*.tf`: grouped VM inventory by role; split these further if a role
   grows too large to scan comfortably
@@ -94,6 +96,13 @@ token is granted `PVEAdmin` at `/`:
 pveum acl modify / --roles PVEAdmin --tokens "root@pam!tofu" --propagate 1
 ```
 
+PCI resource mappings (`hardware-mappings.tf`) need `Mapping.Modify`, which
+`PVEAdmin` doesn't include, so the token also has `PVEMappingAdmin` there:
+
+```sh
+pveum acl modify /mapping/pci --roles PVEMappingAdmin --tokens "root@pam!tofu" --propagate 1
+```
+
 The `proxmox_endpoint` and default SSH public key values in `variables.tf` are
 intentionally committed non-secret defaults.
 
@@ -151,6 +160,7 @@ Managed/imported:
 - running k3s VM
 - running appliance VMs imported for Proxmox inventory and drift control
 - general-purpose server VMs (`inventory-general.tf`, e.g. `akademos`)
+- the `igpu` PCI mapping and the k3s VM's GVT-g virtual GPU (Jellyfin Quick Sync)
 
 Not managed: throwaway or experimental VMs (such as desktop distro test VMs),
 node storage definitions, and the cluster firewall.

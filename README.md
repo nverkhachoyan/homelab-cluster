@@ -4,9 +4,10 @@ Minimal homelab setup for media workloads
 
 ## Stack
 
-- Platform: MetalLB, Traefik, Cloudflared
+- Platform: MetalLB, Traefik, Cloudflared, Intel GPU device plugin
 - Workloads: Radarr, Sonarr, Readarr, Prowlarr, FlareSolverr, Jellyfin, Jellyseerr, Kavita, qBittorrent, Filebrowser
 - Network privacy: qBittorrent runs through a Gluetun sidecar using Proton VPN WireGuard and Proton VPN port forwarding
+- Hardware transcoding: Jellyfin uses Intel Quick Sync through a GVT-g virtual GPU on zeus, exposed to pods by the Intel GPU device plugin
 - Storage:
   - Shared media data on NFS (`media-pv` / `media-pvc`)
   - App config PVCs on k3s `local-path`
@@ -22,7 +23,7 @@ Minimal homelab setup for media workloads
 - `kubernetes/scripts/deploy.sh`: ordered deployment workflow
 - `proxmox/scripts/reconcile-k3s-node-dns.sh`: enforces the live k3s node DNS settings through the Proxmox guest agent
 - `proxmox/`: Proxmox OpenTofu state and workflow documentation
-- `proxmox/ansible/`: Ansible playbook for Proxmox node OS settings (headless display for AMT remote screen, VirGL host libraries)
+- `proxmox/ansible/`: Ansible playbook for Proxmox node OS settings (headless display for AMT remote screen, VirGL host libraries, GVT-g on zeus)
 
 ## Workflow
 

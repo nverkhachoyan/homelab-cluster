@@ -50,6 +50,19 @@ Only enable `virtio-gl` on desktop VMs. Server VMs gain nothing from it,
 FreeBSD (pfSense) has no VirGL guest driver, and the Windows virtio-gpu driver
 has no 3D support.
 
+### `gvt_host` (hosts in `gvt_hosts`: zeus)
+
+Enables Intel GVT-g so the iGPU is split into mediated virtual GPUs (mdev) for
+VMs while the host keeps the display for AMT KVM. Adds `i915.enable_gvt=1` to
+the kernel command line and loads `kvmgt` at boot. Needs a node reboot to take
+effect.
+
+After the reboot, the available types are listed under
+`/sys/bus/pci/devices/0000:00:02.0/mdev_supported_types/`. On zeus (256 MB
+aperture) that's `i915-GVTg_V5_4` (1 instance) and `i915-GVTg_V5_8` (2). The
+k3s VM uses `V5_4` for Jellyfin Quick Sync through the `igpu` mapping in
+`../hardware-mappings.tf`.
+
 ## Adding a Role
 
 Create `roles/<name>/` with `tasks/main.yml` (plus `defaults/`, `templates/`,

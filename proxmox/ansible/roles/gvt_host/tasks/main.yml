@@ -1,0 +1,18 @@
+# Takes effect after a reboot: i915 only reads enable_gvt when it loads.
+- name: Enable GVT-g on the kernel command line
+  ansible.builtin.copy:
+    src: gvt.cfg
+    dest: /etc/default/grub.d/gvt.cfg
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Regenerate GRUB config for GVT-g
+
+# kvmgt registers the GVT-g mdev types that VMs attach to.
+- name: Load kvmgt at boot
+  ansible.builtin.copy:
+    content: "kvmgt\n"
+    dest: /etc/modules-load.d/kvmgt.conf
+    owner: root
+    group: root
+    mode: "0644"

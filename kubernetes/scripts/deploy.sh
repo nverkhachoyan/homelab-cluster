@@ -32,6 +32,7 @@ kubectl apply -f "${REPO_ROOT}/kubernetes/platform/metallb/config.yaml"
 echo "[3/6] Applying Traefik and Cloudflared"
 "${SCRIPT_DIR}/render-traefik.sh" | kubectl apply -f -
 kubectl apply -k "${REPO_ROOT}/kubernetes/platform/cloudflared"
+kubectl apply -k "${REPO_ROOT}/kubernetes/platform/intel-gpu-plugin"
 
 echo "[4/6] Waiting for platform deployments"
 kubectl -n traefik rollout status deployment/traefik --timeout=300s

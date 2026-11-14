@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Advertises Intel GPUs (here the GVT-g virtual GPU attached to the k3s VM) as
+# the gpu.intel.com/i915 resource, so pods get /dev/dri without running privileged.
+namespace: kube-system
+
+resources:
+  - github.com/intel/intel-device-plugins-for-kubernetes/deployments/gpu_plugin?ref=v0.37.1
