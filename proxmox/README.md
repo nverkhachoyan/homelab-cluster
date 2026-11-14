@@ -150,6 +150,10 @@ Managed/imported:
   - subnet: `10.0.0.0/24`
 - running k3s VM
 - running appliance VMs imported for Proxmox inventory and drift control
+- general-purpose server VMs (`inventory-general.tf`, e.g. `akademos`)
+
+Not managed: throwaway or experimental VMs (such as desktop distro test VMs),
+node storage definitions, and the cluster firewall.
 
 ## Roadmap
 
