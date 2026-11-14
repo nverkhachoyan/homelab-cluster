@@ -24,6 +24,8 @@ State is stored in S3:
 - `inventory.tf`: merged VM inventory map
 - `inventory-*.tf`: grouped VM inventory by role; split these further if a role
   grows too large to scan comfortably
+- `ansible/`: node operating system configuration that the Proxmox API can't
+  manage (kernel command line, files under `/etc`); see `ansible/README.md`
 
 ## Refactoring Safely
 

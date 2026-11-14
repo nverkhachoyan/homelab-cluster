@@ -1,0 +1,5 @@
+- name: Configure Proxmox node operating systems
+  hosts: proxmox_nodes
+  gather_facts: false
+  roles:
+    - headless_display

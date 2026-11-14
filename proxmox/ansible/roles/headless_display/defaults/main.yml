@@ -1,0 +1,4 @@
+# DRM connector to keep driven without a monitor, so Intel AMT KVM has an
+# active display pipe to capture. Every EliteDesk 800 G3 DM has DP-1.
+headless_display_connector: DP-1
+headless_display_mode: 1920x1080@60

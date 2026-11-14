@@ -1,0 +1,25 @@
+# Persistent: appended to the kernel command line on every boot.
+- name: Force the headless display output on the kernel command line
+  ansible.builtin.template:
+    src: headless-display.cfg.j2
+    dest: /etc/default/grub.d/headless-display.cfg
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Regenerate GRUB config
+
+# Live: the same effect for the running kernel, so no reboot is needed.
+- name: Force the headless display output on for the running kernel
+  ansible.builtin.shell: |
+    set -eu
+    connector=$(ls -d /sys/class/drm/card*-{{ headless_display_connector }} | head -n1)
+    if [ "$(cat "$connector/status")" = connected ]; then
+      echo unchanged
+    else
+      echo on > "$connector/status"
+      echo changed
+    fi
+  args:
+    executable: /bin/bash
+  register: headless_display_live
+  changed_when: headless_display_live.stdout == "changed"

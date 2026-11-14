@@ -1,0 +1,5 @@
+# Keep {{ headless_display_connector }} driven with no monitor attached so Intel AMT KVM (remote screen)
+# has an active display pipe to capture. The trailing "e" forces the output on.
+# Remove this file (and run update-grub) if a real monitor or dummy plug is
+# permanently attached to a different port.
+GRUB_CMDLINE_LINUX_DEFAULT="$GRUB_CMDLINE_LINUX_DEFAULT video={{ headless_display_connector }}:{{ headless_display_mode }}e"
